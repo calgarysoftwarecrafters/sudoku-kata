@@ -1,8 +1,7 @@
-package com.css;
+package com.csc;
 
 import org.approvaltests.combinations.CombinationApprovals;
 import org.junit.jupiter.api.Test;
-import org.lambda.functions.Function6;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

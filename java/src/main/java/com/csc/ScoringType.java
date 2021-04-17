@@ -1,4 +1,4 @@
-package com.css;
+package com.csc;
 
 public enum ScoringType
 {
