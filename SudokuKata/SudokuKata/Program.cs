@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SudokuKata
 {
-    class Program
+    public class Program
     {
-        static void Play()
+        public static void Play(Random randomNumbers)
         {
             #region Construct fully populated board
             // Prepare empty board
@@ -31,7 +31,6 @@ namespace SudokuKata
             };
 
             // Construct board to be solved
-            Random rng = new Random();
 
             // Top element is current state of the board
             Stack<int[]> stateStack = new Stack<int[]>();
@@ -103,7 +102,7 @@ namespace SudokuKata
                                 break;
                             }
 
-                            int randomValue = rng.Next();
+                            int randomValue = randomNumbers.Next();
 
                             if (bestCandidatesCount < 0 ||
                                 candidatesCount < bestCandidatesCount ||
@@ -208,7 +207,7 @@ namespace SudokuKata
             while (removedPos < 9 * 9 - remainingDigits)
             {
                 int curRemainingDigits = positions.Length - removedPos;
-                int indexToPick = removedPos + rng.Next(curRemainingDigits);
+                int indexToPick = removedPos + randomNumbers.Next(curRemainingDigits);
 
                 int row = positions[indexToPick] / 9;
                 int col = positions[indexToPick] % 9;
@@ -360,7 +359,7 @@ namespace SudokuKata
 
                     if (singleCandidateIndices.Length > 0)
                     {
-                        int pickSingleCandidateIndex = rng.Next(singleCandidateIndices.Length);
+                        int pickSingleCandidateIndex = randomNumbers.Next(singleCandidateIndices.Length);
                         int singleCandidateIndex = singleCandidateIndices[pickSingleCandidateIndex];
                         int candidateMask = candidateMasks[singleCandidateIndex];
                         int candidate = singleBitToIndex[candidateMask];
@@ -462,7 +461,7 @@ namespace SudokuKata
 
                         if (candidates.Count > 0)
                         {
-                            int index = rng.Next(candidates.Count);
+                            int index = randomNumbers.Next(candidates.Count);
                             string description = groupDescriptions.ElementAt(index);
                             int row = candidateRowIndices.ElementAt(index);
                             int col = candidateColIndices.ElementAt(index);
@@ -827,7 +826,7 @@ namespace SudokuKata
                                             break;
                                         }
 
-                                        int randomValue = rng.Next();
+                                        int randomValue = randomNumbers.Next();
 
                                         if (bestCandidatesCount < 0 ||
                                             candidatesCount < bestCandidatesCount ||
@@ -926,7 +925,7 @@ namespace SudokuKata
 
                     if (stateIndex1.Any())
                     {
-                        int pos = rng.Next(stateIndex1.Count());
+                        int pos = randomNumbers.Next(stateIndex1.Count());
                         int index1 = stateIndex1.ElementAt(pos);
                         int index2 = stateIndex2.ElementAt(pos);
                         int digit1 = value1.ElementAt(pos);
@@ -994,7 +993,7 @@ namespace SudokuKata
 
         static void Main(string[] args)
         {
-            Play();
+            Play(new Random());
 
             Console.WriteLine();
             Console.Write("Press ENTER to exit... ");
