@@ -60,7 +60,7 @@ namespace SudokuKata
             return sudokuBoardAndStackState;
         }
 
-        private void ConstructFullyPopulatedBoardNonSense(Random randomNumbers)
+        public void ConstructFullyPopulatedBoardNonSense(Random randomNumbers)
         {
             #region Construct fully populated board
 

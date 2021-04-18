@@ -9,7 +9,15 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            var sudokuBoardAndStackState = SudokuBoardAndStackState.ConstructFullyPopulatedBoard(randomNumbers);
+            var sudokuBoardAndStackState1 = new SudokuBoardAndStackState();
+
+            sudokuBoardAndStackState1.ConstructFullyPopulatedBoardNonSense(randomNumbers);
+
+            Console.WriteLine();
+            Console.WriteLine("Final look of the solved board:");
+            var boardString = sudokuBoardAndStackState1.ToString();
+            Console.WriteLine(boardString);
+            var sudokuBoardAndStackState = sudokuBoardAndStackState1;
 
             var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers,
                 out var finalState, sudokuBoardAndStackState);
