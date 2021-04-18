@@ -973,21 +973,28 @@ namespace SudokuKata
                 }
                 #endregion
 
-                if (changeMade)
-                {
-                    #region Print the board as it looks after one change was made to it
-                    Console.WriteLine(string.Join(Environment.NewLine, board.Select(s => new string(s)).ToArray()));
-                    string code =
-                        string.Join(string.Empty, board.Select(s => new string(s)).ToArray())
-                            .Replace("-", string.Empty)
-                            .Replace("+", string.Empty)
-                            .Replace("|", string.Empty)
-                            .Replace(".", "0");
+                PrintBoardChange(changeMade, board);
+            }
+        }
 
-                    Console.WriteLine("Code: {0}", code);
-                    Console.WriteLine();
-                    #endregion
-                }
+        private static void PrintBoardChange(bool changeMade, char[][] board)
+        {
+            if (changeMade)
+            {
+                #region Print the board as it looks after one change was made to it
+
+                Console.WriteLine(string.Join(Environment.NewLine, board.Select(s => new string(s)).ToArray()));
+                string code =
+                    string.Join(string.Empty, board.Select(s => new string(s)).ToArray())
+                        .Replace("-", string.Empty)
+                        .Replace("+", string.Empty)
+                        .Replace("|", string.Empty)
+                        .Replace(".", "0");
+
+                Console.WriteLine("Code: {0}", code);
+                Console.WriteLine();
+
+                #endregion
             }
         }
 
