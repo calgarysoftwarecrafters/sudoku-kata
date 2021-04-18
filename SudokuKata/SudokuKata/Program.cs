@@ -106,13 +106,14 @@ namespace SudokuKata
                     lastDigitStack, board);
             }
 
+            var sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
+            
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
             Console.WriteLine(string.Join(Environment.NewLine, board.Select(s => new string(s)).ToArray()));
 
             #endregion
 
-            var sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
             return sudokuBoardAndStackState;
         }
 
