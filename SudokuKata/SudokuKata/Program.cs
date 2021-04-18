@@ -60,11 +60,8 @@ namespace SudokuKata
         {
             #region Construct fully populated board
 
-            SudokuBoardAndStackState sudokuBoardAndStackState;
-            {
-                sudokuBoardAndStackState = NewSudokuBoardAndStackState();
-            }
-            
+            var sudokuBoardAndStackState = new SudokuBoardAndStackState();
+
             // Top elements are (row, col) of cell which has been modified compared to previous state
             Stack<int> rowIndexStack = new Stack<int>();
             Stack<int> colIndexStack = new Stack<int>();
@@ -93,12 +90,6 @@ namespace SudokuKata
 
             #endregion
 
-            return sudokuBoardAndStackState;
-        }
-
-        private static SudokuBoardAndStackState NewSudokuBoardAndStackState()
-        {
-            SudokuBoardAndStackState sudokuBoardAndStackState = new SudokuBoardAndStackState();
             return sudokuBoardAndStackState;
         }
 
