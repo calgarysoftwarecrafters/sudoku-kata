@@ -23,8 +23,11 @@ namespace SudokuKata.Test
         {
             StringWriter output = new StringWriter();
             Console.SetOut(output);
-            var rng = new Random(990);
-            Program.Play(rng);
+            for (int i = 900; i < 1200; i++)
+            {
+                var rng = new Random(i);
+                Program.Play(rng);    
+            }
             Approvals.Verify(output);
         }
 
