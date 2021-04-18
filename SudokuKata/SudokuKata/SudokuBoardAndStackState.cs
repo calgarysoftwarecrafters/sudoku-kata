@@ -16,7 +16,12 @@ namespace SudokuKata
             // Prepare empty board
             string line = "+---+---+---+";
             string middle = "|...|...|...|";
-            Board = new[]
+            Board = getEmptyBoard(line, middle);
+        }
+
+        private static char[][] getEmptyBoard(string line, string middle)
+        {
+            return new[]
             {
                 line.ToCharArray(),
                 middle.ToCharArray(),
