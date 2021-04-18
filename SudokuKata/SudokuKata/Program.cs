@@ -17,14 +17,13 @@ namespace SudokuKata
             Console.WriteLine("Final look of the solved board:");
             var boardString = sudokuBoardAndStackState1.ToString();
             Console.WriteLine(boardString);
-            var sudokuBoardAndStackState = sudokuBoardAndStackState1;
 
             var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers,
-                out var finalState, sudokuBoardAndStackState);
+                out var finalState, sudokuBoardAndStackState1);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState.Board, finalState);
+            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState1.Board, finalState);
         }
 
         private static void AppleSauce5(Random randomNumbers, int[] state, int allOnes, Dictionary<int, int> maskToOnesCount,
