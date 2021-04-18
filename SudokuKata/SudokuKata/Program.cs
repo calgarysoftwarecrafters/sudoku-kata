@@ -415,87 +415,7 @@ namespace SudokuKata
 
                     #endregion
 
-                    #region Try to find pairs of digits in the same row/column/block and remove them from other colliding cells
-                    if (!changeMade)
-                    {
-                        IEnumerable<int> twoDigitMasks =
-                            candidateMasks.Where(mask => maskToOnesCount[mask] == 2).Distinct().ToList();
-
-                        List<AppleSauce2> groups =
-                            twoDigitMasks
-                                .SelectMany(mask =>
-                                    cellGroups
-                                        .Where(group => group.Count(tuple => candidateMasks[tuple.Index] == mask) == 2)
-                                        .Where(group => group.Any(tuple => candidateMasks[tuple.Index] != mask && (candidateMasks[tuple.Index] & mask) > 0))
-                                        .Select(group => new AppleSauce2(mask, @group.Key, @group.First().Description, @group)))
-                                .ToList();
-
-                        if (groups.Any())
-                        {
-                            foreach (AppleSauce2 group in groups)
-                            {
-                                List<AppleSauce1> cells =
-                                    group.Cells
-                                        .Where(
-                                            cell =>
-                                                candidateMasks[cell.Index] != group.Mask &&
-                                                (candidateMasks[cell.Index] & group.Mask) > 0)
-                                        .ToList();
-
-                                AppleSauce1[] maskCells =
-                                    group.Cells
-                                        .Where(cell => candidateMasks[cell.Index] == group.Mask)
-                                        .ToArray();
-
-
-                                if (cells.Any())
-                                {
-                                    int upper = 0;
-                                    int lower = 0;
-                                    int temp = group.Mask;
-
-                                    int value = 1;
-                                    while (temp > 0)
-                                    {
-                                        if ((temp & 1) > 0)
-                                        {
-                                            lower = upper;
-                                            upper = value;
-                                        }
-                                        temp = temp >> 1;
-                                        value += 1;
-                                    }
-
-                                    Console.WriteLine(
-                                        $"Values {lower} and {upper} in {group.Description} are in cells ({maskCells[0].Row + 1}, {maskCells[0].Column + 1}) and ({maskCells[1].Row + 1}, {maskCells[1].Column + 1}).");
-
-                                    foreach (AppleSauce1 cell in cells)
-                                    {
-                                        int maskToRemove = candidateMasks[cell.Index] & group.Mask;
-                                        List<int> valuesToRemove = new List<int>();
-                                        int curValue = 1;
-                                        while (maskToRemove > 0)
-                                        {
-                                            if ((maskToRemove & 1) > 0)
-                                            {
-                                                valuesToRemove.Add(curValue);
-                                            }
-                                            maskToRemove = maskToRemove >> 1;
-                                            curValue += 1;
-                                        }
-
-                                        string valuesReport = string.Join(", ", valuesToRemove.ToArray());
-                                        Console.WriteLine($"{valuesReport} cannot appear in ({cell.Row + 1}, {cell.Column + 1}).");
-
-                                        candidateMasks[cell.Index] &= ~group.Mask;
-                                        stepChangeMade = true;
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-                    #endregion
+                    stepChangeMade = RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(changeMade, candidateMasks, maskToOnesCount, cellGroups, stepChangeMade);
 
                     stepChangeMade = tryToFindGroupsOfDigitsOfSizeN(changeMade, stepChangeMade, maskToOnesCount, cellGroups, state, candidateMasks);
                 }
@@ -505,6 +425,98 @@ namespace SudokuKata
 
                 PrintBoardChange(changeMade, board);
             }
+        }
+
+        private static bool RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(bool changeMade,
+            int[] candidateMasks, Dictionary<int, int> maskToOnesCount, List<IGrouping<int, AppleSauce1>> cellGroups, bool stepChangeMade)
+        {
+            #region Try to find pairs of digits in the same row/column/block and remove them from other colliding cells
+
+            if (!changeMade)
+            {
+                IEnumerable<int> twoDigitMasks =
+                    candidateMasks.Where(mask => maskToOnesCount[mask] == 2).Distinct().ToList();
+
+                List<AppleSauce2> groups =
+                    twoDigitMasks
+                        .SelectMany(mask =>
+                            cellGroups
+                                .Where(group => @group.Count(tuple => candidateMasks[tuple.Index] == mask) == 2)
+                                .Where(group => @group.Any(tuple =>
+                                    candidateMasks[tuple.Index] != mask && (candidateMasks[tuple.Index] & mask) > 0))
+                                .Select(group => new AppleSauce2(mask, @group.Key, @group.First().Description, @group)))
+                        .ToList();
+
+                if (groups.Any())
+                {
+                    foreach (AppleSauce2 group in groups)
+                    {
+                        List<AppleSauce1> cells =
+                            @group.Cells
+                                .Where(
+                                    cell =>
+                                        candidateMasks[cell.Index] != @group.Mask &&
+                                        (candidateMasks[cell.Index] & @group.Mask) > 0)
+                                .ToList();
+
+                        AppleSauce1[] maskCells =
+                            @group.Cells
+                                .Where(cell => candidateMasks[cell.Index] == @group.Mask)
+                                .ToArray();
+
+
+                        if (cells.Any())
+                        {
+                            int upper = 0;
+                            int lower = 0;
+                            int temp = @group.Mask;
+
+                            int value = 1;
+                            while (temp > 0)
+                            {
+                                if ((temp & 1) > 0)
+                                {
+                                    lower = upper;
+                                    upper = value;
+                                }
+
+                                temp = temp >> 1;
+                                value += 1;
+                            }
+
+                            Console.WriteLine(
+                                $"Values {lower} and {upper} in {@group.Description} are in cells ({maskCells[0].Row + 1}, {maskCells[0].Column + 1}) and ({maskCells[1].Row + 1}, {maskCells[1].Column + 1}).");
+
+                            foreach (AppleSauce1 cell in cells)
+                            {
+                                int maskToRemove = candidateMasks[cell.Index] & @group.Mask;
+                                List<int> valuesToRemove = new List<int>();
+                                int curValue = 1;
+                                while (maskToRemove > 0)
+                                {
+                                    if ((maskToRemove & 1) > 0)
+                                    {
+                                        valuesToRemove.Add(curValue);
+                                    }
+
+                                    maskToRemove = maskToRemove >> 1;
+                                    curValue += 1;
+                                }
+
+                                string valuesReport = string.Join(", ", valuesToRemove.ToArray());
+                                Console.WriteLine($"{valuesReport} cannot appear in ({cell.Row + 1}, {cell.Column + 1}).");
+
+                                candidateMasks[cell.Index] &= ~@group.Mask;
+                                stepChangeMade = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #endregion
+
+            return stepChangeMade;
         }
 
         private static int[] GenerateInitialBoardFromCompletelySolvedOne(Random randomNumbers, Stack<int[]> stateStack, char[][] board,
