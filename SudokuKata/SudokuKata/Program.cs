@@ -112,7 +112,8 @@ namespace SudokuKata
 
             #endregion
 
-            return new SudokuBoardAndStackState(stateStack, board);
+            var sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
+            return sudokuBoardAndStackState;
         }
 
         private static string AppleSauce4(Random randomNumbers, string command, Stack<int[]> stateStack,
