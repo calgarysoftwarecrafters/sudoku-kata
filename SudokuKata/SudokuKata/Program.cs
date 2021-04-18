@@ -9,7 +9,9 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            var board = ConstructFullyPopulatedBoard(randomNumbers, out var stateStack);
+            var constructFullyPopulatedBoard = ConstructFullyPopulatedBoard(randomNumbers);
+            var stateStack = constructFullyPopulatedBoard.StateStack;
+            var board = constructFullyPopulatedBoard.Board;
 
             var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers, stateStack, board,
                 out var finalState);
@@ -50,7 +52,7 @@ namespace SudokuKata
             }
         }
 
-        private static char[][] ConstructFullyPopulatedBoard(Random randomNumbers, out Stack<int[]> stateStack)
+        private static SudokuBoardAndStackState ConstructFullyPopulatedBoard(Random randomNumbers)
         {
             #region Construct fully populated board
 
@@ -77,7 +79,7 @@ namespace SudokuKata
             // Construct board to be solved
 
             // Top element is current state of the board
-            stateStack = new Stack<int[]>();
+            var stateStack = new Stack<int[]>();
 
             // Top elements are (row, col) of cell which has been modified compared to previous state
             Stack<int> rowIndexStack = new Stack<int>();
@@ -106,7 +108,7 @@ namespace SudokuKata
 
             #endregion
 
-            return board;
+            return new SudokuBoardAndStackState(stateStack, board);
         }
 
         private static string AppleSauce4(Random randomNumbers, string command, Stack<int[]> stateStack,
