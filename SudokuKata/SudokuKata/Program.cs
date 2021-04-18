@@ -10,14 +10,13 @@ namespace SudokuKata
         public static void Play(Random randomNumbers)
         {
             var sudokuBoardAndStackState = ConstructFullyPopulatedBoard(randomNumbers);
-            var board = sudokuBoardAndStackState.Board;
 
             var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers,
                 out var finalState, sudokuBoardAndStackState);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, board, finalState);
+            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState.Board, finalState);
         }
 
         private static void AppleSauce5(Random randomNumbers, int[] state, int allOnes, Dictionary<int, int> maskToOnesCount,
