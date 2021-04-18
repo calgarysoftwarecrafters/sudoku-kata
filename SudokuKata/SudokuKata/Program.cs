@@ -103,8 +103,8 @@ namespace SudokuKata
             string command = "expand";
             while (stateStack.Count <= 9 * 9)
             {
-                command = AppleSauce4(randomNumbers, command, stateStack, rowIndexStack, colIndexStack, usedDigitsStack,
-                    lastDigitStack, board);
+                command = AppleSauce4(randomNumbers, sudokuBoardAndStackState, command, rowIndexStack, colIndexStack, usedDigitsStack,
+                    lastDigitStack);
             }
 
             Console.WriteLine();
@@ -117,17 +117,18 @@ namespace SudokuKata
             return sudokuBoardAndStackState;
         }
 
-        private static string AppleSauce4(Random randomNumbers, string command, Stack<int[]> stateStack,
+        private static string AppleSauce4(Random randomNumbers, SudokuBoardAndStackState sudokuBoardAndStackState,
+            string command,
             Stack<int> rowIndexStack,
-            Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack, char[][] board)
+            Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
             if (command == "expand")
             {
                 int[] currentState = new int[9 * 9];
 
-                if (stateStack.Count > 0)
+                if (sudokuBoardAndStackState.StateStack.Count > 0)
                 {
-                    Array.Copy(stateStack.Peek(), currentState, currentState.Length);
+                    Array.Copy(sudokuBoardAndStackState.StateStack.Peek(), currentState, currentState.Length);
                 }
 
                 int bestRow = -1;
@@ -186,7 +187,7 @@ namespace SudokuKata
 
                 if (!containsUnsolvableCells)
                 {
-                    stateStack.Push(currentState);
+                    sudokuBoardAndStackState.StateStack.Push(currentState);
                     rowIndexStack.Push(bestRow);
                     colIndexStack.Push(bestCol);
                     usedDigitsStack.Push(bestUsedDigits);
@@ -198,7 +199,7 @@ namespace SudokuKata
             }
             else if (command == "collapse")
             {
-                stateStack.Pop();
+                sudokuBoardAndStackState.StateStack.Pop();
                 rowIndexStack.Pop();
                 colIndexStack.Pop();
                 usedDigitsStack.Pop();
@@ -216,7 +217,7 @@ namespace SudokuKata
                 int colToWrite = colToMove + colToMove / 3 + 1;
 
                 bool[] usedDigits = usedDigitsStack.Peek();
-                int[] currentState = stateStack.Peek();
+                int[] currentState = sudokuBoardAndStackState.StateStack.Peek();
                 int currentStateIndex = 9 * rowToMove + colToMove;
 
                 int movedToDigit = digitToMove + 1;
@@ -227,7 +228,7 @@ namespace SudokuKata
                 {
                     usedDigits[digitToMove - 1] = false;
                     currentState[currentStateIndex] = 0;
-                    board[rowToWrite][colToWrite] = '.';
+                    sudokuBoardAndStackState.Board[rowToWrite][colToWrite] = '.';
                 }
 
                 if (movedToDigit <= 9)
@@ -235,7 +236,7 @@ namespace SudokuKata
                     lastDigitStack.Push(movedToDigit);
                     usedDigits[movedToDigit - 1] = true;
                     currentState[currentStateIndex] = movedToDigit;
-                    board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
+                    sudokuBoardAndStackState.Board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
 
                     // Next possible digit was found at current position
                     // Next step will be to expand the state
