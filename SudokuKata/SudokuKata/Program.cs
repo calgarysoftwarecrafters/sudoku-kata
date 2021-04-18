@@ -248,27 +248,7 @@ namespace SudokuKata
                     }
                 #endregion
 
-                #region Build a collection (named cellGroups) which maps cell indices into distinct groups (rows/columns/blocks)
-                IEnumerable<IGrouping<int, AppleSauce1>> rowsIndices = state
-                    .Select((value, index) => new AppleSauce1(index / 9, $"row #{index / 9 + 1}", index, index / 9, index % 9))
-                    .GroupBy(tuple => tuple.Discriminator);
-
-                IEnumerable<IGrouping<int, AppleSauce1>> columnIndices = state
-                    .Select((value, index) => new AppleSauce1(9 + index % 9, $"column #{index % 9 + 1}", index, index / 9, index % 9))
-                    .GroupBy(tuple => tuple.Discriminator);
-
-                IEnumerable<IGrouping<int, AppleSauce1>> blockIndices = state
-                    .Select((value, index) => new
-                    {
-                        Row = index / 9,
-                        Column = index % 9,
-                        Index = index
-                    })
-                    .Select(tuple => new AppleSauce1(18 + 3 * (tuple.Row / 3) + tuple.Column / 3, $"block ({tuple.Row / 3 + 1}, {tuple.Column / 3 + 1})", tuple.Index, tuple.Row, tuple.Column))
-                    .GroupBy(tuple => tuple.Discriminator);
-
-                List<IGrouping<int, AppleSauce1>> cellGroups = rowsIndices.Concat(columnIndices).Concat(blockIndices).ToList();
-                #endregion
+                var cellGroups = BuildCellGroupsThatMapsCellIndicesToDistinctGroups(state);
 
                 bool stepChangeMade = true;
                 while (stepChangeMade)
@@ -289,6 +269,37 @@ namespace SudokuKata
 
                 PrintBoardChange(changeMade, board);
             }
+        }
+
+        private static List<IGrouping<int, AppleSauce1>> BuildCellGroupsThatMapsCellIndicesToDistinctGroups(int[] state)
+        {
+            #region Build a collection (named cellGroups) which maps cell indices into distinct groups (rows/columns/blocks)
+
+            IEnumerable<IGrouping<int, AppleSauce1>> rowsIndices = state
+                .Select((value, index) => new AppleSauce1(index / 9, $"row #{index / 9 + 1}", index, index / 9, index % 9))
+                .GroupBy(tuple => tuple.Discriminator);
+
+            IEnumerable<IGrouping<int, AppleSauce1>> columnIndices = state
+                .Select((value, index) =>
+                    new AppleSauce1(9 + index % 9, $"column #{index % 9 + 1}", index, index / 9, index % 9))
+                .GroupBy(tuple => tuple.Discriminator);
+
+            IEnumerable<IGrouping<int, AppleSauce1>> blockIndices = state
+                .Select((value, index) => new
+                {
+                    Row = index / 9,
+                    Column = index % 9,
+                    Index = index
+                })
+                .Select(tuple => new AppleSauce1(18 + 3 * (tuple.Row / 3) + tuple.Column / 3,
+                    $"block ({tuple.Row / 3 + 1}, {tuple.Column / 3 + 1})", tuple.Index, tuple.Row, tuple.Column))
+                .GroupBy(tuple => tuple.Discriminator);
+
+            List<IGrouping<int, AppleSauce1>> cellGroups = rowsIndices.Concat(columnIndices).Concat(blockIndices).ToList();
+
+            #endregion
+
+            return cellGroups;
         }
 
         private static bool PickCellsWithOnlyOneCandidateLeft(Random randomNumbers, int[] candidateMasks,
