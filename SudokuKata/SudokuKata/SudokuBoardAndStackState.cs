@@ -11,7 +11,12 @@ namespace SudokuKata
             // Prepare empty board
             string line = "+---+---+---+";
             string middle = "|...|...|...|";
-            char[][] board = new char[][]
+
+            // Construct board to be solved
+
+            // Top element is current state of the board
+            StateStack = new Stack<int[]>();
+            Board = new[]
             {
                 line.ToCharArray(),
                 middle.ToCharArray(),
@@ -27,12 +32,6 @@ namespace SudokuKata
                 middle.ToCharArray(),
                 line.ToCharArray()
             };
-
-            // Construct board to be solved
-
-            // Top element is current state of the board
-            StateStack = new Stack<int[]>();
-            Board = board;
         }
 
         public Stack<int[]> StateStack { get; private set; }
