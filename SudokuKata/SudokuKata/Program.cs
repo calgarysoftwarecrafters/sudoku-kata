@@ -98,32 +98,7 @@ namespace SudokuKata
 
         private static SudokuBoardAndStackState NewSudokuBoardAndStackState()
         {
-            SudokuBoardAndStackState sudokuBoardAndStackState;
-            // Prepare empty board
-            string line = "+---+---+---+";
-            string middle = "|...|...|...|";
-            char[][] board = new char[][]
-            {
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray()
-            };
-
-            // Construct board to be solved
-
-            // Top element is current state of the board
-            var stateStack = new Stack<int[]>();
-            sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
+            SudokuBoardAndStackState sudokuBoardAndStackState = new SudokuBoardAndStackState();
             return sudokuBoardAndStackState;
         }
 
