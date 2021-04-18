@@ -218,35 +218,7 @@ namespace SudokuKata
             {
                 changeMade = false;
 
-                #region Calculate candidates for current state of the board
-                int[] candidateMasks = new int[state.Length];
-
-                for (int i = 0; i < state.Length; i++)
-                    if (state[i] == 0)
-                    {
-
-                        int row = i / 9;
-                        int col = i % 9;
-                        int blockRow = row / 3;
-                        int blockCol = col / 3;
-
-                        int colidingNumbers = 0;
-                        for (int j = 0; j < 9; j++)
-                        {
-                            int rowSiblingIndex = 9 * row + j;
-                            int colSiblingIndex = 9 * j + col;
-                            int blockSiblingIndex = 9 * (blockRow * 3 + j / 3) + blockCol * 3 + j % 3;
-
-                            int rowSiblingMask = 1 << (state[rowSiblingIndex] - 1);
-                            int colSiblingMask = 1 << (state[colSiblingIndex] - 1);
-                            int blockSiblingMask = 1 << (state[blockSiblingIndex] - 1);
-
-                            colidingNumbers = colidingNumbers | rowSiblingMask | colSiblingMask | blockSiblingMask;
-                        }
-
-                        candidateMasks[i] = allOnes & ~colidingNumbers;
-                    }
-                #endregion
+                var candidateMasks = CalculateCandidatesForCurrentStateOfTheBoard(state, allOnes);
 
                 var cellGroups = BuildCellGroupsThatMapsCellIndicesToDistinctGroups(state);
 
@@ -269,6 +241,42 @@ namespace SudokuKata
 
                 PrintBoardChange(changeMade, board);
             }
+        }
+
+        private static int[] CalculateCandidatesForCurrentStateOfTheBoard(int[] state, int allOnes)
+        {
+            #region Calculate candidates for current state of the board
+
+            int[] candidateMasks = new int[state.Length];
+
+            for (int i = 0; i < state.Length; i++)
+                if (state[i] == 0)
+                {
+                    int row = i / 9;
+                    int col = i % 9;
+                    int blockRow = row / 3;
+                    int blockCol = col / 3;
+
+                    int colidingNumbers = 0;
+                    for (int j = 0; j < 9; j++)
+                    {
+                        int rowSiblingIndex = 9 * row + j;
+                        int colSiblingIndex = 9 * j + col;
+                        int blockSiblingIndex = 9 * (blockRow * 3 + j / 3) + blockCol * 3 + j % 3;
+
+                        int rowSiblingMask = 1 << (state[rowSiblingIndex] - 1);
+                        int colSiblingMask = 1 << (state[colSiblingIndex] - 1);
+                        int blockSiblingMask = 1 << (state[blockSiblingIndex] - 1);
+
+                        colidingNumbers = colidingNumbers | rowSiblingMask | colSiblingMask | blockSiblingMask;
+                    }
+
+                    candidateMasks[i] = allOnes & ~colidingNumbers;
+                }
+
+            #endregion
+
+            return candidateMasks;
         }
 
         private static List<IGrouping<int, AppleSauce1>> BuildCellGroupsThatMapsCellIndicesToDistinctGroups(int[] state)
