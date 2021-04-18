@@ -474,13 +474,7 @@ namespace SudokuKata
                                     cellGroups
                                         .Where(group => group.Count(tuple => candidateMasks[tuple.Index] == mask) == 2)
                                         .Where(group => group.Any(tuple => candidateMasks[tuple.Index] != mask && (candidateMasks[tuple.Index] & mask) > 0))
-                                        .Select(group => new
-                                        {
-                                            Mask = mask,
-                                            Discriminator = group.Key,
-                                            Description = group.First().Description,
-                                            Cells = group
-                                        }))
+                                        .Select(group => new AppleSauce2(mask, @group.Key, @group.First().Description, @group)))
                                 .ToList();
 
                         if (groups.Any())
