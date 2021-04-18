@@ -17,6 +17,12 @@ namespace SudokuKata
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
+            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, board, finalState);
+        }
+
+        private static void AppleSauce5(Random randomNumbers, int[] state, int allOnes, Dictionary<int, int> maskToOnesCount,
+            Dictionary<int, int> singleBitToIndex, char[][] board, int[] finalState)
+        {
             bool changeMade = true;
             while (changeMade)
             {
