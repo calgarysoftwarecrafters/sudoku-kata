@@ -60,6 +60,7 @@ namespace SudokuKata
         {
             #region Construct fully populated board
 
+            SudokuBoardAndStackState sudokuBoardAndStackState;
             // Prepare empty board
             string line = "+---+---+---+";
             string middle = "|...|...|...|";
@@ -84,6 +85,7 @@ namespace SudokuKata
 
             // Top element is current state of the board
             var stateStack = new Stack<int[]>();
+            sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
 
             // Top elements are (row, col) of cell which has been modified compared to previous state
             Stack<int> rowIndexStack = new Stack<int>();
@@ -99,7 +101,6 @@ namespace SudokuKata
             // - expand - finds next empty cell and puts new state on stacks
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
-            var sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
             string command = "expand";
             while (stateStack.Count <= 9 * 9)
             {
