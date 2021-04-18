@@ -7,6 +7,45 @@ namespace SudokuKata
 {
     public class Program
     {
+        public class AppleSauce1
+        {
+            public int Discriminator { get; }
+            public string Description { get; }
+            public int Index { get; }
+            public int Row { get; }
+            public int Column { get; }
+
+            public AppleSauce1(int discriminator, string description, int index, int row, int column)
+            {
+                Discriminator = discriminator;
+                Description = description;
+                Index = index;
+                Row = row;
+                Column = column;
+            }
+
+            public override string ToString()
+            {
+                return $"{{ Discriminator = {Discriminator}, Description = {Description}, Index = {Index}, Row = {Row}, Column = {Column} }}";
+            }
+
+            public override bool Equals(object value)
+            {
+                var type = value as AppleSauce1;
+                return (type != null) && EqualityComparer<int>.Default.Equals(type.Discriminator, Discriminator) && EqualityComparer<string>.Default.Equals(type.Description, Description) && EqualityComparer<int>.Default.Equals(type.Index, Index) && EqualityComparer<int>.Default.Equals(type.Row, Row) && EqualityComparer<int>.Default.Equals(type.Column, Column);
+            }
+
+            public override int GetHashCode()
+            {
+                int num = 0x7a2f0b42;
+                num = (-1521134295 * num) + EqualityComparer<int>.Default.GetHashCode(Discriminator);
+                num = (-1521134295 * num) + EqualityComparer<string>.Default.GetHashCode(Description);
+                num = (-1521134295 * num) + EqualityComparer<int>.Default.GetHashCode(Index);
+                num = (-1521134295 * num) + EqualityComparer<int>.Default.GetHashCode(Row);
+                return (-1521134295 * num) + EqualityComparer<int>.Default.GetHashCode(Column);
+            }
+        }
+
         public static void Play(Random randomNumbers)
         {
             #region Construct fully populated board
@@ -298,25 +337,11 @@ namespace SudokuKata
 
                 #region Build a collection (named cellGroups) which maps cell indices into distinct groups (rows/columns/blocks)
                 var rowsIndices = state
-                    .Select((value, index) => new
-                    {
-                        Discriminator = index / 9,
-                        Description = $"row #{index / 9 + 1}",
-                        Index = index,
-                        Row = index / 9,
-                        Column = index % 9
-                    })
+                    .Select((value, index) => new AppleSauce1(index / 9, $"row #{index / 9 + 1}", index, index / 9, index % 9))
                     .GroupBy(tuple => tuple.Discriminator);
 
                 var columnIndices = state
-                    .Select((value, index) => new
-                    {
-                        Discriminator = 9 + index % 9,
-                        Description = $"column #{index % 9 + 1}",
-                        Index = index,
-                        Row = index / 9,
-                        Column = index % 9
-                    })
+                    .Select((value, index) => new AppleSauce1(9 + index % 9, $"column #{index % 9 + 1}", index, index / 9, index % 9))
                     .GroupBy(tuple => tuple.Discriminator);
 
                 var blockIndices = state
@@ -326,14 +351,7 @@ namespace SudokuKata
                         Column = index % 9,
                         Index = index
                     })
-                    .Select(tuple => new
-                    {
-                        Discriminator = 18 + 3 * (tuple.Row / 3) + tuple.Column / 3,
-                        Description = $"block ({tuple.Row / 3 + 1}, {tuple.Column / 3 + 1})",
-                        Index = tuple.Index,
-                        Row = tuple.Row,
-                        Column = tuple.Column
-                    })
+                    .Select(tuple => new AppleSauce1(18 + 3 * (tuple.Row / 3) + tuple.Column / 3, $"block ({tuple.Row / 3 + 1}, {tuple.Column / 3 + 1})", tuple.Index, tuple.Row, tuple.Column))
                     .GroupBy(tuple => tuple.Discriminator);
 
                 var cellGroups = rowsIndices.Concat(columnIndices).Concat(blockIndices).ToList();
