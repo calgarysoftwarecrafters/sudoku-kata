@@ -6,12 +6,6 @@ namespace SudokuKata
 {
     public class SudokuBoardAndStackState
     {
-        public SudokuBoardAndStackState(Stack<int[]> stateStack, char[][] board)
-        {
-            StateStack = stateStack;
-            Board = board;
-        }
-
         public SudokuBoardAndStackState()
         {
             // Prepare empty board
