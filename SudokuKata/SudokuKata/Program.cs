@@ -13,10 +13,7 @@ namespace SudokuKata
 
             sudokuBoardAndStackState.ConstructFullyPopulatedBoardNonSense(randomNumbers);
 
-            Console.WriteLine();
-            Console.WriteLine("Final look of the solved board:");
-            var boardString = sudokuBoardAndStackState.ToString();
-            Console.WriteLine(boardString);
+            DisplayFinalLookOfTheSolvedBoard(sudokuBoardAndStackState);
 
             var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers,
                 out var finalState, sudokuBoardAndStackState);
@@ -24,6 +21,14 @@ namespace SudokuKata
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
             AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState.Board, finalState);
+        }
+
+        private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoardAndStackState sudokuBoardAndStackState)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Final look of the solved board:");
+            var boardString = sudokuBoardAndStackState.ToString();
+            Console.WriteLine(boardString);
         }
 
         private static void AppleSauce5(Random randomNumbers, int[] state, int allOnes, Dictionary<int, int> maskToOnesCount,
