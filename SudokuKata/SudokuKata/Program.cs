@@ -555,7 +555,7 @@ namespace SudokuKata
                                 .Where(tuple => tuple.Value > 1)
                                 .Select(tuple => tuple.Key).ToList();
 
-                        var groupsWithNMasks =
+                        List<AppleSauce3> groupsWithNMasks =
                             masks
                                 .SelectMany(mask =>
                                     cellGroups
@@ -567,7 +567,7 @@ namespace SudokuKata
                                 .Where(group => group.CellsWithMask.Count() == maskToOnesCount[group.Mask])
                                 .ToList();
 
-                        foreach (var groupWithNMasks in groupsWithNMasks)
+                        foreach (AppleSauce3 groupWithNMasks in groupsWithNMasks)
                         {
                             int mask = groupWithNMasks.Mask;
 
