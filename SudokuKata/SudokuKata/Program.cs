@@ -110,7 +110,7 @@ namespace SudokuKata
             
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
-            var boardString = sudokuBoardAndStackState.ToString(board);
+            var boardString = sudokuBoardAndStackState.ToString();
             Console.WriteLine(boardString);
 
             #endregion

@@ -15,9 +15,9 @@ namespace SudokuKata
         public Stack<int[]> StateStack { get; private set; }
         public char[][] Board { get; private set; }
 
-        public string ToString(char[][] board)
+        public override string ToString()
         {
-            return string.Join(Environment.NewLine, board.Select(s => new string(s)).ToArray());
+            return string.Join(Environment.NewLine, Board.Select(s => new string(s)).ToArray());
         }
     }
 }
