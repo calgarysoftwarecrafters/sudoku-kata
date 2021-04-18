@@ -560,19 +560,10 @@ namespace SudokuKata
                                 .SelectMany(mask =>
                                     cellGroups
                                         .Where(group => group.All(cell => state[cell.Index] == 0 || (mask & (1 << (state[cell.Index] - 1))) == 0))
-                                        .Select(group => new
-                                        {
-                                            Mask = mask,
-                                            Description = group.First().Description,
-                                            Cells = group,
-                                            CellsWithMask =
-                                                group.Where(cell => state[cell.Index] == 0 && (candidateMasks[cell.Index] & mask) != 0).ToList(),
-                                            CleanableCellsCount =
-                                                group.Count(
-                                                    cell => state[cell.Index] == 0 && 
-                                                        (candidateMasks[cell.Index] & mask) != 0 &&
-                                                        (candidateMasks[cell.Index] & ~mask) != 0)
-                                        }))
+                                        .Select(group => new AppleSauce3(mask, @group.First().Description, @group, @group.Where(cell => state[cell.Index] == 0 && (candidateMasks[cell.Index] & mask) != 0).ToList(), @group.Count(
+                                            cell => state[cell.Index] == 0 && 
+                                                    (candidateMasks[cell.Index] & mask) != 0 &&
+                                                    (candidateMasks[cell.Index] & ~mask) != 0))))
                                 .Where(group => group.CellsWithMask.Count() == maskToOnesCount[group.Mask])
                                 .ToList();
 

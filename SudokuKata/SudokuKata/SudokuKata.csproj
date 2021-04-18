@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AppleSauce1.cs" />
     <Compile Include="AppleSauce2.cs" />
+    <Compile Include="AppleSauce3.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
