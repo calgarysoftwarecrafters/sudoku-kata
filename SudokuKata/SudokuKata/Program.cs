@@ -61,32 +61,34 @@ namespace SudokuKata
             #region Construct fully populated board
 
             SudokuBoardAndStackState sudokuBoardAndStackState;
-            // Prepare empty board
-            string line = "+---+---+---+";
-            string middle = "|...|...|...|";
-            char[][] board = new char[][]
             {
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray()
-            };
+                // Prepare empty board
+                string line = "+---+---+---+";
+                string middle = "|...|...|...|";
+                char[][] board = new char[][]
+                {
+                    line.ToCharArray(),
+                    middle.ToCharArray(),
+                    middle.ToCharArray(),
+                    middle.ToCharArray(),
+                    line.ToCharArray(),
+                    middle.ToCharArray(),
+                    middle.ToCharArray(),
+                    middle.ToCharArray(),
+                    line.ToCharArray(),
+                    middle.ToCharArray(),
+                    middle.ToCharArray(),
+                    middle.ToCharArray(),
+                    line.ToCharArray()
+                };
 
-            // Construct board to be solved
+                // Construct board to be solved
 
-            // Top element is current state of the board
-            var stateStack = new Stack<int[]>();
-            sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
-
+                // Top element is current state of the board
+                var stateStack = new Stack<int[]>();
+                sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
+            }
+            
             // Top elements are (row, col) of cell which has been modified compared to previous state
             Stack<int> rowIndexStack = new Stack<int>();
             Stack<int> colIndexStack = new Stack<int>();
@@ -102,7 +104,7 @@ namespace SudokuKata
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
             string command = "expand";
-            while (stateStack.Count <= 9 * 9)
+            while (sudokuBoardAndStackState.StateStack.Count <= 9 * 9)
             {
                 command = AppleSauce4(randomNumbers, sudokuBoardAndStackState, command, rowIndexStack, colIndexStack, usedDigitsStack,
                     lastDigitStack);
