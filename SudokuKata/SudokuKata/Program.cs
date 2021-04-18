@@ -110,17 +110,12 @@ namespace SudokuKata
             
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
-            var boardString = ToString(board);
+            var boardString = SudokuBoardAndStackState.ToString(board);
             Console.WriteLine(boardString);
 
             #endregion
 
             return sudokuBoardAndStackState;
-        }
-
-        private static string ToString(char[][] board)
-        {
-            return string.Join(Environment.NewLine, board.Select(s => new string(s)).ToArray());
         }
 
         private static string AppleSauce4(Random randomNumbers, string command, Stack<int[]> stateStack,
