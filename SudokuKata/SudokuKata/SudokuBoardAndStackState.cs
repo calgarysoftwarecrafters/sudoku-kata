@@ -51,7 +51,7 @@ namespace SudokuKata
         {
             var sudokuBoardAndStackState = new SudokuBoardAndStackState();
 
-            ConstructFullyPopulatedBoardNonSense(randomNumbers, sudokuBoardAndStackState);
+            sudokuBoardAndStackState.ConstructFullyPopulatedBoardNonSense(randomNumbers);
 
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
@@ -60,8 +60,7 @@ namespace SudokuKata
             return sudokuBoardAndStackState;
         }
 
-        private static void ConstructFullyPopulatedBoardNonSense(Random randomNumbers,
-            SudokuBoardAndStackState sudokuBoardAndStackState)
+        private void ConstructFullyPopulatedBoardNonSense(Random randomNumbers)
         {
             #region Construct fully populated board
 
@@ -80,9 +79,9 @@ namespace SudokuKata
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
             string command = "expand";
-            while (sudokuBoardAndStackState.StateStack.Count <= 9 * 9)
+            while (StateStack.Count <= 9 * 9)
             {
-                command = sudokuBoardAndStackState.AppleSauce4(randomNumbers, command, rowIndexStack, colIndexStack,
+                command = AppleSauce4(randomNumbers, command, rowIndexStack, colIndexStack,
                     usedDigitsStack,
                     lastDigitStack);
             }
