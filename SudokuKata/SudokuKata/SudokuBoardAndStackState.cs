@@ -14,13 +14,13 @@ namespace SudokuKata
             StateStack = new Stack<int[]>();
 
             // Prepare empty board
-            string line = "+---+---+---+";
-            string middle = "|...|...|...|";
-            Board = getEmptyBoard(line, middle);
+            Board = GetEmptyBoard();
         }
 
-        private static char[][] getEmptyBoard(string line, string middle)
+        private char[][] GetEmptyBoard()
         {
+            string line = "+---+---+---+";
+            string middle = "|...|...|...|";
             return new[]
             {
                 line.ToCharArray(),
