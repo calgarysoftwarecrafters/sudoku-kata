@@ -9,56 +9,7 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            #region Construct fully populated board
-            // Prepare empty board
-            string line = "+---+---+---+";
-            string middle = "|...|...|...|";
-            char[][] board = new char[][]
-            {
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray()
-            };
-
-            // Construct board to be solved
-
-            // Top element is current state of the board
-            Stack<int[]> stateStack = new Stack<int[]>();
-
-            // Top elements are (row, col) of cell which has been modified compared to previous state
-            Stack<int> rowIndexStack = new Stack<int>();
-            Stack<int> colIndexStack = new Stack<int>();
-
-            // Top element indicates candidate digits (those with False) for (row, col)
-            Stack<bool[]> usedDigitsStack = new Stack<bool[]>();
-
-            // Top element is the value that was set on (row, col)
-            Stack<int> lastDigitStack = new Stack<int>();
-
-            // Indicates operation to perform next
-            // - expand - finds next empty cell and puts new state on stacks
-            // - move - finds next candidate number at current pos and applies it to current state
-            // - collapse - pops current state from stack as it did not yield a solution
-            string command = "expand";
-            while (stateStack.Count <= 9 * 9)
-            {
-                command = AppleSauce4(randomNumbers, command, stateStack, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack, board);
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Final look of the solved board:");
-            Console.WriteLine(string.Join(Environment.NewLine, board.Select(s => new string(s)).ToArray()));
-            #endregion
+            var board = ConstructFullyPopulatedBoard(randomNumbers, out var stateStack);
 
             var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers, stateStack, board, out var finalState);
 
@@ -92,6 +43,65 @@ namespace SudokuKata
 
                 PrintBoardChange(changeMade, board);
             }
+        }
+
+        private static char[][] ConstructFullyPopulatedBoard(Random randomNumbers, out Stack<int[]> stateStack)
+        {
+            #region Construct fully populated board
+
+            // Prepare empty board
+            string line = "+---+---+---+";
+            string middle = "|...|...|...|";
+            char[][] board = new char[][]
+            {
+                line.ToCharArray(),
+                middle.ToCharArray(),
+                middle.ToCharArray(),
+                middle.ToCharArray(),
+                line.ToCharArray(),
+                middle.ToCharArray(),
+                middle.ToCharArray(),
+                middle.ToCharArray(),
+                line.ToCharArray(),
+                middle.ToCharArray(),
+                middle.ToCharArray(),
+                middle.ToCharArray(),
+                line.ToCharArray()
+            };
+
+            // Construct board to be solved
+
+            // Top element is current state of the board
+            stateStack = new Stack<int[]>();
+
+            // Top elements are (row, col) of cell which has been modified compared to previous state
+            Stack<int> rowIndexStack = new Stack<int>();
+            Stack<int> colIndexStack = new Stack<int>();
+
+            // Top element indicates candidate digits (those with False) for (row, col)
+            Stack<bool[]> usedDigitsStack = new Stack<bool[]>();
+
+            // Top element is the value that was set on (row, col)
+            Stack<int> lastDigitStack = new Stack<int>();
+
+            // Indicates operation to perform next
+            // - expand - finds next empty cell and puts new state on stacks
+            // - move - finds next candidate number at current pos and applies it to current state
+            // - collapse - pops current state from stack as it did not yield a solution
+            string command = "expand";
+            while (stateStack.Count <= 9 * 9)
+            {
+                command = AppleSauce4(randomNumbers, command, stateStack, rowIndexStack, colIndexStack, usedDigitsStack,
+                    lastDigitStack, board);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Final look of the solved board:");
+            Console.WriteLine(string.Join(Environment.NewLine, board.Select(s => new string(s)).ToArray()));
+
+            #endregion
+
+            return board;
         }
 
         private static string AppleSauce4(Random randomNumbers, string command, Stack<int[]> stateStack, Stack<int> rowIndexStack,
