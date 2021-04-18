@@ -31,7 +31,13 @@ namespace SudokuKata.Test
             Approvals.Verify(output);
         }
 
-        [TestCleanup()]
+        [TestMethod]
+        public void testEmptyBoard()
+        {
+            Approvals.Verify(new SudokuBoardAndStackState());
+        }
+        
+        [TestCleanup]
         public void Cleanup()
         {
             Console.SetOut(_existingOut);
