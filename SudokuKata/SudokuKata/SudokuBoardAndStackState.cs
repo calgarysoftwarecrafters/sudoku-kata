@@ -8,14 +8,14 @@ namespace SudokuKata
     {
         public SudokuBoardAndStackState()
         {
-            // Prepare empty board
-            string line = "+---+---+---+";
-            string middle = "|...|...|...|";
-
             // Construct board to be solved
 
             // Top element is current state of the board
             StateStack = new Stack<int[]>();
+
+            // Prepare empty board
+            string line = "+---+---+---+";
+            string middle = "|...|...|...|";
             Board = new[]
             {
                 line.ToCharArray(),
