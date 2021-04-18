@@ -9,21 +9,21 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            var sudokuBoardAndStackState1 = new SudokuBoardAndStackState();
+            var sudokuBoardAndStackState = new SudokuBoardAndStackState();
 
-            sudokuBoardAndStackState1.ConstructFullyPopulatedBoardNonSense(randomNumbers);
+            sudokuBoardAndStackState.ConstructFullyPopulatedBoardNonSense(randomNumbers);
 
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
-            var boardString = sudokuBoardAndStackState1.ToString();
+            var boardString = sudokuBoardAndStackState.ToString();
             Console.WriteLine(boardString);
 
             var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers,
-                out var finalState, sudokuBoardAndStackState1);
+                out var finalState, sudokuBoardAndStackState);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState1.Board, finalState);
+            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState.Board, finalState);
         }
 
         private static void AppleSauce5(Random randomNumbers, int[] state, int allOnes, Dictionary<int, int> maskToOnesCount,
