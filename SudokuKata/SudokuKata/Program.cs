@@ -131,7 +131,7 @@ namespace SudokuKata
                                 int blockDigit = currentState[(blockRow * 3 + i / 3) * 9 + (blockCol * 3 + i % 3)];
                                 if (blockDigit > 0)
                                     isDigitUsed[blockDigit - 1] = true;
-                            } // for (i = 0..8)
+                            }
 
                             int candidatesCount = isDigitUsed.Where(used => !used).Count();
 
@@ -154,7 +154,7 @@ namespace SudokuKata
                                 bestRandomValue = randomValue;
                             }
 
-                        } // for (index = 0..81)
+                        }
 
                     if (!containsUnsolvableCells)
                     {
@@ -168,7 +168,7 @@ namespace SudokuKata
                     // Always try to move after expand
                     command = "move";
 
-                } // if (command == "expand")
+                }
                 else if (command == "collapse")
                 {
                     stateStack.Pop();
@@ -221,8 +221,7 @@ namespace SudokuKata
                         lastDigitStack.Push(0);
                         command = "collapse";
                     }
-                } // if (command == "move")
-
+                }
             }
 
             Console.WriteLine();
@@ -474,8 +473,8 @@ namespace SudokuKata
                                     candidateColIndices.Add(blockCol * 3 + indexInBlock % 3);
                                     candidates.Add(digit);
                                 }
-                            } // for (cellGroup = 0..8)
-                        } // for (digit = 1..9)
+                            }
+                        }
 
                         if (candidates.Count > 0)
                         {
@@ -852,7 +851,7 @@ namespace SudokuKata
                                         int blockDigit = currentState[(blockRow * 3 + i / 3) * 9 + (blockCol * 3 + i % 3)];
                                         if (blockDigit > 0)
                                             isDigitUsed[blockDigit - 1] = true;
-                                    } // for (i = 0..8)
+                                    }
 
                                     int candidatesCount = isDigitUsed.Where(used => !used).Count();
 
@@ -874,7 +873,7 @@ namespace SudokuKata
                                         bestCandidatesCount = candidatesCount;
                                         bestRandomValue = randomValue;
                                     }
-                                } // for (index = 0..81)
+                                }
 
                             if (!containsUnsolvableCells)
                             {
@@ -887,7 +886,7 @@ namespace SudokuKata
 
                             // Always try to move after expand
                             command = "move";
-                        } // if (command == "expand")
+                        }
                         else if (command == "collapse")
                         {
                             stateStack.Pop();
@@ -943,8 +942,8 @@ namespace SudokuKata
                                 lastDigitStack.Push(0);
                                 command = "collapse";
                             }
-                        } // if (command == "move")
-                    } // while (command != "complete" && command != "fail")
+                        }
+                    }
 
                     if (command == "complete")
                     {
@@ -954,7 +953,7 @@ namespace SudokuKata
                         value1.Add(digit1);
                         value2.Add(digit2);
                     }
-                } // while (candidateIndex1.Any())
+                }
 
                 if (stateIndex1.Any())
                 {
