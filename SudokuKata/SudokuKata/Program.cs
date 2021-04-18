@@ -11,7 +11,8 @@ namespace SudokuKata
         {
             var board = ConstructFullyPopulatedBoard(randomNumbers, out var stateStack);
 
-            var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers, stateStack, board, out var finalState);
+            var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers, stateStack, board,
+                out var finalState);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
@@ -29,13 +30,17 @@ namespace SudokuKata
                 {
                     stepChangeMade = false;
 
-                    changeMade = PickCellsWithOnlyOneCandidateLeft(randomNumbers, candidateMasks, maskToOnesCount, singleBitToIndex, state, board, changeMade);
+                    changeMade = PickCellsWithOnlyOneCandidateLeft(randomNumbers, candidateMasks, maskToOnesCount,
+                        singleBitToIndex, state, board, changeMade);
 
-                    changeMade = FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(randomNumbers, changeMade, candidateMasks, state, board);
+                    changeMade = FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(randomNumbers, changeMade,
+                        candidateMasks, state, board);
 
-                    stepChangeMade = RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(changeMade, candidateMasks, maskToOnesCount, cellGroups, stepChangeMade);
+                    stepChangeMade = RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(changeMade,
+                        candidateMasks, maskToOnesCount, cellGroups, stepChangeMade);
 
-                    stepChangeMade = TryToFindGroupsOfDigitsOfSizeN(changeMade, stepChangeMade, maskToOnesCount, cellGroups, state, candidateMasks);
+                    stepChangeMade = TryToFindGroupsOfDigitsOfSizeN(changeMade, stepChangeMade, maskToOnesCount,
+                        cellGroups, state, candidateMasks);
                 }
 
                 changeMade = LookIfBoardHasMultipleSolutions(randomNumbers, changeMade, candidateMasks, maskToOnesCount,
@@ -104,7 +109,8 @@ namespace SudokuKata
             return board;
         }
 
-        private static string AppleSauce4(Random randomNumbers, string command, Stack<int[]> stateStack, Stack<int> rowIndexStack,
+        private static string AppleSauce4(Random randomNumbers, string command, Stack<int[]> stateStack,
+            Stack<int> rowIndexStack,
             Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack, char[][] board)
         {
             if (command == "expand")
@@ -238,7 +244,8 @@ namespace SudokuKata
             return command;
         }
 
-        private static Dictionary<int, int> PrepareLookupStructures(out Dictionary<int, int> singleBitToIndex, out int allOnes)
+        private static Dictionary<int, int> PrepareLookupStructures(out Dictionary<int, int> singleBitToIndex,
+            out int allOnes)
         {
             #region Prepare lookup structures that will be used in further execution
 
@@ -307,7 +314,8 @@ namespace SudokuKata
             #region Build a collection (named cellGroups) which maps cell indices into distinct groups (rows/columns/blocks)
 
             IEnumerable<IGrouping<int, AppleSauce1>> rowsIndices = state
-                .Select((value, index) => new AppleSauce1(index / 9, $"row #{index / 9 + 1}", index, index / 9, index % 9))
+                .Select((value, index) =>
+                    new AppleSauce1(index / 9, $"row #{index / 9 + 1}", index, index / 9, index % 9))
                 .GroupBy(tuple => tuple.Discriminator);
 
             IEnumerable<IGrouping<int, AppleSauce1>> columnIndices = state
@@ -326,7 +334,8 @@ namespace SudokuKata
                     $"block ({tuple.Row / 3 + 1}, {tuple.Column / 3 + 1})", tuple.Index, tuple.Row, tuple.Column))
                 .GroupBy(tuple => tuple.Discriminator);
 
-            List<IGrouping<int, AppleSauce1>> cellGroups = rowsIndices.Concat(columnIndices).Concat(blockIndices).ToList();
+            List<IGrouping<int, AppleSauce1>> cellGroups =
+                rowsIndices.Concat(columnIndices).Concat(blockIndices).ToList();
 
             #endregion
 
@@ -334,7 +343,8 @@ namespace SudokuKata
         }
 
         private static bool PickCellsWithOnlyOneCandidateLeft(Random randomNumbers, int[] candidateMasks,
-            Dictionary<int, int> maskToOnesCount, Dictionary<int, int> singleBitToIndex, int[] state, char[][] board, bool changeMade)
+            Dictionary<int, int> maskToOnesCount, Dictionary<int, int> singleBitToIndex, int[] state, char[][] board,
+            bool changeMade)
         {
             #region Pick cells with only one candidate left
 
@@ -486,7 +496,8 @@ namespace SudokuKata
         }
 
         private static bool RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(bool changeMade,
-            int[] candidateMasks, Dictionary<int, int> maskToOnesCount, List<IGrouping<int, AppleSauce1>> cellGroups, bool stepChangeMade)
+            int[] candidateMasks, Dictionary<int, int> maskToOnesCount, List<IGrouping<int, AppleSauce1>> cellGroups,
+            bool stepChangeMade)
         {
             #region Try to find pairs of digits in the same row/column/block and remove them from other colliding cells
 
@@ -562,7 +573,8 @@ namespace SudokuKata
                                 }
 
                                 string valuesReport = string.Join(", ", valuesToRemove.ToArray());
-                                Console.WriteLine($"{valuesReport} cannot appear in ({cell.Row + 1}, {cell.Column + 1}).");
+                                Console.WriteLine(
+                                    $"{valuesReport} cannot appear in ({cell.Row + 1}, {cell.Column + 1}).");
 
                                 candidateMasks[cell.Index] &= ~@group.Mask;
                                 stepChangeMade = true;
@@ -577,7 +589,8 @@ namespace SudokuKata
             return stepChangeMade;
         }
 
-        private static int[] GenerateInitialBoardFromCompletelySolvedOne(Random randomNumbers, Stack<int[]> stateStack, char[][] board,
+        private static int[] GenerateInitialBoardFromCompletelySolvedOne(Random randomNumbers, Stack<int[]> stateStack,
+            char[][] board,
             out int[] finalState)
         {
             #region Generate inital board from the completely solved one
@@ -634,7 +647,8 @@ namespace SudokuKata
             return state;
         }
 
-        private static bool TryToFindGroupsOfDigitsOfSizeN(bool changeMade, bool stepChangeMade, Dictionary<int, int> maskToOnesCount,
+        private static bool TryToFindGroupsOfDigitsOfSizeN(bool changeMade, bool stepChangeMade,
+            Dictionary<int, int> maskToOnesCount,
             List<IGrouping<int, AppleSauce1>> cellGroups, int[] state, int[] candidateMasks)
         {
             #region Try to find groups of digits of size N which only appear in N cells within row/column/block
@@ -656,7 +670,8 @@ namespace SudokuKata
                                 .Where(group => @group.All(cell =>
                                     state[cell.Index] == 0 || (mask & (1 << (state[cell.Index] - 1))) == 0))
                                 .Select(group => new AppleSauce3(mask, @group.First().Description, @group,
-                                    @group.Where(cell => state[cell.Index] == 0 && (candidateMasks[cell.Index] & mask) != 0)
+                                    @group.Where(cell =>
+                                            state[cell.Index] == 0 && (candidateMasks[cell.Index] & mask) != 0)
                                         .ToList(), @group.Count(
                                         cell => state[cell.Index] == 0 &&
                                                 (candidateMasks[cell.Index] & mask) != 0 &&
@@ -887,7 +902,8 @@ namespace SudokuKata
                                         if (colDigit > 0)
                                             isDigitUsed[colDigit - 1] = true;
 
-                                        int blockDigit = currentState[(blockRow * 3 + i / 3) * 9 + (blockCol * 3 + i % 3)];
+                                        int blockDigit =
+                                            currentState[(blockRow * 3 + i / 3) * 9 + (blockCol * 3 + i % 3)];
                                         if (blockDigit > 0)
                                             isDigitUsed[blockDigit - 1] = true;
                                     }
