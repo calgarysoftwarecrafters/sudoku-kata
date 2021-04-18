@@ -10,11 +10,10 @@ namespace SudokuKata
         public static void Play(Random randomNumbers)
         {
             var sudokuBoardAndStackState = ConstructFullyPopulatedBoard(randomNumbers);
-            var stateStack = sudokuBoardAndStackState.StateStack;
             var board = sudokuBoardAndStackState.Board;
 
-            var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers, stateStack, board,
-                out var finalState);
+            var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers,
+                out var finalState, sudokuBoardAndStackState);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
@@ -591,9 +590,8 @@ namespace SudokuKata
             return stepChangeMade;
         }
 
-        private static int[] GenerateInitialBoardFromCompletelySolvedOne(Random randomNumbers, Stack<int[]> stateStack,
-            char[][] board,
-            out int[] finalState)
+        private static int[] GenerateInitialBoardFromCompletelySolvedOne(Random randomNumbers,
+            out int[] finalState, SudokuBoardAndStackState sudokuBoardAndState)
         {
             #region Generate inital board from the completely solved one
 
@@ -603,7 +601,7 @@ namespace SudokuKata
             int maxRemovedPerBlock = 6;
             int[,] removedPerBlock = new int[3, 3];
             int[] positions = Enumerable.Range(0, 9 * 9).ToArray();
-            int[] state = stateStack.Peek();
+            int[] state = sudokuBoardAndState.StateStack.Peek();
 
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
@@ -632,7 +630,7 @@ namespace SudokuKata
                 int rowToWrite = row + row / 3 + 1;
                 int colToWrite = col + col / 3 + 1;
 
-                board[rowToWrite][colToWrite] = '.';
+                sudokuBoardAndState.Board[rowToWrite][colToWrite] = '.';
 
                 int stateIndex = 9 * row + col;
                 state[stateIndex] = 0;
@@ -642,7 +640,7 @@ namespace SudokuKata
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(string.Join("\n", board.Select(s => new string(s)).ToArray()));
+            Console.WriteLine(string.Join("\n", sudokuBoardAndState.Board.Select(s => new string(s)).ToArray()));
 
             #endregion
 
