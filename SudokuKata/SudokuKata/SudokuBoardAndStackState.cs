@@ -49,9 +49,21 @@ namespace SudokuKata
 
         public static SudokuBoardAndStackState ConstructFullyPopulatedBoard(Random randomNumbers)
         {
-            #region Construct fully populated board
-
             var sudokuBoardAndStackState = new SudokuBoardAndStackState();
+
+            ConstructFullyPopulatedBoardNonSense(randomNumbers, sudokuBoardAndStackState);
+
+            Console.WriteLine();
+            Console.WriteLine("Final look of the solved board:");
+            var boardString = sudokuBoardAndStackState.ToString();
+            Console.WriteLine(boardString);
+            return sudokuBoardAndStackState;
+        }
+
+        private static void ConstructFullyPopulatedBoardNonSense(Random randomNumbers,
+            SudokuBoardAndStackState sudokuBoardAndStackState)
+        {
+            #region Construct fully populated board
 
             // Top elements are (row, col) of cell which has been modified compared to previous state
             Stack<int> rowIndexStack = new Stack<int>();
@@ -70,18 +82,12 @@ namespace SudokuKata
             string command = "expand";
             while (sudokuBoardAndStackState.StateStack.Count <= 9 * 9)
             {
-                command = sudokuBoardAndStackState.AppleSauce4(randomNumbers, command, rowIndexStack, colIndexStack, usedDigitsStack,
+                command = sudokuBoardAndStackState.AppleSauce4(randomNumbers, command, rowIndexStack, colIndexStack,
+                    usedDigitsStack,
                     lastDigitStack);
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Final look of the solved board:");
-            var boardString = sudokuBoardAndStackState.ToString();
-            Console.WriteLine(boardString);
-
             #endregion
-
-            return sudokuBoardAndStackState;
         }
 
         public string AppleSauce4(Random randomNumbers,
