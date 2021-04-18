@@ -47,19 +47,6 @@ namespace SudokuKata
             return string.Join(Environment.NewLine, Board.Select(s => new string(s)).ToArray());
         }
 
-        public static SudokuBoardAndStackState ConstructFullyPopulatedBoard(Random randomNumbers)
-        {
-            var sudokuBoardAndStackState = new SudokuBoardAndStackState();
-
-            sudokuBoardAndStackState.ConstructFullyPopulatedBoardNonSense(randomNumbers);
-
-            Console.WriteLine();
-            Console.WriteLine("Final look of the solved board:");
-            var boardString = sudokuBoardAndStackState.ToString();
-            Console.WriteLine(boardString);
-            return sudokuBoardAndStackState;
-        }
-
         public void ConstructFullyPopulatedBoardNonSense(Random randomNumbers)
         {
             #region Construct fully populated board
