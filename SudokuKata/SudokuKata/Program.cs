@@ -99,6 +99,7 @@ namespace SudokuKata
             // - expand - finds next empty cell and puts new state on stacks
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
+            var sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
             string command = "expand";
             while (stateStack.Count <= 9 * 9)
             {
@@ -106,8 +107,6 @@ namespace SudokuKata
                     lastDigitStack, board);
             }
 
-            var sudokuBoardAndStackState = new SudokuBoardAndStackState(stateStack, board);
-            
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
             var boardString = sudokuBoardAndStackState.ToString();
