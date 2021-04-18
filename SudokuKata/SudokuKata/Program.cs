@@ -9,9 +9,9 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            var constructFullyPopulatedBoard = ConstructFullyPopulatedBoard(randomNumbers);
-            var stateStack = constructFullyPopulatedBoard.StateStack;
-            var board = constructFullyPopulatedBoard.Board;
+            var sudokuBoardAndStackState = ConstructFullyPopulatedBoard(randomNumbers);
+            var stateStack = sudokuBoardAndStackState.StateStack;
+            var board = sudokuBoardAndStackState.Board;
 
             var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers, stateStack, board,
                 out var finalState);
