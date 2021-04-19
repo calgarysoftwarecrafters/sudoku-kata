@@ -683,6 +683,7 @@ namespace SudokuKata
                     lastDigitStack = new Stack<int>();
 
                     command = Command.ExpandCommandName;
+                    var commandObj = Command.Expand;
                     while (command != Command.CompleteCommandName && command != Command.FailCommandName)
                     {
                         if (command == Command.ExpandCommandName)
@@ -764,6 +765,7 @@ namespace SudokuKata
 
                             // Always try to move after expand
                             command = Command.MoveCommandName;
+                            commandObj = Command.Move;
                         }
                         else if (command == "collapse")
                         {
@@ -774,9 +776,13 @@ namespace SudokuKata
                             lastDigitStack.Pop();
 
                             if (stateStack.Any())
+                            {
                                 command = Command.MoveCommandName; // Always try to move after collapse
+                            }
                             else
+                            {
                                 command = Command.FailCommandName;
+                            }
                         }
                         else if (command == Command.MoveCommandName)
                         {
