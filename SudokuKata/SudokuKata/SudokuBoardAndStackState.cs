@@ -92,35 +92,35 @@ namespace SudokuKata
             Command commandObj = Command.Expand;
             while (StateStack.Count <= 9 * 9)
             {
-                commandObj = new Command(AppleSauce4(randomNumbers, commandObj, rowIndexStack, colIndexStack,
+                commandObj = AppleSauce4(randomNumbers, commandObj, rowIndexStack, colIndexStack,
                     usedDigitsStack,
-                    lastDigitStack));
+                    lastDigitStack);
             }
 
             #endregion
         }
 
-        private string AppleSauce4(Random randomNumbers,
+        private Command AppleSauce4(Random randomNumbers,
             Command commandObj,
             Stack<int> rowIndexStack,
             Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
             if (commandObj.Equals(Command.Expand))
             {
-                return ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
+                return new Command(ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack));
             }
 
             if (commandObj.Equals(Command.Collapse))
             {
-                return CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
+                return new Command(CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack));
             }
 
             if (commandObj.Equals(Command.Move))
             {
-                return MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
+                return new Command(MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack));
             }
 
-            return commandObj.Name;
+            return commandObj;
         }
 
         private string MoveAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
