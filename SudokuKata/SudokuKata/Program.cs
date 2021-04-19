@@ -463,7 +463,7 @@ namespace SudokuKata
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(string.Join("\n", sudokuBoardAndState.SudokuBoard.Board.Select(s => new string(s)).ToArray()));
+            Console.WriteLine(string.Join(Environment.NewLine, sudokuBoardAndState.SudokuBoard.ToString()));
 
             #endregion
 
