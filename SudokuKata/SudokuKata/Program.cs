@@ -683,9 +683,9 @@ namespace SudokuKata
 
                     var command = Command.ExpandCommandName;
                     var commandObj = Command.Expand;
-                    while (command != Command.CompleteCommandName && command != Command.FailCommandName)
+                    while (!commandObj.Equals(Command.Complete) && !commandObj.Equals(Command.Fail))
                     {
-                        if (command == Command.ExpandCommandName)
+                        if (commandObj.Equals(Command.Expand))
                         {
                             int[] currentState = new int[9 * 9];
 
