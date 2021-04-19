@@ -766,7 +766,7 @@ namespace SudokuKata
                             command = Command.MoveCommandName;
                             commandObj = Command.Move;
                         }
-                        else if (command == "collapse")
+                        else if (command == Command.CollapseCommandName)
                         {
                             stateStack.Pop();
                             rowIndexStack.Pop();
@@ -817,15 +817,21 @@ namespace SudokuKata
                                 board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
 
                                 if (currentState.Any(digit => digit == 0))
+                                {
                                     command = Command.ExpandCommandName;
+                                    commandObj = Command.Expand;
+                                }
                                 else
+                                {
                                     command = Command.CompleteCommandName;
+                                    commandObj = Command.Complete;
+                                }
                             }
                             else
                             {
                                 // No viable candidate was found at current position - pop it in the next iteration
                                 lastDigitStack.Push(0);
-                                command = "collapse";
+                                command = Command.CollapseCommandName;
                             }
                         }
                     }
