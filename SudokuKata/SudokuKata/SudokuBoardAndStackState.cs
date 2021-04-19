@@ -121,7 +121,7 @@ namespace SudokuKata
                 return MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
-            return command;
+            return commandObj.Name;
         }
 
         private string MoveAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
