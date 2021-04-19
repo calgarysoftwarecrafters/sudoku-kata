@@ -48,7 +48,6 @@ namespace SudokuKata
             StateStack = new Stack<int[]>();
 
             // Prepare empty board
-            var board = SudokuBoard.GetEmptyBoard();
             _sudokuBoard = new SudokuBoard();
         }
 
