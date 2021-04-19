@@ -107,7 +107,7 @@ namespace SudokuKata
         {
             if (commandObj.Equals(Command.Expand))
             {
-                return new Command(ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack));
+                return ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
             if (commandObj.Equals(Command.Collapse))
@@ -182,10 +182,9 @@ namespace SudokuKata
             return command;
         }
 
-        private string ExpandAppleSauce(Random randomNumbers, Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack,
+        private Command ExpandAppleSauce(Random randomNumbers, Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack,
             Stack<int> lastDigitStack)
         {
-            string command;
             int[] currentState = new int[9 * 9];
 
             if (StateStack.Count > 0)
@@ -257,8 +256,7 @@ namespace SudokuKata
             }
 
             // Always try to move after expand
-            command = Command.MoveCommandName;
-            return command;
+            return Command.Move;
         }
     }
 }
