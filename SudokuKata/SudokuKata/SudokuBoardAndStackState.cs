@@ -102,7 +102,7 @@ namespace SudokuKata
             #endregion
         }
 
-        public string AppleSauce4(Random randomNumbers,
+        private string AppleSauce4(Random randomNumbers,
             string command,
             Stack<int> rowIndexStack,
             Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
