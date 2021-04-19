@@ -9,6 +9,8 @@ namespace SudokuKata
         public const string ExpandCommandName = "expand";
         public const string CollapseCommandName = "collapse";
         public const string MoveCommandName = "move";
+        public const string CompleteCommandName = "complete";
+        public const string FailCommandName = "fail";
     }
     
     public class SudokuBoardAndStackState

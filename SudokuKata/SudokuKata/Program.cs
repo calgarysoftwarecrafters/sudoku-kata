@@ -683,7 +683,7 @@ namespace SudokuKata
                     lastDigitStack = new Stack<int>();
 
                     command = Command.ExpandCommandName;
-                    while (command != "complete" && command != "fail")
+                    while (command != Command.CompleteCommandName && command != "fail")
                     {
                         if (command == Command.ExpandCommandName)
                         {
@@ -812,7 +812,7 @@ namespace SudokuKata
                                 if (currentState.Any(digit => digit == 0))
                                     command = Command.ExpandCommandName;
                                 else
-                                    command = "complete";
+                                    command = Command.CompleteCommandName;
                             }
                             else
                             {
@@ -823,7 +823,7 @@ namespace SudokuKata
                         }
                     }
 
-                    if (command == "complete")
+                    if (command == Command.CompleteCommandName)
                     {
                         // Board was solved successfully even with two digits swapped
                         stateIndex1.Add(index1);
