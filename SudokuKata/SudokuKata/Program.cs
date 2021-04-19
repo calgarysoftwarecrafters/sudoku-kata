@@ -27,7 +27,7 @@ namespace SudokuKata
         {
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
-            var boardString = sudokuBoardAndStackState.ToString();
+            var boardString = sudokuBoardAndStackState.SudokuBoard.ToString();
             Console.WriteLine(boardString);
         }
 
