@@ -112,7 +112,7 @@ namespace SudokuKata
 
             if (commandObj.Equals(Command.Collapse))
             {
-                return new Command(CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack));
+                return CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
             if (commandObj.Equals(Command.Move))
@@ -169,17 +169,15 @@ namespace SudokuKata
             return command;
         }
 
-        private string CollapseAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
+        private Command CollapseAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
-            string command;
             StateStack.Pop();
             rowIndexStack.Pop();
             colIndexStack.Pop();
             usedDigitsStack.Pop();
             lastDigitStack.Pop();
 
-            command = Command.MoveCommandName; // Always try to move after collapse
-            return command;
+            return Command.Move;
         }
 
         private Command ExpandAppleSauce(Random randomNumbers, Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack,
