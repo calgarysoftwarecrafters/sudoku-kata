@@ -19,7 +19,7 @@ namespace SudokuKata.Test
         }
 
         [TestMethod]
-        public void pinEverythingTests()
+        public void PinEverythingTests()
         {
             StringWriter output = new StringWriter();
             Console.SetOut(output);
