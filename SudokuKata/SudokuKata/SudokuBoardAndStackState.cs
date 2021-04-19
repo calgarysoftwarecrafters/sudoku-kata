@@ -40,6 +40,10 @@ namespace SudokuKata
             return string.Join(Environment.NewLine, Board.Select(s => new string(s)).ToArray());
         }
 
+        public void SetElementAt(int row, int col, char value)
+        {
+            Board[row][col] = value;
+        }
     }
 
     public class SudokuBoardAndStackState
