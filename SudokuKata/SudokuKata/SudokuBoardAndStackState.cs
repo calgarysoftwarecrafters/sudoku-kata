@@ -12,25 +12,8 @@ namespace SudokuKata
         }
 
         public char[][] Board { get; private set; }
-    }
 
-    public class SudokuBoardAndStackState
-    {
-        private readonly SudokuBoard _sudokuBoard;
-
-        public SudokuBoardAndStackState()
-        {
-            // Construct board to be solved
-
-            // Top element is current state of the board
-            StateStack = new Stack<int[]>();
-
-            // Prepare empty board
-            var board = GetEmptyBoard();
-            _sudokuBoard = new SudokuBoard(board);
-        }
-
-        private char[][] GetEmptyBoard()
+        public char[][] GetEmptyBoard()
         {
             string line = "+---+---+---+";
             string middle = "|...|...|...|";
@@ -50,6 +33,23 @@ namespace SudokuKata
                 middle.ToCharArray(),
                 line.ToCharArray()
             };
+        }
+    }
+
+    public class SudokuBoardAndStackState
+    {
+        private readonly SudokuBoard _sudokuBoard;
+
+        public SudokuBoardAndStackState()
+        {
+            // Construct board to be solved
+
+            // Top element is current state of the board
+            StateStack = new Stack<int[]>();
+
+            // Prepare empty board
+            var board = SudokuBoard.GetEmptyBoard();
+            _sudokuBoard = new SudokuBoard(board);
         }
 
         public Stack<int[]> StateStack { get; private set; }
