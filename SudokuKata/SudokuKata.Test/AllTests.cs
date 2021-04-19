@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SudokuKata;
@@ -32,9 +34,25 @@ namespace SudokuKata.Test
         }
 
         [TestMethod]
+        public void ConstructFullyPopulatedBoardTests()
+        {
+            StringWriter output = new StringWriter();
+            Console.SetOut(output);
+            for (int i = 1300; i < 1600; i++)
+            {
+                var rng = new Random(i);
+                var sudokuBoardAndStackState = new SudokuBoardAndStackState();
+                sudokuBoardAndStackState.ConstructFullyPopulatedBoardNonSense(rng);
+                output.WriteLine(sudokuBoardAndStackState.SudokuBoard.ToString());
+                output.WriteLine(StateStackString(sudokuBoardAndStackState.StateStack));
+            }
+            Approvals.Verify(output);
+        }
+
+        [TestMethod]
         public void TestEmptyBoard()
         {
-            Approvals.Verify(new SudokuBoardAndStackState());
+            Approvals.Verify(new SudokuBoard());
         }
         
         [TestCleanup]
@@ -42,5 +60,16 @@ namespace SudokuKata.Test
         {
             Console.SetOut(_existingOut);
         }
+
+        private string StateStackString(Stack<int[]> stateStack)
+        {
+            return string.Join(Environment.NewLine, stateStack.Select(SingleStackElementString).ToArray());
+        }
+
+        private string SingleStackElementString(int[] stackElement)
+        {
+            return string.Join(",", stackElement.Select(value => value.ToString()).ToArray());
+        }
+
     }
 }
