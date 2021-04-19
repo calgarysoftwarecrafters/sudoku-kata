@@ -34,6 +34,12 @@ namespace SudokuKata
                 line.ToCharArray()
             };
         }
+        
+        public override string ToString()
+        {
+            return string.Join(Environment.NewLine, Board.Select(s => new string(s)).ToArray());
+        }
+
     }
 
     public class SudokuBoardAndStackState
@@ -60,7 +66,7 @@ namespace SudokuKata
 
         public override string ToString()
         {
-            return string.Join(Environment.NewLine, SudokuBoard.Board.Select(s => new string(s)).ToArray());
+            return SudokuBoard.ToString();
         }
 
         public void ConstructFullyPopulatedBoardNonSense(Random randomNumbers)
