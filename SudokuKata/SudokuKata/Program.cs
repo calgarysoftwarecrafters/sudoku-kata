@@ -682,10 +682,10 @@ namespace SudokuKata
                     usedDigitsStack = new Stack<bool[]>();
                     lastDigitStack = new Stack<int>();
 
-                    command = "expand";
+                    command = Command.ExpandCommandName;
                     while (command != "complete" && command != "fail")
                     {
-                        if (command == "expand")
+                        if (command == Command.ExpandCommandName)
                         {
                             int[] currentState = new int[9 * 9];
 
@@ -810,7 +810,7 @@ namespace SudokuKata
                                 board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
 
                                 if (currentState.Any(digit => digit == 0))
-                                    command = "expand";
+                                    command = Command.ExpandCommandName;
                                 else
                                     command = "complete";
                             }
