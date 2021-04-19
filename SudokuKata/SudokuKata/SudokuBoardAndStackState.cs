@@ -89,10 +89,10 @@ namespace SudokuKata
             // - expand - finds next empty cell and puts new state on stacks
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
-            Command commandObj = Command.Expand;
+            Command command = Command.Expand;
             while (StateStack.Count <= 9 * 9)
             {
-                commandObj = AppleSauce4(randomNumbers, commandObj, rowIndexStack, colIndexStack,
+                command = AppleSauce4(randomNumbers, command, rowIndexStack, colIndexStack,
                     usedDigitsStack,
                     lastDigitStack);
             }
