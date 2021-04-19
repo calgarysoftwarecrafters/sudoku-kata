@@ -96,7 +96,7 @@ namespace SudokuKata
 
             if (command == Command.MoveCommandName)
             {
-                command = MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
+                return MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
             return command;
