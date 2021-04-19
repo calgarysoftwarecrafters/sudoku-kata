@@ -116,7 +116,7 @@ namespace SudokuKata
                 return CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
-            if (command == Command.MoveCommandName)
+            if (commandObj.Equals(Command.Move))
             {
                 return MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
