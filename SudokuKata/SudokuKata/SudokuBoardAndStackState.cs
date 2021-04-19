@@ -6,9 +6,9 @@ namespace SudokuKata
 {
     public class SudokuBoard
     {
-        public SudokuBoard(char[][] board)
+        public SudokuBoard()
         {
-            Board = board;
+            Board = GetEmptyBoard();
         }
 
         public char[][] Board { get; private set; }
@@ -49,7 +49,7 @@ namespace SudokuKata
 
             // Prepare empty board
             var board = SudokuBoard.GetEmptyBoard();
-            _sudokuBoard = new SudokuBoard(board);
+            _sudokuBoard = new SudokuBoard();
         }
 
         public Stack<int[]> StateStack { get; private set; }
