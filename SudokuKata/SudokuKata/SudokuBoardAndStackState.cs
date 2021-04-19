@@ -101,26 +101,26 @@ namespace SudokuKata
         }
 
         private Command AppleSauce4(Random randomNumbers,
-            Command commandObj,
+            Command command,
             Stack<int> rowIndexStack,
             Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
-            if (commandObj.Equals(Command.Expand))
+            if (command.Equals(Command.Expand))
             {
                 return ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
-            if (commandObj.Equals(Command.Collapse))
+            if (command.Equals(Command.Collapse))
             {
                 return CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
-            if (commandObj.Equals(Command.Move))
+            if (command.Equals(Command.Move))
             {
                 return MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
-            return commandObj;
+            return command;
         }
 
         private Command MoveAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
