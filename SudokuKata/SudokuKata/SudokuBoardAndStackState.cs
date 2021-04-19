@@ -70,7 +70,7 @@ namespace SudokuKata
             Command commandObj = Command.Expand;
             while (StateStack.Count <= 9 * 9)
             {
-                commandObj = new Command(AppleSauce4(randomNumbers, commandObj.Name, rowIndexStack, colIndexStack,
+                commandObj = new Command(AppleSauce4(randomNumbers, commandObj.Name, commandObj, rowIndexStack, colIndexStack,
                     usedDigitsStack,
                     lastDigitStack));
             }
@@ -80,6 +80,7 @@ namespace SudokuKata
 
         private string AppleSauce4(Random randomNumbers,
             string command,
+            Command commandObj,
             Stack<int> rowIndexStack,
             Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
