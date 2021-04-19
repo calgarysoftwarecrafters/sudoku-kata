@@ -32,6 +32,10 @@ namespace SudokuKata
         }
 
         public static readonly Command Expand = new Command(ExpandCommandName);
+        public static readonly Command Collapse = new Command(CollapseCommandName);
+        public static readonly Command Move = new Command(MoveCommandName);
+        public static readonly Command Complete = new Command(CompleteCommandName);
+        public static readonly Command Fail = new Command(FailCommandName);
 
         public const string ExpandCommandName = "expand";
         public const string CollapseCommandName = "collapse";
@@ -107,7 +111,7 @@ namespace SudokuKata
                 return ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
-            if (command == Command.CollapseCommandName)
+            if (commandObj.Equals(Command.Collapse))
             {
                 return CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
