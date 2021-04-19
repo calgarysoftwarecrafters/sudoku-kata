@@ -32,7 +32,7 @@ namespace SudokuKata.Test
         }
 
         [TestMethod]
-        public void testEmptyBoard()
+        public void TestEmptyBoard()
         {
             Approvals.Verify(new SudokuBoardAndStackState());
         }
