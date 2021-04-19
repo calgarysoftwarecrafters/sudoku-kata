@@ -4,8 +4,20 @@ using System.Linq;
 
 namespace SudokuKata
 {
+    public class SudokuBoard
+    {
+        public SudokuBoard(char[][] board)
+        {
+            Board = board;
+        }
+
+        public char[][] Board { get; private set; }
+    }
+
     public class SudokuBoardAndStackState
     {
+        private readonly SudokuBoard _sudokuBoard;
+
         public SudokuBoardAndStackState()
         {
             // Construct board to be solved
@@ -14,7 +26,8 @@ namespace SudokuKata
             StateStack = new Stack<int[]>();
 
             // Prepare empty board
-            Board = GetEmptyBoard();
+            var board = GetEmptyBoard();
+            _sudokuBoard = new SudokuBoard(board);
         }
 
         private char[][] GetEmptyBoard()
@@ -40,11 +53,15 @@ namespace SudokuKata
         }
 
         public Stack<int[]> StateStack { get; private set; }
-        public char[][] Board { get; private set; }
+
+        public SudokuBoard SudokuBoard
+        {
+            get { return _sudokuBoard; }
+        }
 
         public override string ToString()
         {
-            return string.Join(Environment.NewLine, Board.Select(s => new string(s)).ToArray());
+            return string.Join(Environment.NewLine, SudokuBoard.Board.Select(s => new string(s)).ToArray());
         }
 
         public void ConstructFullyPopulatedBoardNonSense(Random randomNumbers)
@@ -187,7 +204,7 @@ namespace SudokuKata
                 {
                     usedDigits[digitToMove - 1] = false;
                     currentState[currentStateIndex] = 0;
-                    Board[rowToWrite][colToWrite] = '.';
+                    SudokuBoard.Board[rowToWrite][colToWrite] = '.';
                 }
 
                 if (movedToDigit <= 9)
@@ -195,7 +212,7 @@ namespace SudokuKata
                     lastDigitStack.Push(movedToDigit);
                     usedDigits[movedToDigit - 1] = true;
                     currentState[currentStateIndex] = movedToDigit;
-                    Board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
+                    SudokuBoard.Board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
 
                     // Next possible digit was found at current position
                     // Next step will be to expand the state

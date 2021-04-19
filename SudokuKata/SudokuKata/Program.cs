@@ -20,7 +20,7 @@ namespace SudokuKata
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState.Board, finalState);
+            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState.SudokuBoard.Board, finalState);
         }
 
         private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoardAndStackState sudokuBoardAndStackState)
@@ -453,7 +453,7 @@ namespace SudokuKata
                 int rowToWrite = row + row / 3 + 1;
                 int colToWrite = col + col / 3 + 1;
 
-                sudokuBoardAndState.Board[rowToWrite][colToWrite] = '.';
+                sudokuBoardAndState.SudokuBoard.Board[rowToWrite][colToWrite] = '.';
 
                 int stateIndex = 9 * row + col;
                 state[stateIndex] = 0;
@@ -463,7 +463,7 @@ namespace SudokuKata
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(string.Join("\n", sudokuBoardAndState.Board.Select(s => new string(s)).ToArray()));
+            Console.WriteLine(string.Join("\n", sudokuBoardAndState.SudokuBoard.Board.Select(s => new string(s)).ToArray()));
 
             #endregion
 
