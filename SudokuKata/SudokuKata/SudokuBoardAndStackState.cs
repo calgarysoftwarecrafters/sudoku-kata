@@ -7,6 +7,7 @@ namespace SudokuKata
     public class Command
     {
         public const string ExpandCommandName = "expand";
+        public const string CollapseCommandName = "collapse";
     }
     
     public class SudokuBoardAndStackState
@@ -74,7 +75,7 @@ namespace SudokuKata
             {
                 command = ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
-            else if (command == "collapse")
+            else if (command == Command.CollapseCommandName)
             {
                 command = CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
@@ -126,7 +127,7 @@ namespace SudokuKata
             {
                 // No viable candidate was found at current position - pop it in the next iteration
                 lastDigitStack.Push(0);
-                command = "collapse";
+                command = Command.CollapseCommandName;
             }
 
             return command;
