@@ -4,6 +4,11 @@ using System.Linq;
 
 namespace SudokuKata
 {
+    public class Command
+    {
+        public const string ExpandCommandName = "expand";
+    }
+    
     public class SudokuBoardAndStackState
     {
         private readonly SudokuBoard _sudokuBoard;
@@ -49,7 +54,7 @@ namespace SudokuKata
             // - expand - finds next empty cell and puts new state on stacks
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
-            string command = "expand";
+            string command = Command.ExpandCommandName;
             while (StateStack.Count <= 9 * 9)
             {
                 command = AppleSauce4(randomNumbers, command, rowIndexStack, colIndexStack,
@@ -65,7 +70,7 @@ namespace SudokuKata
             Stack<int> rowIndexStack,
             Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
-            if (command == "expand")
+            if (command == Command.ExpandCommandName)
             {
                 command = ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
@@ -115,7 +120,7 @@ namespace SudokuKata
 
                 // Next possible digit was found at current position
                 // Next step will be to expand the state
-                command = "expand";
+                command = Command.ExpandCommandName;
             }
             else
             {
