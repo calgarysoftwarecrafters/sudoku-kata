@@ -6,6 +6,24 @@ namespace SudokuKata
 {
     public class Command
     {
+        protected bool Equals(Command other)
+        {
+            return Name == other.Name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Command) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Name != null ? Name.GetHashCode() : 0);
+        }
+
         public string Name { get; }
 
         public Command(string name)
@@ -84,7 +102,7 @@ namespace SudokuKata
             Stack<int> rowIndexStack,
             Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
-            if (command == Command.ExpandCommandName)
+            if (commandObj.Equals(Command.Expand))
             {
                 return ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
