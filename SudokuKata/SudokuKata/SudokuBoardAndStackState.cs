@@ -6,6 +6,15 @@ namespace SudokuKata
 {
     public class Command
     {
+        public string Name { get; }
+
+        public Command(string name)
+        {
+            Name = name;
+        }
+
+        public static readonly Command Expand = new Command(ExpandCommandName);
+
         public const string ExpandCommandName = "expand";
         public const string CollapseCommandName = "collapse";
         public const string MoveCommandName = "move";
@@ -59,6 +68,7 @@ namespace SudokuKata
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
             string command = Command.ExpandCommandName;
+            Command commandObj = Command.Expand;
             while (StateStack.Count <= 9 * 9)
             {
                 command = AppleSauce4(randomNumbers, command, rowIndexStack, colIndexStack,
