@@ -67,7 +67,6 @@ namespace SudokuKata
             // - expand - finds next empty cell and puts new state on stacks
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
-            string command = Command.ExpandCommandName;
             Command commandObj = Command.Expand;
             while (StateStack.Count <= 9 * 9)
             {
