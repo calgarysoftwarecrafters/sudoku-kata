@@ -681,7 +681,7 @@ namespace SudokuKata
                     usedDigitsStack = new Stack<bool[]>();
                     lastDigitStack = new Stack<int>();
 
-                    var command = Command.ExpandCommandName;
+                    //var command = Command.ExpandCommandName;
                     var commandObj = Command.Expand;
                     while (!commandObj.Equals(Command.Complete) && !commandObj.Equals(Command.Fail))
                     {
@@ -763,10 +763,9 @@ namespace SudokuKata
                             }
 
                             // Always try to move after expand
-                            command = Command.MoveCommandName;
                             commandObj = Command.Move;
                         }
-                        else if (command == Command.CollapseCommandName)
+                        else if (commandObj.Equals(Command.Collapse))
                         {
                             stateStack.Pop();
                             rowIndexStack.Pop();
@@ -776,16 +775,14 @@ namespace SudokuKata
 
                             if (stateStack.Any())
                             {
-                                command = Command.MoveCommandName; // Always try to move after collapse
-                                commandObj = Command.Move;
+                                commandObj = Command.Move; // Always try to move after collapse
                             }
                             else
                             {
-                                command = Command.FailCommandName;
                                 commandObj = Command.Fail;
                             }
                         }
-                        else if (command == Command.MoveCommandName)
+                        else if (commandObj.Equals(Command.Move))
                         {
                             int rowToMove = rowIndexStack.Peek();
                             int colToMove = colIndexStack.Peek();
@@ -818,12 +815,10 @@ namespace SudokuKata
 
                                 if (currentState.Any(digit => digit == 0))
                                 {
-                                    command = Command.ExpandCommandName;
                                     commandObj = Command.Expand;
                                 }
                                 else
                                 {
-                                    command = Command.CompleteCommandName;
                                     commandObj = Command.Complete;
                                 }
                             }
@@ -831,12 +826,12 @@ namespace SudokuKata
                             {
                                 // No viable candidate was found at current position - pop it in the next iteration
                                 lastDigitStack.Push(0);
-                                command = Command.CollapseCommandName;
+                                commandObj = Command.Collapse;
                             }
                         }
                     }
 
-                    if (command == Command.CompleteCommandName)
+                    if (commandObj.Equals(Command.Complete))
                     {
                         // Board was solved successfully even with two digits swapped
                         stateIndex1.Add(index1);
