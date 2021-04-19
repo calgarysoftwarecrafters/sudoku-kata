@@ -585,7 +585,6 @@ namespace SudokuKata
             Stack<int> colIndexStack;
             Stack<bool[]> usedDigitsStack;
             Stack<int> lastDigitStack;
-            string command;
 
             #region Final attempt - look if the board has multiple solutions
 
@@ -682,7 +681,7 @@ namespace SudokuKata
                     usedDigitsStack = new Stack<bool[]>();
                     lastDigitStack = new Stack<int>();
 
-                    command = Command.ExpandCommandName;
+                    var command = Command.ExpandCommandName;
                     var commandObj = Command.Expand;
                     while (command != Command.CompleteCommandName && command != Command.FailCommandName)
                     {
@@ -778,10 +777,12 @@ namespace SudokuKata
                             if (stateStack.Any())
                             {
                                 command = Command.MoveCommandName; // Always try to move after collapse
+                                commandObj = Command.Move;
                             }
                             else
                             {
                                 command = Command.FailCommandName;
+                                commandObj = Command.Fail;
                             }
                         }
                         else if (command == Command.MoveCommandName)
