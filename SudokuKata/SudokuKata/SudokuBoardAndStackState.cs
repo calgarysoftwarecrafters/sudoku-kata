@@ -8,6 +8,7 @@ namespace SudokuKata
     {
         public const string ExpandCommandName = "expand";
         public const string CollapseCommandName = "collapse";
+        public const string MoveCommandName = "move";
     }
     
     public class SudokuBoardAndStackState
@@ -79,7 +80,7 @@ namespace SudokuKata
             {
                 command = CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
-            else if (command == "move")
+            else if (command == Command.MoveCommandName)
             {
                 command = MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
@@ -142,7 +143,7 @@ namespace SudokuKata
             usedDigitsStack.Pop();
             lastDigitStack.Pop();
 
-            command = "move"; // Always try to move after collapse
+            command = Command.MoveCommandName; // Always try to move after collapse
             return command;
         }
 
@@ -221,7 +222,7 @@ namespace SudokuKata
             }
 
             // Always try to move after expand
-            command = "move";
+            command = Command.MoveCommandName;
             return command;
         }
     }
