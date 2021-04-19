@@ -213,7 +213,7 @@ namespace SudokuKata
                 {
                     usedDigits[digitToMove - 1] = false;
                     currentState[currentStateIndex] = 0;
-                    SudokuBoard.Board[rowToWrite][colToWrite] = '.';
+                    SudokuBoard.SetElementAt(rowToWrite, colToWrite, '.');
                 }
 
                 if (movedToDigit <= 9)
@@ -221,7 +221,7 @@ namespace SudokuKata
                     lastDigitStack.Push(movedToDigit);
                     usedDigits[movedToDigit - 1] = true;
                     currentState[currentStateIndex] = movedToDigit;
-                    SudokuBoard.Board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
+                    SudokuBoard.SetElementAt(rowToWrite, colToWrite, (char) ('0' + movedToDigit));
 
                     // Next possible digit was found at current position
                     // Next step will be to expand the state
