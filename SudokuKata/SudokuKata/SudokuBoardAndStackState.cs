@@ -117,15 +117,14 @@ namespace SudokuKata
 
             if (commandObj.Equals(Command.Move))
             {
-                return new Command(MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack));
+                return MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
             }
 
             return commandObj;
         }
 
-        private string MoveAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
+        private Command MoveAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
-            string command;
             int rowToMove = rowIndexStack.Peek();
             int colToMove = colIndexStack.Peek();
             int digitToMove = lastDigitStack.Pop();
@@ -157,16 +156,13 @@ namespace SudokuKata
 
                 // Next possible digit was found at current position
                 // Next step will be to expand the state
-                command = Command.ExpandCommandName;
-            }
-            else
-            {
-                // No viable candidate was found at current position - pop it in the next iteration
-                lastDigitStack.Push(0);
-                command = Command.CollapseCommandName;
+                return Command.Expand;
             }
 
-            return command;
+            // No viable candidate was found at current position - pop it in the next iteration
+            lastDigitStack.Push(0);
+
+            return Command.Collapse;
         }
 
         private Command CollapseAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
