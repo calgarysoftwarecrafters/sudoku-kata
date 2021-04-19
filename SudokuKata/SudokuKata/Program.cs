@@ -763,7 +763,7 @@ namespace SudokuKata
                             }
 
                             // Always try to move after expand
-                            command = "move";
+                            command = Command.MoveCommandName;
                         }
                         else if (command == "collapse")
                         {
@@ -774,11 +774,11 @@ namespace SudokuKata
                             lastDigitStack.Pop();
 
                             if (stateStack.Any())
-                                command = "move"; // Always try to move after collapse
+                                command = Command.MoveCommandName; // Always try to move after collapse
                             else
                                 command = "fail";
                         }
-                        else if (command == "move")
+                        else if (command == Command.MoveCommandName)
                         {
                             int rowToMove = rowIndexStack.Peek();
                             int colToMove = colIndexStack.Peek();
