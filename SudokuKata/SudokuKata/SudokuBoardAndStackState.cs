@@ -134,7 +134,10 @@ namespace SudokuKata
             {
                 usedDigits[digitToMove - 1] = false;
                 currentState[currentStateIndex] = 0;
-                SudokuBoard.SetElementAt(rowToWrite, colToWrite, '.');
+                var row = rowToWrite;
+                var column = colToWrite;
+                var value = '.';
+                SudokuBoard.SetElementAt(row, column, value);
             }
 
             if (movedToDigit <= 9)
