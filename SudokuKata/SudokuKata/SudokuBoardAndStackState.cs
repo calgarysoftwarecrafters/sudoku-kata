@@ -134,10 +134,7 @@ namespace SudokuKata
             {
                 usedDigits[digitToMove - 1] = false;
                 currentState[currentStateIndex] = 0;
-                var row = rowToWrite;
-                var column = colToWrite;
-                var value = '.';
-                SetValue(row, column, value);
+                SudokuBoard.SetElementAt(rowToWrite, colToWrite, '.');
             }
 
             if (movedToDigit <= 9)
@@ -146,11 +143,6 @@ namespace SudokuKata
             }
 
             return null;
-        }
-
-        private void SetValue(int row, int column, char value)
-        {
-            SudokuBoard.SetElementAt(row, column, value);
         }
 
         private Command CollapseAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack,
