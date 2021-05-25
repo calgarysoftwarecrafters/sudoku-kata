@@ -95,7 +95,7 @@ namespace SudokuKata
         {
             var viableMove = GetViableMove(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
 
-            if (viableMove.MovedToDigit <= 9)
+            if (viableMove != null)
             {
                 lastDigitStack.Push(viableMove.MovedToDigit);
                 viableMove.UsedDigits[viableMove.MovedToDigit - 1] = true;
@@ -137,7 +137,12 @@ namespace SudokuKata
                 SudokuBoard.SetElementAt(rowToWrite, colToWrite, '.');
             }
 
-            return new ViableMove(rowToWrite, colToWrite, usedDigits, currentState, currentStateIndex, movedToDigit);
+            if (movedToDigit <= 9)
+            {
+                return new ViableMove(rowToWrite, colToWrite, usedDigits, currentState, currentStateIndex, movedToDigit);    
+            }
+
+            return null;
         }
 
         private Command CollapseAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack,
