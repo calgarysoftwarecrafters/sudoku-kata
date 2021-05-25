@@ -6,8 +6,6 @@ namespace SudokuKata
 {
     public class SudokuBoardAndStackState
     {
-        private readonly SudokuBoard _sudokuBoard;
-
         public SudokuBoardAndStackState()
         {
             // Construct board to be solved
@@ -16,15 +14,12 @@ namespace SudokuKata
             StateStack = new Stack<int[]>();
 
             // Prepare empty board
-            _sudokuBoard = new SudokuBoard();
+            SudokuBoard = new SudokuBoard();
         }
 
-        public Stack<int[]> StateStack { get; private set; }
+        public Stack<int[]> StateStack { get; }
 
-        public SudokuBoard SudokuBoard
-        {
-            get { return _sudokuBoard; }
-        }
+        public SudokuBoard SudokuBoard { get; }
 
         public override string ToString()
         {
@@ -36,26 +31,24 @@ namespace SudokuKata
             #region Construct fully populated board
 
             // Top elements are (row, col) of cell which has been modified compared to previous state
-            Stack<int> rowIndexStack = new Stack<int>();
-            Stack<int> colIndexStack = new Stack<int>();
+            var rowIndexStack = new Stack<int>();
+            var colIndexStack = new Stack<int>();
 
             // Top element indicates candidate digits (those with False) for (row, col)
-            Stack<bool[]> usedDigitsStack = new Stack<bool[]>();
+            var usedDigitsStack = new Stack<bool[]>();
 
             // Top element is the value that was set on (row, col)
-            Stack<int> lastDigitStack = new Stack<int>();
+            var lastDigitStack = new Stack<int>();
 
             // Indicates operation to perform next
             // - expand - finds next empty cell and puts new state on stacks
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
-            Command command = Command.Expand;
+            var command = Command.Expand;
             while (StateStack.Count <= 9 * 9)
-            {
                 command = AppleSauce4(randomNumbers, command, rowIndexStack, colIndexStack,
                     usedDigitsStack,
                     lastDigitStack);
-            }
 
             #endregion
         }
@@ -66,37 +59,32 @@ namespace SudokuKata
             Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
             if (command.Equals(Command.Expand))
-            {
                 return ExpandAppleSauce(randomNumbers, rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
-            }
 
             if (command.Equals(Command.Collapse))
-            {
                 return CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
-            }
 
             if (command.Equals(Command.Move))
-            {
                 return MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
-            }
 
             return command;
         }
 
-        private Command MoveAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
+        private Command MoveAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack,
+            Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
-            int rowToMove = rowIndexStack.Peek();
-            int colToMove = colIndexStack.Peek();
-            int digitToMove = lastDigitStack.Pop();
+            var rowToMove = rowIndexStack.Peek();
+            var colToMove = colIndexStack.Peek();
+            var digitToMove = lastDigitStack.Pop();
 
-            int rowToWrite = rowToMove + rowToMove / 3 + 1;
-            int colToWrite = colToMove + colToMove / 3 + 1;
+            var rowToWrite = rowToMove + rowToMove / 3 + 1;
+            var colToWrite = colToMove + colToMove / 3 + 1;
 
-            bool[] usedDigits = usedDigitsStack.Peek();
-            int[] currentState = StateStack.Peek();
-            int currentStateIndex = 9 * rowToMove + colToMove;
+            var usedDigits = usedDigitsStack.Peek();
+            var currentState = StateStack.Peek();
+            var currentStateIndex = 9 * rowToMove + colToMove;
 
-            int movedToDigit = digitToMove + 1;
+            var movedToDigit = digitToMove + 1;
             while (movedToDigit <= 9 && usedDigits[movedToDigit - 1])
                 movedToDigit += 1;
 
@@ -125,7 +113,8 @@ namespace SudokuKata
             return Command.Collapse;
         }
 
-        private Command CollapseAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
+        private Command CollapseAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack,
+            Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
             StateStack.Pop();
             rowIndexStack.Pop();
@@ -136,49 +125,47 @@ namespace SudokuKata
             return Command.Move;
         }
 
-        private Command ExpandAppleSauce(Random randomNumbers, Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack,
+        private Command ExpandAppleSauce(Random randomNumbers, Stack<int> rowIndexStack, Stack<int> colIndexStack,
+            Stack<bool[]> usedDigitsStack,
             Stack<int> lastDigitStack)
         {
-            int[] currentState = new int[9 * 9];
+            var currentState = new int[9 * 9];
 
-            if (StateStack.Count > 0)
-            {
-                Array.Copy(StateStack.Peek(), currentState, currentState.Length);
-            }
+            if (StateStack.Count > 0) Array.Copy(StateStack.Peek(), currentState, currentState.Length);
 
-            int bestRow = -1;
-            int bestCol = -1;
+            var bestRow = -1;
+            var bestCol = -1;
             bool[] bestUsedDigits = null;
-            int bestCandidatesCount = -1;
-            int bestRandomValue = -1;
-            bool containsUnsolvableCells = false;
+            var bestCandidatesCount = -1;
+            var bestRandomValue = -1;
+            var containsUnsolvableCells = false;
 
-            for (int index = 0; index < currentState.Length; index++)
+            for (var index = 0; index < currentState.Length; index++)
                 if (currentState[index] == 0)
                 {
-                    int row = index / 9;
-                    int col = index % 9;
-                    int blockRow = row / 3;
-                    int blockCol = col / 3;
+                    var row = index / 9;
+                    var col = index % 9;
+                    var blockRow = row / 3;
+                    var blockCol = col / 3;
 
-                    bool[] isDigitUsed = new bool[9];
+                    var isDigitUsed = new bool[9];
 
-                    for (int i = 0; i < 9; i++)
+                    for (var i = 0; i < 9; i++)
                     {
-                        int rowDigit = currentState[9 * i + col];
+                        var rowDigit = currentState[9 * i + col];
                         if (rowDigit > 0)
                             isDigitUsed[rowDigit - 1] = true;
 
-                        int colDigit = currentState[9 * row + i];
+                        var colDigit = currentState[9 * row + i];
                         if (colDigit > 0)
                             isDigitUsed[colDigit - 1] = true;
 
-                        int blockDigit = currentState[(blockRow * 3 + i / 3) * 9 + (blockCol * 3 + i % 3)];
+                        var blockDigit = currentState[(blockRow * 3 + i / 3) * 9 + blockCol * 3 + i % 3];
                         if (blockDigit > 0)
                             isDigitUsed[blockDigit - 1] = true;
                     }
 
-                    int candidatesCount = isDigitUsed.Where(used => !used).Count();
+                    var candidatesCount = isDigitUsed.Where(used => !used).Count();
 
                     if (candidatesCount == 0)
                     {
@@ -186,11 +173,11 @@ namespace SudokuKata
                         break;
                     }
 
-                    int randomValue = randomNumbers.Next();
+                    var randomValue = randomNumbers.Next();
 
                     if (bestCandidatesCount < 0 ||
                         candidatesCount < bestCandidatesCount ||
-                        (candidatesCount == bestCandidatesCount && randomValue < bestRandomValue))
+                        candidatesCount == bestCandidatesCount && randomValue < bestRandomValue)
                     {
                         bestRow = row;
                         bestCol = col;

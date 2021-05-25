@@ -20,7 +20,8 @@ namespace SudokuKata
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState.SudokuBoard.Board, finalState);
+            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex,
+                sudokuBoardAndStackState.SudokuBoard.Board, finalState);
         }
 
         private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoardAndStackState sudokuBoardAndStackState)
@@ -31,10 +32,11 @@ namespace SudokuKata
             Console.WriteLine(boardString);
         }
 
-        private static void AppleSauce5(Random randomNumbers, int[] state, int allOnes, Dictionary<int, int> maskToOnesCount,
+        private static void AppleSauce5(Random randomNumbers, int[] state, int allOnes,
+            Dictionary<int, int> maskToOnesCount,
             Dictionary<int, int> singleBitToIndex, char[][] board, int[] finalState)
         {
-            bool changeMade = true;
+            var changeMade = true;
             while (changeMade)
             {
                 changeMade = false;
@@ -43,7 +45,7 @@ namespace SudokuKata
 
                 var cellGroups = BuildCellGroupsThatMapsCellIndicesToDistinctGroups(state);
 
-                bool stepChangeMade = true;
+                var stepChangeMade = true;
                 while (stepChangeMade)
                 {
                     stepChangeMade = false;
@@ -77,17 +79,17 @@ namespace SudokuKata
             Console.WriteLine(new string('=', 80));
             Console.WriteLine();
 
-            Dictionary<int, int> maskToOnesCount = new Dictionary<int, int>();
+            var maskToOnesCount = new Dictionary<int, int>();
             maskToOnesCount[0] = 0;
-            for (int i = 1; i < (1 << 9); i++)
+            for (var i = 1; i < 1 << 9; i++)
             {
-                int smaller = i >> 1;
-                int increment = i & 1;
+                var smaller = i >> 1;
+                var increment = i & 1;
                 maskToOnesCount[i] = maskToOnesCount[smaller] + increment;
             }
 
             singleBitToIndex = new Dictionary<int, int>();
-            for (int i = 0; i < 9; i++)
+            for (var i = 0; i < 9; i++)
                 singleBitToIndex[1 << i] = i;
 
             allOnes = (1 << 9) - 1;
@@ -101,26 +103,26 @@ namespace SudokuKata
         {
             #region Calculate candidates for current state of the board
 
-            int[] candidateMasks = new int[state.Length];
+            var candidateMasks = new int[state.Length];
 
-            for (int i = 0; i < state.Length; i++)
+            for (var i = 0; i < state.Length; i++)
                 if (state[i] == 0)
                 {
-                    int row = i / 9;
-                    int col = i % 9;
-                    int blockRow = row / 3;
-                    int blockCol = col / 3;
+                    var row = i / 9;
+                    var col = i % 9;
+                    var blockRow = row / 3;
+                    var blockCol = col / 3;
 
-                    int colidingNumbers = 0;
-                    for (int j = 0; j < 9; j++)
+                    var colidingNumbers = 0;
+                    for (var j = 0; j < 9; j++)
                     {
-                        int rowSiblingIndex = 9 * row + j;
-                        int colSiblingIndex = 9 * j + col;
-                        int blockSiblingIndex = 9 * (blockRow * 3 + j / 3) + blockCol * 3 + j % 3;
+                        var rowSiblingIndex = 9 * row + j;
+                        var colSiblingIndex = 9 * j + col;
+                        var blockSiblingIndex = 9 * (blockRow * 3 + j / 3) + blockCol * 3 + j % 3;
 
-                        int rowSiblingMask = 1 << (state[rowSiblingIndex] - 1);
-                        int colSiblingMask = 1 << (state[colSiblingIndex] - 1);
-                        int blockSiblingMask = 1 << (state[blockSiblingIndex] - 1);
+                        var rowSiblingMask = 1 << (state[rowSiblingIndex] - 1);
+                        var colSiblingMask = 1 << (state[colSiblingIndex] - 1);
+                        var blockSiblingMask = 1 << (state[blockSiblingIndex] - 1);
 
                         colidingNumbers = colidingNumbers | rowSiblingMask | colSiblingMask | blockSiblingMask;
                     }
@@ -137,17 +139,17 @@ namespace SudokuKata
         {
             #region Build a collection (named cellGroups) which maps cell indices into distinct groups (rows/columns/blocks)
 
-            IEnumerable<IGrouping<int, AppleSauce1>> rowsIndices = state
+            var rowsIndices = state
                 .Select((value, index) =>
                     new AppleSauce1(index / 9, $"row #{index / 9 + 1}", index, index / 9, index % 9))
                 .GroupBy(tuple => tuple.Discriminator);
 
-            IEnumerable<IGrouping<int, AppleSauce1>> columnIndices = state
+            var columnIndices = state
                 .Select((value, index) =>
                     new AppleSauce1(9 + index % 9, $"column #{index % 9 + 1}", index, index / 9, index % 9))
                 .GroupBy(tuple => tuple.Discriminator);
 
-            IEnumerable<IGrouping<int, AppleSauce1>> blockIndices = state
+            var blockIndices = state
                 .Select((value, index) => new
                 {
                     Row = index / 9,
@@ -158,7 +160,7 @@ namespace SudokuKata
                     $"block ({tuple.Row / 3 + 1}, {tuple.Column / 3 + 1})", tuple.Index, tuple.Row, tuple.Column))
                 .GroupBy(tuple => tuple.Discriminator);
 
-            List<IGrouping<int, AppleSauce1>> cellGroups =
+            var cellGroups =
                 rowsIndices.Concat(columnIndices).Concat(blockIndices).ToList();
 
             #endregion
@@ -172,7 +174,7 @@ namespace SudokuKata
         {
             #region Pick cells with only one candidate left
 
-            int[] singleCandidateIndices =
+            var singleCandidateIndices =
                 candidateMasks
                     .Select((mask, index) => new
                     {
@@ -185,16 +187,16 @@ namespace SudokuKata
 
             if (singleCandidateIndices.Length > 0)
             {
-                int pickSingleCandidateIndex = randomNumbers.Next(singleCandidateIndices.Length);
-                int singleCandidateIndex = singleCandidateIndices[pickSingleCandidateIndex];
-                int candidateMask = candidateMasks[singleCandidateIndex];
-                int candidate = singleBitToIndex[candidateMask];
+                var pickSingleCandidateIndex = randomNumbers.Next(singleCandidateIndices.Length);
+                var singleCandidateIndex = singleCandidateIndices[pickSingleCandidateIndex];
+                var candidateMask = candidateMasks[singleCandidateIndex];
+                var candidate = singleBitToIndex[candidateMask];
 
-                int row = singleCandidateIndex / 9;
-                int col = singleCandidateIndex % 9;
+                var row = singleCandidateIndex / 9;
+                var col = singleCandidateIndex % 9;
 
-                int rowToWrite = row + row / 3 + 1;
-                int colToWrite = col + col / 3 + 1;
+                var rowToWrite = row + row / 3 + 1;
+                var colToWrite = col + col / 3 + 1;
 
                 state[singleCandidateIndex] = candidate + 1;
                 board[rowToWrite][colToWrite] = (char) ('1' + candidate);
@@ -216,32 +218,32 @@ namespace SudokuKata
 
             if (!changeMade)
             {
-                List<string> groupDescriptions = new List<string>();
-                List<int> candidateRowIndices = new List<int>();
-                List<int> candidateColIndices = new List<int>();
-                List<int> candidates = new List<int>();
+                var groupDescriptions = new List<string>();
+                var candidateRowIndices = new List<int>();
+                var candidateColIndices = new List<int>();
+                var candidates = new List<int>();
 
-                for (int digit = 1; digit <= 9; digit++)
+                for (var digit = 1; digit <= 9; digit++)
                 {
-                    int mask = 1 << (digit - 1);
-                    for (int cellGroup = 0; cellGroup < 9; cellGroup++)
+                    var mask = 1 << (digit - 1);
+                    for (var cellGroup = 0; cellGroup < 9; cellGroup++)
                     {
-                        int rowNumberCount = 0;
-                        int indexInRow = 0;
+                        var rowNumberCount = 0;
+                        var indexInRow = 0;
 
-                        int colNumberCount = 0;
-                        int indexInCol = 0;
+                        var colNumberCount = 0;
+                        var indexInCol = 0;
 
-                        int blockNumberCount = 0;
-                        int indexInBlock = 0;
+                        var blockNumberCount = 0;
+                        var indexInBlock = 0;
 
-                        for (int indexInGroup = 0; indexInGroup < 9; indexInGroup++)
+                        for (var indexInGroup = 0; indexInGroup < 9; indexInGroup++)
                         {
-                            int rowStateIndex = 9 * cellGroup + indexInGroup;
-                            int colStateIndex = 9 * indexInGroup + cellGroup;
-                            int blockRowIndex = (cellGroup / 3) * 3 + indexInGroup / 3;
-                            int blockColIndex = (cellGroup % 3) * 3 + indexInGroup % 3;
-                            int blockStateIndex = blockRowIndex * 9 + blockColIndex;
+                            var rowStateIndex = 9 * cellGroup + indexInGroup;
+                            var colStateIndex = 9 * indexInGroup + cellGroup;
+                            var blockRowIndex = cellGroup / 3 * 3 + indexInGroup / 3;
+                            var blockColIndex = cellGroup % 3 * 3 + indexInGroup % 3;
+                            var blockStateIndex = blockRowIndex * 9 + blockColIndex;
 
                             if ((candidateMasks[rowStateIndex] & mask) != 0)
                             {
@@ -280,8 +282,8 @@ namespace SudokuKata
 
                         if (blockNumberCount == 1)
                         {
-                            int blockRow = cellGroup / 3;
-                            int blockCol = cellGroup % 3;
+                            var blockRow = cellGroup / 3;
+                            var blockCol = cellGroup % 3;
 
                             groupDescriptions.Add($"Block ({blockRow + 1}, {blockCol + 1})");
                             candidateRowIndices.Add(blockRow * 3 + indexInBlock / 3);
@@ -293,17 +295,17 @@ namespace SudokuKata
 
                 if (candidates.Count > 0)
                 {
-                    int index = randomNumbers.Next(candidates.Count);
-                    string description = groupDescriptions.ElementAt(index);
-                    int row = candidateRowIndices.ElementAt(index);
-                    int col = candidateColIndices.ElementAt(index);
-                    int digit = candidates.ElementAt(index);
-                    int rowToWrite = row + row / 3 + 1;
-                    int colToWrite = col + col / 3 + 1;
+                    var index = randomNumbers.Next(candidates.Count);
+                    var description = groupDescriptions.ElementAt(index);
+                    var row = candidateRowIndices.ElementAt(index);
+                    var col = candidateColIndices.ElementAt(index);
+                    var digit = candidates.ElementAt(index);
+                    var rowToWrite = row + row / 3 + 1;
+                    var colToWrite = col + col / 3 + 1;
 
-                    string message = $"{description} can contain {digit} only at ({row + 1}, {col + 1}).";
+                    var message = $"{description} can contain {digit} only at ({row + 1}, {col + 1}).";
 
-                    int stateIndex = 9 * row + col;
+                    var stateIndex = 9 * row + col;
                     state[stateIndex] = digit;
                     candidateMasks[stateIndex] = 0;
                     board[rowToWrite][colToWrite] = (char) ('0' + digit);
@@ -330,21 +332,20 @@ namespace SudokuKata
                 IEnumerable<int> twoDigitMasks =
                     candidateMasks.Where(mask => maskToOnesCount[mask] == 2).Distinct().ToList();
 
-                List<AppleSauce2> groups =
+                var groups =
                     twoDigitMasks
                         .SelectMany(mask =>
                             cellGroups
-                                .Where(group => @group.Count(tuple => candidateMasks[tuple.Index] == mask) == 2)
-                                .Where(group => @group.Any(tuple =>
+                                .Where(group => group.Count(tuple => candidateMasks[tuple.Index] == mask) == 2)
+                                .Where(group => group.Any(tuple =>
                                     candidateMasks[tuple.Index] != mask && (candidateMasks[tuple.Index] & mask) > 0))
-                                .Select(group => new AppleSauce2(mask, @group.Key, @group.First().Description, @group)))
+                                .Select(group => new AppleSauce2(mask, group.Key, group.First().Description, group)))
                         .ToList();
 
                 if (groups.Any())
-                {
-                    foreach (AppleSauce2 group in groups)
+                    foreach (var group in groups)
                     {
-                        List<AppleSauce1> cells =
+                        var cells =
                             @group.Cells
                                 .Where(
                                     cell =>
@@ -352,7 +353,7 @@ namespace SudokuKata
                                         (candidateMasks[cell.Index] & @group.Mask) > 0)
                                 .ToList();
 
-                        AppleSauce1[] maskCells =
+                        var maskCells =
                             @group.Cells
                                 .Where(cell => candidateMasks[cell.Index] == @group.Mask)
                                 .ToArray();
@@ -360,11 +361,11 @@ namespace SudokuKata
 
                         if (cells.Any())
                         {
-                            int upper = 0;
-                            int lower = 0;
-                            int temp = @group.Mask;
+                            var upper = 0;
+                            var lower = 0;
+                            var temp = @group.Mask;
 
-                            int value = 1;
+                            var value = 1;
                             while (temp > 0)
                             {
                                 if ((temp & 1) > 0)
@@ -380,23 +381,20 @@ namespace SudokuKata
                             Console.WriteLine(
                                 $"Values {lower} and {upper} in {@group.Description} are in cells ({maskCells[0].Row + 1}, {maskCells[0].Column + 1}) and ({maskCells[1].Row + 1}, {maskCells[1].Column + 1}).");
 
-                            foreach (AppleSauce1 cell in cells)
+                            foreach (var cell in cells)
                             {
-                                int maskToRemove = candidateMasks[cell.Index] & @group.Mask;
-                                List<int> valuesToRemove = new List<int>();
-                                int curValue = 1;
+                                var maskToRemove = candidateMasks[cell.Index] & @group.Mask;
+                                var valuesToRemove = new List<int>();
+                                var curValue = 1;
                                 while (maskToRemove > 0)
                                 {
-                                    if ((maskToRemove & 1) > 0)
-                                    {
-                                        valuesToRemove.Add(curValue);
-                                    }
+                                    if ((maskToRemove & 1) > 0) valuesToRemove.Add(curValue);
 
                                     maskToRemove = maskToRemove >> 1;
                                     curValue += 1;
                                 }
 
-                                string valuesReport = string.Join(", ", valuesToRemove.ToArray());
+                                var valuesReport = string.Join(", ", valuesToRemove.ToArray());
                                 Console.WriteLine(
                                     $"{valuesReport} cannot appear in ({cell.Row + 1}, {cell.Column + 1}).");
 
@@ -405,7 +403,6 @@ namespace SudokuKata
                             }
                         }
                     }
-                }
             }
 
             #endregion
@@ -420,42 +417,42 @@ namespace SudokuKata
 
             // Board is solved at this point.
             // Now pick subset of digits as the starting position.
-            int remainingDigits = 30;
-            int maxRemovedPerBlock = 6;
-            int[,] removedPerBlock = new int[3, 3];
-            int[] positions = Enumerable.Range(0, 9 * 9).ToArray();
-            int[] state = sudokuBoardAndState.StateStack.Peek();
+            var remainingDigits = 30;
+            var maxRemovedPerBlock = 6;
+            var removedPerBlock = new int[3, 3];
+            var positions = Enumerable.Range(0, 9 * 9).ToArray();
+            var state = sudokuBoardAndState.StateStack.Peek();
 
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
 
-            int removedPos = 0;
+            var removedPos = 0;
             while (removedPos < 9 * 9 - remainingDigits)
             {
-                int curRemainingDigits = positions.Length - removedPos;
-                int indexToPick = removedPos + randomNumbers.Next(curRemainingDigits);
+                var curRemainingDigits = positions.Length - removedPos;
+                var indexToPick = removedPos + randomNumbers.Next(curRemainingDigits);
 
-                int row = positions[indexToPick] / 9;
-                int col = positions[indexToPick] % 9;
+                var row = positions[indexToPick] / 9;
+                var col = positions[indexToPick] % 9;
 
-                int blockRowToRemove = row / 3;
-                int blockColToRemove = col / 3;
+                var blockRowToRemove = row / 3;
+                var blockColToRemove = col / 3;
 
                 if (removedPerBlock[blockRowToRemove, blockColToRemove] >= maxRemovedPerBlock)
                     continue;
 
                 removedPerBlock[blockRowToRemove, blockColToRemove] += 1;
 
-                int temp = positions[removedPos];
+                var temp = positions[removedPos];
                 positions[removedPos] = positions[indexToPick];
                 positions[indexToPick] = temp;
 
-                int rowToWrite = row + row / 3 + 1;
-                int colToWrite = col + col / 3 + 1;
+                var rowToWrite = row + row / 3 + 1;
+                var colToWrite = col + col / 3 + 1;
 
-                sudokuBoardAndState.SudokuBoard.SetElementAt(rowToWrite,colToWrite, '.');
+                sudokuBoardAndState.SudokuBoard.SetElementAt(rowToWrite, colToWrite, '.');
 
-                int stateIndex = 9 * row + col;
+                var stateIndex = 9 * row + col;
                 state[stateIndex] = 0;
 
                 removedPos += 1;
@@ -486,37 +483,37 @@ namespace SudokuKata
                         .Where(tuple => tuple.Value > 1)
                         .Select(tuple => tuple.Key).ToList();
 
-                List<AppleSauce3> groupsWithNMasks =
+                var groupsWithNMasks =
                     masks
                         .SelectMany(mask =>
                             cellGroups
-                                .Where(group => @group.All(cell =>
+                                .Where(group => group.All(cell =>
                                     state[cell.Index] == 0 || (mask & (1 << (state[cell.Index] - 1))) == 0))
-                                .Select(group => new AppleSauce3(mask, @group.First().Description, @group,
-                                    @group.Where(cell =>
+                                .Select(group => new AppleSauce3(mask, group.First().Description, group,
+                                    group.Where(cell =>
                                             state[cell.Index] == 0 && (candidateMasks[cell.Index] & mask) != 0)
-                                        .ToList(), @group.Count(
+                                        .ToList(), group.Count(
                                         cell => state[cell.Index] == 0 &&
                                                 (candidateMasks[cell.Index] & mask) != 0 &&
                                                 (candidateMasks[cell.Index] & ~mask) != 0))))
-                        .Where(group => @group.CellsWithMask.Count() == maskToOnesCount[@group.Mask])
+                        .Where(group => group.CellsWithMask.Count() == maskToOnesCount[group.Mask])
                         .ToList();
 
-                foreach (AppleSauce3 groupWithNMasks in groupsWithNMasks)
+                foreach (var groupWithNMasks in groupsWithNMasks)
                 {
-                    int mask = groupWithNMasks.Mask;
+                    var mask = groupWithNMasks.Mask;
 
                     if (groupWithNMasks.Cells
                         .Any(cell =>
                             (candidateMasks[cell.Index] & mask) != 0 &&
                             (candidateMasks[cell.Index] & ~mask) != 0))
                     {
-                        StringBuilder message = new StringBuilder();
+                        var message = new StringBuilder();
                         message.Append($"In {groupWithNMasks.Description} values ");
 
-                        string separator = string.Empty;
-                        int temp = mask;
-                        int curValue = 1;
+                        var separator = string.Empty;
+                        var temp = mask;
+                        var curValue = 1;
                         while (temp > 0)
                         {
                             if ((temp & 1) > 0)
@@ -530,29 +527,27 @@ namespace SudokuKata
                         }
 
                         message.Append(" appear only in cells");
-                        foreach (AppleSauce1 cell in groupWithNMasks.CellsWithMask)
-                        {
+                        foreach (var cell in groupWithNMasks.CellsWithMask)
                             message.Append($" ({cell.Row + 1}, {cell.Column + 1})");
-                        }
 
                         message.Append(" and other values cannot appear in those cells.");
 
                         Console.WriteLine(message.ToString());
                     }
 
-                    foreach (AppleSauce1 cell in groupWithNMasks.CellsWithMask)
+                    foreach (var cell in groupWithNMasks.CellsWithMask)
                     {
-                        int maskToClear = candidateMasks[cell.Index] & ~groupWithNMasks.Mask;
+                        var maskToClear = candidateMasks[cell.Index] & ~groupWithNMasks.Mask;
                         if (maskToClear == 0)
                             continue;
 
                         candidateMasks[cell.Index] &= groupWithNMasks.Mask;
                         stepChangeMade = true;
 
-                        int valueToClear = 1;
+                        var valueToClear = 1;
 
-                        string separator = string.Empty;
-                        StringBuilder message = new StringBuilder();
+                        var separator = string.Empty;
+                        var message = new StringBuilder();
 
                         while (maskToClear > 0)
                         {
@@ -596,23 +591,22 @@ namespace SudokuKata
                 // Try to see if there are pairs of values that can be exchanged arbitrarily
                 // This happens when board has more than one valid solution
 
-                Queue<int> candidateIndex1 = new Queue<int>();
-                Queue<int> candidateIndex2 = new Queue<int>();
-                Queue<int> candidateDigit1 = new Queue<int>();
-                Queue<int> candidateDigit2 = new Queue<int>();
+                var candidateIndex1 = new Queue<int>();
+                var candidateIndex2 = new Queue<int>();
+                var candidateDigit1 = new Queue<int>();
+                var candidateDigit2 = new Queue<int>();
 
-                for (int i = 0; i < candidateMasks.Length - 1; i++)
-                {
+                for (var i = 0; i < candidateMasks.Length - 1; i++)
                     if (maskToOnesCount[candidateMasks[i]] == 2)
                     {
-                        int row = i / 9;
-                        int col = i % 9;
-                        int blockIndex = 3 * (row / 3) + col / 3;
+                        var row = i / 9;
+                        var col = i % 9;
+                        var blockIndex = 3 * (row / 3) + col / 3;
 
-                        int temp = candidateMasks[i];
-                        int lower = 0;
-                        int upper = 0;
-                        for (int digit = 1; temp > 0; digit++)
+                        var temp = candidateMasks[i];
+                        var lower = 0;
+                        var upper = 0;
+                        for (var digit = 1; temp > 0; digit++)
                         {
                             if ((temp & 1) != 0)
                             {
@@ -623,13 +617,12 @@ namespace SudokuKata
                             temp = temp >> 1;
                         }
 
-                        for (int j = i + 1; j < candidateMasks.Length; j++)
-                        {
+                        for (var j = i + 1; j < candidateMasks.Length; j++)
                             if (candidateMasks[j] == candidateMasks[i])
                             {
-                                int row1 = j / 9;
-                                int col1 = j % 9;
-                                int blockIndex1 = 3 * (row1 / 3) + col1 / 3;
+                                var row1 = j / 9;
+                                var col1 = j % 9;
+                                var blockIndex1 = 3 * (row1 / 3) + col1 / 3;
 
                                 if (row == row1 || col == col1 || blockIndex == blockIndex1)
                                 {
@@ -639,26 +632,24 @@ namespace SudokuKata
                                     candidateDigit2.Enqueue(upper);
                                 }
                             }
-                        }
                     }
-                }
 
                 // At this point we have the lists with pairs of cells that might pick one of two digits each
                 // Now we have to check whether that is really true - does the board have two solutions?
 
-                List<int> stateIndex1 = new List<int>();
-                List<int> stateIndex2 = new List<int>();
-                List<int> value1 = new List<int>();
-                List<int> value2 = new List<int>();
+                var stateIndex1 = new List<int>();
+                var stateIndex2 = new List<int>();
+                var value1 = new List<int>();
+                var value2 = new List<int>();
 
                 while (candidateIndex1.Any())
                 {
-                    int index1 = candidateIndex1.Dequeue();
-                    int index2 = candidateIndex2.Dequeue();
-                    int digit1 = candidateDigit1.Dequeue();
-                    int digit2 = candidateDigit2.Dequeue();
+                    var index1 = candidateIndex1.Dequeue();
+                    var index2 = candidateIndex2.Dequeue();
+                    var digit1 = candidateDigit1.Dequeue();
+                    var digit2 = candidateDigit2.Dequeue();
 
-                    int[] alternateState = new int[finalState.Length];
+                    var alternateState = new int[finalState.Length];
                     Array.Copy(state, alternateState, alternateState.Length);
 
                     if (finalState[index1] == digit1)
@@ -684,54 +675,49 @@ namespace SudokuKata
                     //var command = Command.ExpandCommandName;
                     var commandObj = Command.Expand;
                     while (!commandObj.Equals(Command.Complete) && !commandObj.Equals(Command.Fail))
-                    {
                         if (commandObj.Equals(Command.Expand))
                         {
-                            int[] currentState = new int[9 * 9];
+                            var currentState = new int[9 * 9];
 
                             if (stateStack.Any())
-                            {
                                 Array.Copy(stateStack.Peek(), currentState, currentState.Length);
-                            }
                             else
-                            {
                                 Array.Copy(alternateState, currentState, currentState.Length);
-                            }
 
-                            int bestRow = -1;
-                            int bestCol = -1;
+                            var bestRow = -1;
+                            var bestCol = -1;
                             bool[] bestUsedDigits = null;
-                            int bestCandidatesCount = -1;
-                            int bestRandomValue = -1;
-                            bool containsUnsolvableCells = false;
+                            var bestCandidatesCount = -1;
+                            var bestRandomValue = -1;
+                            var containsUnsolvableCells = false;
 
-                            for (int index = 0; index < currentState.Length; index++)
+                            for (var index = 0; index < currentState.Length; index++)
                                 if (currentState[index] == 0)
                                 {
-                                    int row = index / 9;
-                                    int col = index % 9;
-                                    int blockRow = row / 3;
-                                    int blockCol = col / 3;
+                                    var row = index / 9;
+                                    var col = index % 9;
+                                    var blockRow = row / 3;
+                                    var blockCol = col / 3;
 
-                                    bool[] isDigitUsed = new bool[9];
+                                    var isDigitUsed = new bool[9];
 
-                                    for (int i = 0; i < 9; i++)
+                                    for (var i = 0; i < 9; i++)
                                     {
-                                        int rowDigit = currentState[9 * i + col];
+                                        var rowDigit = currentState[9 * i + col];
                                         if (rowDigit > 0)
                                             isDigitUsed[rowDigit - 1] = true;
 
-                                        int colDigit = currentState[9 * row + i];
+                                        var colDigit = currentState[9 * row + i];
                                         if (colDigit > 0)
                                             isDigitUsed[colDigit - 1] = true;
 
-                                        int blockDigit =
-                                            currentState[(blockRow * 3 + i / 3) * 9 + (blockCol * 3 + i % 3)];
+                                        var blockDigit =
+                                            currentState[(blockRow * 3 + i / 3) * 9 + blockCol * 3 + i % 3];
                                         if (blockDigit > 0)
                                             isDigitUsed[blockDigit - 1] = true;
                                     }
 
-                                    int candidatesCount = isDigitUsed.Where(used => !used).Count();
+                                    var candidatesCount = isDigitUsed.Where(used => !used).Count();
 
                                     if (candidatesCount == 0)
                                     {
@@ -739,11 +725,11 @@ namespace SudokuKata
                                         break;
                                     }
 
-                                    int randomValue = randomNumbers.Next();
+                                    var randomValue = randomNumbers.Next();
 
                                     if (bestCandidatesCount < 0 ||
                                         candidatesCount < bestCandidatesCount ||
-                                        (candidatesCount == bestCandidatesCount && randomValue < bestRandomValue))
+                                        candidatesCount == bestCandidatesCount && randomValue < bestRandomValue)
                                     {
                                         bestRow = row;
                                         bestCol = col;
@@ -774,28 +760,24 @@ namespace SudokuKata
                             lastDigitStack.Pop();
 
                             if (stateStack.Any())
-                            {
                                 commandObj = Command.Move; // Always try to move after collapse
-                            }
                             else
-                            {
                                 commandObj = Command.Fail;
-                            }
                         }
                         else if (commandObj.Equals(Command.Move))
                         {
-                            int rowToMove = rowIndexStack.Peek();
-                            int colToMove = colIndexStack.Peek();
-                            int digitToMove = lastDigitStack.Pop();
+                            var rowToMove = rowIndexStack.Peek();
+                            var colToMove = colIndexStack.Peek();
+                            var digitToMove = lastDigitStack.Pop();
 
-                            int rowToWrite = rowToMove + rowToMove / 3 + 1;
-                            int colToWrite = colToMove + colToMove / 3 + 1;
+                            var rowToWrite = rowToMove + rowToMove / 3 + 1;
+                            var colToWrite = colToMove + colToMove / 3 + 1;
 
-                            bool[] usedDigits = usedDigitsStack.Peek();
-                            int[] currentState = stateStack.Peek();
-                            int currentStateIndex = 9 * rowToMove + colToMove;
+                            var usedDigits = usedDigitsStack.Peek();
+                            var currentState = stateStack.Peek();
+                            var currentStateIndex = 9 * rowToMove + colToMove;
 
-                            int movedToDigit = digitToMove + 1;
+                            var movedToDigit = digitToMove + 1;
                             while (movedToDigit <= 9 && usedDigits[movedToDigit - 1])
                                 movedToDigit += 1;
 
@@ -814,13 +796,9 @@ namespace SudokuKata
                                 board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
 
                                 if (currentState.Any(digit => digit == 0))
-                                {
                                     commandObj = Command.Expand;
-                                }
                                 else
-                                {
                                     commandObj = Command.Complete;
-                                }
                             }
                             else
                             {
@@ -829,7 +807,6 @@ namespace SudokuKata
                                 commandObj = Command.Collapse;
                             }
                         }
-                    }
 
                     if (commandObj.Equals(Command.Complete))
                     {
@@ -843,30 +820,24 @@ namespace SudokuKata
 
                 if (stateIndex1.Any())
                 {
-                    int pos = randomNumbers.Next(stateIndex1.Count());
-                    int index1 = stateIndex1.ElementAt(pos);
-                    int index2 = stateIndex2.ElementAt(pos);
-                    int digit1 = value1.ElementAt(pos);
-                    int digit2 = value2.ElementAt(pos);
-                    int row1 = index1 / 9;
-                    int col1 = index1 % 9;
-                    int row2 = index2 / 9;
-                    int col2 = index2 % 9;
+                    var pos = randomNumbers.Next(stateIndex1.Count());
+                    var index1 = stateIndex1.ElementAt(pos);
+                    var index2 = stateIndex2.ElementAt(pos);
+                    var digit1 = value1.ElementAt(pos);
+                    var digit2 = value2.ElementAt(pos);
+                    var row1 = index1 / 9;
+                    var col1 = index1 % 9;
+                    var row2 = index2 / 9;
+                    var col2 = index2 % 9;
 
-                    string description = string.Empty;
+                    var description = string.Empty;
 
                     if (index1 / 9 == index2 / 9)
-                    {
                         description = $"row #{index1 / 9 + 1}";
-                    }
                     else if (index1 % 9 == index2 % 9)
-                    {
                         description = $"column #{index1 % 9 + 1}";
-                    }
                     else
-                    {
                         description = $"block ({row1 / 3 + 1}, {col1 / 3 + 1})";
-                    }
 
                     state[index1] = finalState[index1];
                     state[index2] = finalState[index2];
@@ -874,12 +845,12 @@ namespace SudokuKata
                     candidateMasks[index2] = 0;
                     changeMade = true;
 
-                    for (int i = 0; i < state.Length; i++)
+                    for (var i = 0; i < state.Length; i++)
                     {
-                        int tempRow = i / 9;
-                        int tempCol = i % 9;
-                        int rowToWrite = tempRow + tempRow / 3 + 1;
-                        int colToWrite = tempCol + tempCol / 3 + 1;
+                        var tempRow = i / 9;
+                        var tempCol = i % 9;
+                        var rowToWrite = tempRow + tempRow / 3 + 1;
+                        var colToWrite = tempCol + tempCol / 3 + 1;
 
                         board[rowToWrite][colToWrite] = '.';
                         if (state[i] > 0)
@@ -903,7 +874,7 @@ namespace SudokuKata
                 #region Print the board as it looks after one change was made to it
 
                 Console.WriteLine(string.Join(Environment.NewLine, board.Select(s => new string(s)).ToArray()));
-                string code =
+                var code =
                     string.Join(string.Empty, board.Select(s => new string(s)).ToArray())
                         .Replace("-", string.Empty)
                         .Replace("+", string.Empty)
@@ -917,7 +888,7 @@ namespace SudokuKata
             }
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Play(new Random());
 

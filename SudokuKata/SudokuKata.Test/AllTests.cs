@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SudokuKata;
 using ApprovalTests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SudokuKata.Test
 {
@@ -14,7 +12,7 @@ namespace SudokuKata.Test
     {
         private TextWriter _existingOut;
 
-        [TestInitialize()]
+        [TestInitialize]
         public void Initialize()
         {
             _existingOut = Console.Out;
@@ -23,22 +21,23 @@ namespace SudokuKata.Test
         [TestMethod]
         public void PinEverythingTests()
         {
-            StringWriter output = new StringWriter();
+            var output = new StringWriter();
             Console.SetOut(output);
-            for (int i = 900; i < 1200; i++)
+            for (var i = 900; i < 1200; i++)
             {
                 var rng = new Random(i);
-                Program.Play(rng);    
+                Program.Play(rng);
             }
+
             Approvals.Verify(output);
         }
 
         [TestMethod]
         public void ConstructFullyPopulatedBoardTests()
         {
-            StringWriter output = new StringWriter();
+            var output = new StringWriter();
             Console.SetOut(output);
-            for (int i = 1300; i < 1600; i++)
+            for (var i = 1300; i < 1600; i++)
             {
                 var rng = new Random(i);
                 var sudokuBoardAndStackState = new SudokuBoardAndStackState();
@@ -46,6 +45,7 @@ namespace SudokuKata.Test
                 output.WriteLine(sudokuBoardAndStackState.SudokuBoard.ToString());
                 output.WriteLine(StateStackString(sudokuBoardAndStackState.StateStack));
             }
+
             Approvals.Verify(output);
         }
 
@@ -54,7 +54,7 @@ namespace SudokuKata.Test
         {
             Approvals.Verify(new SudokuBoard());
         }
-        
+
         [TestCleanup]
         public void Cleanup()
         {
@@ -70,6 +70,5 @@ namespace SudokuKata.Test
         {
             return string.Join(",", stackElement.Select(value => value.ToString()).ToArray());
         }
-
     }
 }

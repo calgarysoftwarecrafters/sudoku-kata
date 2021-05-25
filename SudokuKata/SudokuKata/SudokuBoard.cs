@@ -10,12 +10,12 @@ namespace SudokuKata
             Board = GetEmptyBoard();
         }
 
-        public char[][] Board { get; private set; }
+        public char[][] Board { get; }
 
         public char[][] GetEmptyBoard()
         {
-            string line = "+---+---+---+";
-            string middle = "|...|...|...|";
+            var line = "+---+---+---+";
+            var middle = "|...|...|...|";
             return new[]
             {
                 line.ToCharArray(),
@@ -33,7 +33,7 @@ namespace SudokuKata
                 line.ToCharArray()
             };
         }
-        
+
         public override string ToString()
         {
             return string.Join(Environment.NewLine, Board.Select(s => new string(s)).ToArray());
