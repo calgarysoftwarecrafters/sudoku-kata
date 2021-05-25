@@ -4,6 +4,26 @@ using System.Linq;
 
 namespace SudokuKata
 {
+    public class ViableMove
+    {
+        public ViableMove(int rowToWrite, int colToWrite, bool[] usedDigits, int[] currentState, int currentStateIndex, int movedToDigit)
+        {
+            RowToWrite = rowToWrite;
+            ColToWrite = colToWrite;
+            UsedDigits = usedDigits;
+            CurrentState = currentState;
+            CurrentStateIndex = currentStateIndex;
+            MovedToDigit = movedToDigit;
+        }
+
+        public int RowToWrite { get; private set; }
+        public int ColToWrite { get; private set; }
+        public bool[] UsedDigits { get; private set; }
+        public int[] CurrentState { get; private set; }
+        public int CurrentStateIndex { get; private set; }
+        public int MovedToDigit { get; private set; }
+    }
+
     public class SudokuBoardAndStackState
     {
         public SudokuBoardAndStackState()
@@ -73,7 +93,13 @@ namespace SudokuKata
         private Command MoveAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack,
             Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
-            GetViableMove(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack, out var rowToWrite, out var colToWrite, out var usedDigits, out var currentState, out var currentStateIndex, out var movedToDigit);
+            var viableMove = GetViableMove(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
+            var rowToWrite = viableMove.RowToWrite;
+            var colToWrite = viableMove.ColToWrite;
+            var usedDigits = viableMove.UsedDigits;
+            var currentState = viableMove.CurrentState;
+            var currentStateIndex = viableMove.CurrentStateIndex;
+            var movedToDigit = viableMove.MovedToDigit;
 
             if (movedToDigit <= 9)
             {
@@ -93,22 +119,20 @@ namespace SudokuKata
             return Command.Collapse;
         }
 
-        private void GetViableMove(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack,
-            out int rowToWrite, out int colToWrite, out bool[] usedDigits, out int[] currentState, out int currentStateIndex,
-            out int movedToDigit)
+        private ViableMove GetViableMove(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
             var rowToMove = rowIndexStack.Peek();
             var colToMove = colIndexStack.Peek();
             var digitToMove = lastDigitStack.Pop();
 
-            rowToWrite = rowToMove + rowToMove / 3 + 1;
-            colToWrite = colToMove + colToMove / 3 + 1;
+            var rowToWrite = rowToMove + rowToMove / 3 + 1;
+            var colToWrite = colToMove + colToMove / 3 + 1;
 
-            usedDigits = usedDigitsStack.Peek();
-            currentState = StateStack.Peek();
-            currentStateIndex = 9 * rowToMove + colToMove;
+            var usedDigits = usedDigitsStack.Peek();
+            var currentState = StateStack.Peek();
+            var currentStateIndex = 9 * rowToMove + colToMove;
 
-            movedToDigit = digitToMove + 1;
+            var movedToDigit = digitToMove + 1;
             while (movedToDigit <= 9 && usedDigits[movedToDigit - 1])
                 movedToDigit += 1;
 
@@ -118,6 +142,8 @@ namespace SudokuKata
                 currentState[currentStateIndex] = 0;
                 SudokuBoard.SetElementAt(rowToWrite, colToWrite, '.');
             }
+
+            return new ViableMove(rowToWrite, colToWrite, usedDigits, currentState, currentStateIndex, movedToDigit);
         }
 
         private Command CollapseAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack,
