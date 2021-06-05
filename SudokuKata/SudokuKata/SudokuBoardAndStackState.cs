@@ -172,7 +172,7 @@ namespace SudokuKata
                     lastDigitStack.Push(viableMove.MovedToDigit);
                     viableMove.UsedDigits[viableMove.MovedToDigit - 1] = true;
                     viableMove.CurrentState[viableMove.CurrentStateIndex] = viableMove.MovedToDigit;
-                    SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, (char) ('0' + viableMove.MovedToDigit), viableMove.MovedToDigit);
+                    SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, viableMove.MovedToDigit);
 
                     // Next possible digit was found at current position
                     // Next step will be to expand the state
@@ -209,7 +209,7 @@ namespace SudokuKata
             {
                 usedDigits[digitToMove - 1] = false;
                 currentState[currentStateIndex] = 0;
-                SudokuBoard.SetElementAt(rowToWrite, colToWrite, '.', SudokuBoardAndStackState.UNKNOWN);
+                SudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoardAndStackState.UNKNOWN);
             }
 
             if (movedToDigit <= 9)

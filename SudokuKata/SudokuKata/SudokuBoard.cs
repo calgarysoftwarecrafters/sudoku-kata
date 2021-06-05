@@ -39,7 +39,7 @@ namespace SudokuKata
             return string.Join(Environment.NewLine, Board.Select(s => new string(s)).ToArray());
         }
 
-        public void SetElementAt(int row, int col, char value, int digitValue)
+        public void SetElementAt(int row, int col, int digitValue)
         {
             if (digitValue == SudokuBoardAndStackState.UNKNOWN)
             {
