@@ -180,7 +180,7 @@ namespace SudokuKata
             var rowToWrite = rowToMove + rowToMove / 3 + 1;
             var colToWrite = colToMove + colToMove / 3 + 1;
 
-            var usedDigits = usedDigitsStack.Peek();
+            var usedDigits = stacks.UsedDigitsStack.Peek();
             var currentState = StateStack.Peek();
             var currentStateIndex = 9 * rowToMove + colToMove;
 
