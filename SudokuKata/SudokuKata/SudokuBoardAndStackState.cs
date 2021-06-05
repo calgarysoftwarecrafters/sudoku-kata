@@ -172,7 +172,7 @@ namespace SudokuKata
         private ViableMove GetViableMove(Stacks stacks, Stack<int> rowIndexStack, Stack<int> colIndexStack,
             Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
-            var rowToMove = rowIndexStack.Peek();
+            var rowToMove = stacks.RowIndexStack.Peek();
             var colToMove = colIndexStack.Peek();
             var digitToMove = lastDigitStack.Pop();
 
