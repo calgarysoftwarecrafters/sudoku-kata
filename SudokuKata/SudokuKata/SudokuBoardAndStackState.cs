@@ -75,7 +75,8 @@ namespace SudokuKata
 
             // Top element is the value that was set on (row, col)
             var lastDigitStack = new Stack<int>();
-
+            var stacks = new Stacks(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
+            
             // Indicates operation to perform next
             // - expand - finds next empty cell and puts new state on stacks
             // - move - finds next candidate number at current pos and applies it to current state
@@ -83,7 +84,7 @@ namespace SudokuKata
             var command = Command.Expand;
             while (StateStack.Count <= 9 * 9)
             {
-                var stacks = new Stacks(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
+                
                 command = AppleSauce4(randomNumbers, command, stacks);
             }
 
