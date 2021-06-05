@@ -32,7 +32,7 @@ namespace SudokuKata
             Console.WriteLine(boardString);
         }
 
-        private static void AppleSauce5(Random randomNumbers, int[] state, int allOnes,
+        private static void AppleSauce5(Random randomNumbers, int[] boardAsNumbers, int allOnes,
             Dictionary<int, int> maskToOnesCount,
             Dictionary<int, int> singleBitToIndex, char[][] board, int[] finalState)
         {
@@ -41,9 +41,9 @@ namespace SudokuKata
             {
                 changeMade = false;
 
-                var candidateMasks = CalculateCandidatesForCurrentStateOfTheBoard(state, allOnes);
+                var candidateMasks = CalculateCandidatesForCurrentStateOfTheBoard(boardAsNumbers, allOnes);
 
-                var cellGroups = BuildCellGroupsThatMapsCellIndicesToDistinctGroups(state);
+                var cellGroups = BuildCellGroupsThatMapsCellIndicesToDistinctGroups(boardAsNumbers);
 
                 var stepChangeMade = true;
                 while (stepChangeMade)
@@ -51,20 +51,20 @@ namespace SudokuKata
                     stepChangeMade = false;
 
                     changeMade = PickCellsWithOnlyOneCandidateLeft(randomNumbers, candidateMasks, maskToOnesCount,
-                        singleBitToIndex, state, board, changeMade);
+                        singleBitToIndex, boardAsNumbers, board, changeMade);
 
                     changeMade = FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(randomNumbers, changeMade,
-                        candidateMasks, state, board);
+                        candidateMasks, boardAsNumbers, board);
 
                     stepChangeMade = RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(changeMade,
                         candidateMasks, maskToOnesCount, cellGroups, stepChangeMade);
 
                     stepChangeMade = TryToFindGroupsOfDigitsOfSizeN(changeMade, stepChangeMade, maskToOnesCount,
-                        cellGroups, state, candidateMasks);
+                        cellGroups, boardAsNumbers, candidateMasks);
                 }
 
                 changeMade = LookIfBoardHasMultipleSolutions(randomNumbers, changeMade, candidateMasks, maskToOnesCount,
-                    finalState, state, board);
+                    finalState, boardAsNumbers, board);
 
                 PrintBoardChange(changeMade, board);
             }
