@@ -50,7 +50,7 @@ namespace SudokuKata
                     stepChangeMade = false;
 
                     wasChangeMade = PickCellsWithOnlyOneCandidateLeft(randomNumbers, candidateMasks, maskToOnesCount,
-                        singleBitToIndex, boardAsNumbers, sudokuBoard.Board, wasChangeMade);
+                        singleBitToIndex, boardAsNumbers, sudokuBoard.Board, sudokuBoard, wasChangeMade);
 
                     wasChangeMade = FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(randomNumbers, wasChangeMade,
                         candidateMasks, boardAsNumbers, sudokuBoard.Board);
@@ -169,6 +169,7 @@ namespace SudokuKata
 
         private static bool PickCellsWithOnlyOneCandidateLeft(Random randomNumbers, int[] candidateMasks,
             Dictionary<int, int> maskToOnesCount, Dictionary<int, int> singleBitToIndex, int[] state, char[][] board,
+            SudokuBoard sudokuBoard,
             bool changeMade)
         {
             #region Pick cells with only one candidate left
