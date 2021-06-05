@@ -15,7 +15,7 @@ namespace SudokuKata
 
             DisplayFinalLookOfTheSolvedBoard(sudokuBoardAndStackState);
 
-            var state = GenerateInitialBoardFromCompletelySolvedOne(randomNumbers,
+            var state = GeneratePuzzleFromCompletelySolvedBoard(randomNumbers,
                 out var finalState, sudokuBoardAndStackState);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
@@ -410,7 +410,7 @@ namespace SudokuKata
             return stepChangeMade;
         }
 
-        private static int[] GenerateInitialBoardFromCompletelySolvedOne(Random randomNumbers,
+        private static int[] GeneratePuzzleFromCompletelySolvedBoard(Random randomNumbers,
             out int[] finalState, SudokuBoardAndStackState sudokuBoardAndState)
         {
             #region Generate inital board from the completely solved one
