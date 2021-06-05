@@ -199,7 +199,7 @@ namespace SudokuKata
                 var colToWrite = col + col / 3 + 1;
 
                 state[singleCandidateIndex] = candidate + 1;
-                board[rowToWrite][colToWrite] = (char) ('1' + candidate);
+                sudokuBoard.Board[rowToWrite][colToWrite] = (char) ('1' + candidate);
                 candidateMasks[singleCandidateIndex] = 0;
                 changeMade = true;
 
