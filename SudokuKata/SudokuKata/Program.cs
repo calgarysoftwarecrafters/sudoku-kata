@@ -63,7 +63,7 @@ namespace SudokuKata
                 }
 
                 wasChangeMade = LookIfBoardHasMultipleSolutions(randomNumbers, wasChangeMade, candidateMasks, maskToOnesCount,
-                    finalState, boardAsNumbers, sudokuBoard.Board, sudokuBoard);
+                    finalState, boardAsNumbers, sudokuBoard);
 
                 PrintBoardChange(wasChangeMade, sudokuBoard.Board);
             }
@@ -573,7 +573,7 @@ namespace SudokuKata
         }
 
         private static bool LookIfBoardHasMultipleSolutions(Random randomNumbers, bool changeMade, int[] candidateMasks,
-            Dictionary<int, int> maskToOnesCount, int[] finalState, int[] state, char[][] board,
+            Dictionary<int, int> maskToOnesCount, int[] finalState, int[] state,
             SudokuBoard sudokuBoard)
         {
             Stack<int[]> stateStack;
@@ -786,7 +786,7 @@ namespace SudokuKata
                             {
                                 usedDigits[digitToMove - 1] = false;
                                 currentState[currentStateIndex] = 0;
-                                board[rowToWrite][colToWrite] = '.';
+                                sudokuBoard.Board[rowToWrite][colToWrite] = '.';
                             }
 
                             if (movedToDigit <= 9)
@@ -794,7 +794,7 @@ namespace SudokuKata
                                 lastDigitStack.Push(movedToDigit);
                                 usedDigits[movedToDigit - 1] = true;
                                 currentState[currentStateIndex] = movedToDigit;
-                                board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
+                                sudokuBoard.Board[rowToWrite][colToWrite] = (char) ('0' + movedToDigit);
 
                                 if (currentState.Any(digit => digit == 0))
                                     commandObj = Command.Expand;
@@ -853,9 +853,9 @@ namespace SudokuKata
                         var rowToWrite = tempRow + tempRow / 3 + 1;
                         var colToWrite = tempCol + tempCol / 3 + 1;
 
-                        board[rowToWrite][colToWrite] = '.';
+                        sudokuBoard.Board[rowToWrite][colToWrite] = '.';
                         if (state[i] > 0)
-                            board[rowToWrite][colToWrite] = (char) ('0' + state[i]);
+                            sudokuBoard.Board[rowToWrite][colToWrite] = (char) ('0' + state[i]);
                     }
 
                     Console.WriteLine(
