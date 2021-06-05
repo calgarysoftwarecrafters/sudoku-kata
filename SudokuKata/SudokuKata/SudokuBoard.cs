@@ -41,7 +41,13 @@ namespace SudokuKata
 
         public void SetElementAt(int row, int col, char value, int digitValue)
         {
-            Board[row][col] = value;
+            if (digitValue == SudokuBoardAndStackState.UNKNOWN)
+            {
+                Board[row][col] = '.';
+                return;
+            }
+            
+            Board[row][col] = (char) ('0' + digitValue);
         }
     }
 }
