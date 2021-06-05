@@ -85,32 +85,28 @@ namespace SudokuKata
                 return CollapseAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
 
             if (command.Equals(Command.Move))
-                return MoveAppleSauce(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
-
-            return command;
-        }
-
-        private Command MoveAppleSauce(Stack<int> rowIndexStack, Stack<int> colIndexStack,
-            Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
-        {
-            var viableMove = GetViableMove(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
-
-            if (viableMove != null)
             {
-                lastDigitStack.Push(viableMove.MovedToDigit);
-                viableMove.UsedDigits[viableMove.MovedToDigit - 1] = true;
-                viableMove.CurrentState[viableMove.CurrentStateIndex] = viableMove.MovedToDigit;
-                SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, (char) ('0' + viableMove.MovedToDigit));
+                var viableMove = GetViableMove(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
 
-                // Next possible digit was found at current position
-                // Next step will be to expand the state
-                return Command.Expand;
+                if (viableMove != null)
+                {
+                    lastDigitStack.Push(viableMove.MovedToDigit);
+                    viableMove.UsedDigits[viableMove.MovedToDigit - 1] = true;
+                    viableMove.CurrentState[viableMove.CurrentStateIndex] = viableMove.MovedToDigit;
+                    SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, (char) ('0' + viableMove.MovedToDigit));
+
+                    // Next possible digit was found at current position
+                    // Next step will be to expand the state
+                    return Command.Expand;
+                }
+
+                // No viable candidate was found at current position - pop it in the next iteration
+                lastDigitStack.Push(0);
+
+                return Command.Collapse;
             }
 
-            // No viable candidate was found at current position - pop it in the next iteration
-            lastDigitStack.Push(0);
-
-            return Command.Collapse;
+            return command;
         }
 
         private ViableMove GetViableMove(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
