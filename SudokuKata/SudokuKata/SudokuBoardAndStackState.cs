@@ -24,6 +24,22 @@ namespace SudokuKata
         public int MovedToDigit { get; private set; }
     }
 
+    public class Stacks
+    {
+        public Stacks(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
+        {
+            RowIndexStack = rowIndexStack;
+            ColIndexStack = colIndexStack;
+            UsedDigitsStack = usedDigitsStack;
+            LastDigitStack = lastDigitStack;
+        }
+
+        public Stack<int> RowIndexStack { get; private set; }
+        public Stack<int> ColIndexStack { get; private set; }
+        public Stack<bool[]> UsedDigitsStack { get; private set; }
+        public Stack<int> LastDigitStack { get; private set; }
+    }
+
     public class SudokuBoardAndStackState
     {
         public SudokuBoardAndStackState()
@@ -66,17 +82,13 @@ namespace SudokuKata
             // - collapse - pops current state from stack as it did not yield a solution
             var command = Command.Expand;
             while (StateStack.Count <= 9 * 9)
-                command = AppleSauce4(randomNumbers, command, rowIndexStack, colIndexStack,
-                    usedDigitsStack,
-                    lastDigitStack);
+                command = AppleSauce4(randomNumbers, command, new Stacks(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack));
 
             #endregion
         }
 
         private Command AppleSauce4(Random randomNumbers,
-            Command command,
-            Stack<int> rowIndexStack,
-            Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
+            Command command, Stacks stacks)
         {
             if (command.Equals(Command.Expand))
             {
@@ -141,10 +153,10 @@ namespace SudokuKata
                 if (!containsUnsolvableCells)
                 {
                     StateStack.Push(currentState);
-                    rowIndexStack.Push(bestRow);
-                    colIndexStack.Push(bestCol);
-                    usedDigitsStack.Push(bestUsedDigits);
-                    lastDigitStack.Push(0); // No digit was tried at this position
+                    stacks.RowIndexStack.Push(bestRow);
+                    stacks.ColIndexStack.Push(bestCol);
+                    stacks.UsedDigitsStack.Push(bestUsedDigits);
+                    stacks.LastDigitStack.Push(0); // No digit was tried at this position
                 }
 
                 // Always try to move after expand
@@ -154,21 +166,21 @@ namespace SudokuKata
             if (command.Equals(Command.Collapse))
             {
                 StateStack.Pop();
-                rowIndexStack.Pop();
-                colIndexStack.Pop();
-                usedDigitsStack.Pop();
-                lastDigitStack.Pop();
+                stacks.RowIndexStack.Pop();
+                stacks.ColIndexStack.Pop();
+                stacks.UsedDigitsStack.Pop();
+                stacks.LastDigitStack.Pop();
 
                 return Command.Move;
             }
 
             if (command.Equals(Command.Move))
             {
-                var viableMove = GetViableMove(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
+                var viableMove = GetViableMove(stacks.RowIndexStack, stacks.ColIndexStack, stacks.UsedDigitsStack, stacks.LastDigitStack);
 
                 if (viableMove != null)
                 {
-                    lastDigitStack.Push(viableMove.MovedToDigit);
+                    stacks.LastDigitStack.Push(viableMove.MovedToDigit);
                     viableMove.UsedDigits[viableMove.MovedToDigit - 1] = true;
                     viableMove.CurrentState[viableMove.CurrentStateIndex] = viableMove.MovedToDigit;
                     SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, viableMove.MovedToDigit);
@@ -179,7 +191,7 @@ namespace SudokuKata
                 }
 
                 // No viable candidate was found at current position - pop it in the next iteration
-                lastDigitStack.Push(0);
+                stacks.LastDigitStack.Push(0);
 
                 return Command.Collapse;
             }
