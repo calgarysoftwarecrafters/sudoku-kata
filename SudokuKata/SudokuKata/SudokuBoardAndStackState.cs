@@ -129,27 +129,32 @@ namespace SudokuKata
 
             if (command.Equals(Command.Move))
             {
-                var viableMove = GetViableMove(stacks);
-
-                if (viableMove != null)
-                {
-                    stacks.LastDigitStack.Push(viableMove.MovedToDigit);
-                    viableMove.UsedDigits[viableMove.MovedToDigit - 1] = true;
-                    viableMove.CurrentState[viableMove.CurrentStateIndex] = viableMove.MovedToDigit;
-                    SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, viableMove.MovedToDigit);
-
-                    // Next possible digit was found at current position
-                    // Next step will be to expand the state
-                    return Command.Expand;
-                }
-
-                // No viable candidate was found at current position - pop it in the next iteration
-                stacks.LastDigitStack.Push(0);
-
-                return Command.Collapse;
+                return executeMoveCommand(stacks);
             }
 
             return command;
+        }
+
+        private Command executeMoveCommand(Stacks stacks)
+        {
+            var viableMove = GetViableMove(stacks);
+
+            if (viableMove != null)
+            {
+                stacks.LastDigitStack.Push(viableMove.MovedToDigit);
+                viableMove.UsedDigits[viableMove.MovedToDigit - 1] = true;
+                viableMove.CurrentState[viableMove.CurrentStateIndex] = viableMove.MovedToDigit;
+                SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, viableMove.MovedToDigit);
+
+                // Next possible digit was found at current position
+                // Next step will be to expand the state
+                return Command.Expand;
+            }
+
+            // No viable candidate was found at current position - pop it in the next iteration
+            stacks.LastDigitStack.Push(0);
+
+            return Command.Collapse;
         }
 
         private Command executeCollapseCommand(Stacks stacks)
