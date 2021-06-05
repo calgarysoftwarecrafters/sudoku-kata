@@ -26,33 +26,21 @@ namespace SudokuKata
 
     public class Stacks
     {
-        public Stacks(Stack<int> rowIndexStack, Stack<int> colIndexStack, Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
+        public Stacks()
         {
-            RowIndexStack = rowIndexStack;
-            ColIndexStack = colIndexStack;
-            UsedDigitsStack = usedDigitsStack;
-            LastDigitStack = lastDigitStack;
+            // Top elements are (row, col) of cell which has been modified compared to previous state
+            RowIndexStack = new Stack<int>();
+            ColIndexStack = new Stack<int>();
+            // Top element indicates candidate digits (those with False) for (row, col)
+            UsedDigitsStack = new Stack<bool[]>();
+            // Top element is the value that was set on (row, col)
+            LastDigitStack = new Stack<int>();
         }
 
         public Stack<int> RowIndexStack { get; private set; }
         public Stack<int> ColIndexStack { get; private set; }
         public Stack<bool[]> UsedDigitsStack { get; private set; }
         public Stack<int> LastDigitStack { get; private set; }
-
-        public static Stacks StacksCtor()
-        {
-            // Top elements are (row, col) of cell which has been modified compared to previous state
-            var rowIndexStack = new Stack<int>();
-            var colIndexStack = new Stack<int>();
-
-            // Top element indicates candidate digits (those with False) for (row, col)
-            var usedDigitsStack = new Stack<bool[]>();
-
-            // Top element is the value that was set on (row, col)
-            var lastDigitStack = new Stack<int>();
-            var stacks = new Stacks(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
-            return stacks;
-        }
     }
 
     public class SudokuBoardAndStackState
@@ -81,7 +69,7 @@ namespace SudokuKata
         {
             #region Construct fully populated board
 
-            var stacks = Stacks.StacksCtor();
+            var stacks = new Stacks();
 
             // Indicates operation to perform next
             // - expand - finds next empty cell and puts new state on stacks
