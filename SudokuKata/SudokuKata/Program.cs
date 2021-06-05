@@ -21,7 +21,7 @@ namespace SudokuKata
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
             AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex,
-                sudokuBoardAndStackState.SudokuBoard.Board, finalState);
+                sudokuBoardAndStackState.SudokuBoard.Board, sudokuBoardAndStackState.SudokuBoard, finalState);
         }
 
         private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoardAndStackState sudokuBoardAndStackState)
@@ -34,7 +34,7 @@ namespace SudokuKata
 
         private static void AppleSauce5(Random randomNumbers, int[] boardAsNumbers, int allOnes,
             Dictionary<int, int> maskToOnesCount,
-            Dictionary<int, int> singleBitToIndex, char[][] board, int[] finalState)
+            Dictionary<int, int> singleBitToIndex, char[][] board, SudokuBoard sudokuBoard, int[] finalState)
         {
             var wasChangeMade = true;
             while (wasChangeMade)
