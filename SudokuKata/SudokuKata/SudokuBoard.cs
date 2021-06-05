@@ -55,5 +55,10 @@ namespace SudokuKata
         }
 
         public const int UNKNOWN = -1;
+
+        public static void SetValueStartWith1At(SudokuBoard sudokuBoard, int row, int col, int digit)
+        {
+            sudokuBoard.Board[row][col] = (char) ('1' + digit);
+        }
     }
 }

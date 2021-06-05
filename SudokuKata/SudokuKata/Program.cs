@@ -199,7 +199,7 @@ namespace SudokuKata
                 var colToWrite = col + col / 3 + 1;
 
                 state[singleCandidateIndex] = candidate + 1;
-                setValue(sudokuBoard, rowToWrite, colToWrite, candidate);
+                SudokuBoard.SetValueStartWith1At(sudokuBoard, rowToWrite, colToWrite, candidate);
                 candidateMasks[singleCandidateIndex] = 0;
                 changeMade = true;
 
@@ -209,11 +209,6 @@ namespace SudokuKata
             #endregion
 
             return changeMade;
-        }
-
-        private static void setValue(SudokuBoard sudokuBoard, int rowToWrite, int colToWrite, int candidate)
-        {
-            sudokuBoard.Board[rowToWrite][colToWrite] = (char) ('1' + candidate);
         }
 
         private static bool FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(Random randomNumbers, bool changeMade,
