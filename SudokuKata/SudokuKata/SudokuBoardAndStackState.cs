@@ -173,7 +173,8 @@ namespace SudokuKata
             Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
         {
             var rowToMove = stacks.RowIndexStack.Peek();
-            var colToMove = colIndexStack.Peek();
+            var colIndexStackTemp = stacks.ColIndexStack;
+            var colToMove = colIndexStackTemp.Peek();
             var digitToMove = lastDigitStack.Pop();
 
             var rowToWrite = rowToMove + rowToMove / 3 + 1;
