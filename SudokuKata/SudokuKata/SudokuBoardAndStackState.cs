@@ -174,7 +174,7 @@ namespace SudokuKata
             var rowToMove = stacks.RowIndexStack.Peek();
             var colIndexStackTemp = stacks.ColIndexStack;
             var colToMove = colIndexStackTemp.Peek();
-            var digitToMove = lastDigitStack.Pop();
+            var digitToMove = stacks.LastDigitStack.Pop();
 
             var rowToWrite = rowToMove + rowToMove / 3 + 1;
             var colToWrite = colToMove + colToMove / 3 + 1;
