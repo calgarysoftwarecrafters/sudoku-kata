@@ -49,6 +49,7 @@
     <Compile Include="Command.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stacks.cs" />
     <Compile Include="SudokuBoard.cs" />
     <Compile Include="SudokuBoardAndStackState.cs" />
     <Compile Include="ViableMove.cs" />
