@@ -26,6 +26,7 @@ namespace SudokuKata
 
     public class SudokuBoardAndStackState
     {
+        public const int UNKNOWN = -1;
         public SudokuBoardAndStackState()
         {
             // Construct board to be solved
@@ -171,7 +172,7 @@ namespace SudokuKata
                     lastDigitStack.Push(viableMove.MovedToDigit);
                     viableMove.UsedDigits[viableMove.MovedToDigit - 1] = true;
                     viableMove.CurrentState[viableMove.CurrentStateIndex] = viableMove.MovedToDigit;
-                    SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, (char) ('0' + viableMove.MovedToDigit));
+                    SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, (char) ('0' + viableMove.MovedToDigit), viableMove.MovedToDigit);
 
                     // Next possible digit was found at current position
                     // Next step will be to expand the state
@@ -208,7 +209,7 @@ namespace SudokuKata
             {
                 usedDigits[digitToMove - 1] = false;
                 currentState[currentStateIndex] = 0;
-                SudokuBoard.SetElementAt(rowToWrite, colToWrite, '.');
+                SudokuBoard.SetElementAt(rowToWrite, colToWrite, '.', SudokuBoardAndStackState.UNKNOWN);
             }
 
             if (movedToDigit <= 9)
