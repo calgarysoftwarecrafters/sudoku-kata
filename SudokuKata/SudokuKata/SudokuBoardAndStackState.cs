@@ -82,7 +82,10 @@ namespace SudokuKata
             // - collapse - pops current state from stack as it did not yield a solution
             var command = Command.Expand;
             while (StateStack.Count <= 9 * 9)
-                command = AppleSauce4(randomNumbers, command, new Stacks(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack));
+            {
+                var stacks = new Stacks(rowIndexStack, colIndexStack, usedDigitsStack, lastDigitStack);
+                command = AppleSauce4(randomNumbers, command, stacks);
+            }
 
             #endregion
         }
