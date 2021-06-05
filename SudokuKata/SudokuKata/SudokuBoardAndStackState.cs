@@ -26,7 +26,6 @@ namespace SudokuKata
 
     public class SudokuBoardAndStackState
     {
-        public const int UNKNOWN = -1;
         public SudokuBoardAndStackState()
         {
             // Construct board to be solved
@@ -209,7 +208,7 @@ namespace SudokuKata
             {
                 usedDigits[digitToMove - 1] = false;
                 currentState[currentStateIndex] = 0;
-                SudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoardAndStackState.UNKNOWN);
+                SudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.UNKNOWN);
             }
 
             if (movedToDigit <= 9)
