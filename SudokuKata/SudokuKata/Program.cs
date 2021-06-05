@@ -51,10 +51,10 @@ namespace SudokuKata
                     stepChangeMade = false;
 
                     wasChangeMade = PickCellsWithOnlyOneCandidateLeft(randomNumbers, candidateMasks, maskToOnesCount,
-                        singleBitToIndex, boardAsNumbers, board, wasChangeMade);
+                        singleBitToIndex, boardAsNumbers, sudokuBoard.Board, wasChangeMade);
 
                     wasChangeMade = FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(randomNumbers, wasChangeMade,
-                        candidateMasks, boardAsNumbers, board);
+                        candidateMasks, boardAsNumbers, sudokuBoard.Board);
 
                     stepChangeMade = RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(wasChangeMade,
                         candidateMasks, maskToOnesCount, cellGroups, stepChangeMade);
@@ -64,9 +64,9 @@ namespace SudokuKata
                 }
 
                 wasChangeMade = LookIfBoardHasMultipleSolutions(randomNumbers, wasChangeMade, candidateMasks, maskToOnesCount,
-                    finalState, boardAsNumbers, board);
+                    finalState, boardAsNumbers, sudokuBoard.Board);
 
-                PrintBoardChange(wasChangeMade, board);
+                PrintBoardChange(wasChangeMade, sudokuBoard.Board);
             }
         }
 
