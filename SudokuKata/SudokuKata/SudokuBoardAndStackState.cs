@@ -124,13 +124,7 @@ namespace SudokuKata
 
             if (command.Equals(Command.Collapse))
             {
-                StateStack.Pop();
-                stacks.RowIndexStack.Pop();
-                stacks.ColIndexStack.Pop();
-                stacks.UsedDigitsStack.Pop();
-                stacks.LastDigitStack.Pop();
-
-                return Command.Move;
+                return executeCollapseCommand(stacks);
             }
 
             if (command.Equals(Command.Move))
@@ -156,6 +150,17 @@ namespace SudokuKata
             }
 
             return command;
+        }
+
+        private Command executeCollapseCommand(Stacks stacks)
+        {
+            StateStack.Pop();
+            stacks.RowIndexStack.Pop();
+            stacks.ColIndexStack.Pop();
+            stacks.UsedDigitsStack.Pop();
+            stacks.LastDigitStack.Pop();
+
+            return Command.Move;
         }
 
         private ViableMove GetViableMove(Stacks stacks)
