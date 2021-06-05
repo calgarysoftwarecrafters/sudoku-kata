@@ -71,13 +71,13 @@ namespace SudokuKata
             while (StateStack.Count <= 9 * 9)
             {
                 
-                command = AppleSauce4(randomNumbers, command, stacks);
+                command = PopulateBoardAndNextCommand(randomNumbers, command, stacks);
             }
 
             #endregion
         }
 
-        private Command AppleSauce4(Random randomNumbers,
+        private Command PopulateBoardAndNextCommand(Random randomNumbers,
             Command command, Stacks stacks)
         {
             if (command.Equals(Command.Expand))
