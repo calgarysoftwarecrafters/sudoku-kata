@@ -11,7 +11,7 @@ namespace SudokuKata
         {
             var sudokuBoardAndStackState = new SudokuBoardAndStackState();
 
-            sudokuBoardAndStackState.ConstructFullyPopulatedBoardNonSense(randomNumbers);
+            sudokuBoardAndStackState.ConstructFullyPopulatedBoard(randomNumbers);
 
             DisplayFinalLookOfTheSolvedBoard(sudokuBoardAndStackState);
 

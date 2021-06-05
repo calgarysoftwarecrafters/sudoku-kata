@@ -26,7 +26,7 @@ namespace SudokuKata
             return SudokuBoard.ToString();
         }
 
-        public void ConstructFullyPopulatedBoardNonSense(Random randomNumbers)
+        public void ConstructFullyPopulatedBoard(Random randomNumbers)
         {
             #region Construct fully populated board
 
