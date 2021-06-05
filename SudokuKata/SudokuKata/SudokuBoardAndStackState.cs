@@ -146,7 +146,7 @@ namespace SudokuKata
 
             if (command.Equals(Command.Move))
             {
-                var viableMove = GetViableMove(stacks, stacks.UsedDigitsStack, stacks.LastDigitStack);
+                var viableMove = GetViableMove(stacks, stacks.LastDigitStack);
 
                 if (viableMove != null)
                 {
@@ -169,8 +169,7 @@ namespace SudokuKata
             return command;
         }
 
-        private ViableMove GetViableMove(Stacks stacks,
-            Stack<bool[]> usedDigitsStack, Stack<int> lastDigitStack)
+        private ViableMove GetViableMove(Stacks stacks, Stack<int> lastDigitStack)
         {
             var rowToMove = stacks.RowIndexStack.Peek();
             var colIndexStackTemp = stacks.ColIndexStack;
