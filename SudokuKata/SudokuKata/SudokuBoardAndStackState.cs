@@ -51,23 +51,23 @@ namespace SudokuKata
         {
             if (command.Equals(Command.Expand))
             {
-                return executeExpandCommand(randomNumbers, stacks);
+                return ExecuteExpandCommand(randomNumbers, stacks);
             }
 
             if (command.Equals(Command.Collapse))
             {
-                return executeCollapseCommand(stacks);
+                return ExecuteCollapseCommand(stacks);
             }
 
             if (command.Equals(Command.Move))
             {
-                return executeMoveCommand(stacks);
+                return ExecuteMoveCommand(stacks);
             }
 
             return command;
         }
 
-        private Command executeExpandCommand(Random randomNumbers, Stacks stacks)
+        private Command ExecuteExpandCommand(Random randomNumbers, Stacks stacks)
         {
             var currentState = new int[9 * 9];
 
@@ -140,7 +140,7 @@ namespace SudokuKata
             return Command.Move;
         }
 
-        private Command executeMoveCommand(Stacks stacks)
+        private Command ExecuteMoveCommand(Stacks stacks)
         {
             var viableMove = GetViableMove(stacks);
 
@@ -162,7 +162,7 @@ namespace SudokuKata
             return Command.Collapse;
         }
 
-        private Command executeCollapseCommand(Stacks stacks)
+        private Command ExecuteCollapseCommand(Stacks stacks)
         {
             StateStack.Pop();
             stacks.RowIndexStack.Pop();
