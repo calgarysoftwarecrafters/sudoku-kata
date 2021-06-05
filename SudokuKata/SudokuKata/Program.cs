@@ -63,7 +63,7 @@ namespace SudokuKata
                 }
 
                 wasChangeMade = LookIfBoardHasMultipleSolutions(randomNumbers, wasChangeMade, candidateMasks, maskToOnesCount,
-                    finalState, boardAsNumbers, sudokuBoard.Board);
+                    finalState, boardAsNumbers, sudokuBoard.Board, sudokuBoard);
 
                 PrintBoardChange(wasChangeMade, sudokuBoard.Board);
             }
@@ -573,7 +573,8 @@ namespace SudokuKata
         }
 
         private static bool LookIfBoardHasMultipleSolutions(Random randomNumbers, bool changeMade, int[] candidateMasks,
-            Dictionary<int, int> maskToOnesCount, int[] finalState, int[] state, char[][] board)
+            Dictionary<int, int> maskToOnesCount, int[] finalState, int[] state, char[][] board,
+            SudokuBoard sudokuBoard)
         {
             Stack<int[]> stateStack;
             Stack<int> rowIndexStack;
