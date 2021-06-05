@@ -15,12 +15,12 @@ namespace SudokuKata
 
             DisplayFinalLookOfTheSolvedBoard(sudokuBoardAndStackState);
 
-            var state = GeneratePuzzleFromCompletelySolvedBoard(randomNumbers,
+            var boardAsNumbers = GeneratePuzzleFromCompletelySolvedBoard(randomNumbers,
                 out var finalState, sudokuBoardAndStackState);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, state, allOnes, maskToOnesCount, singleBitToIndex,
+            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex,
                 sudokuBoardAndStackState.SudokuBoard.Board, finalState);
         }
 
