@@ -41,13 +41,17 @@ namespace SudokuKata
 
         public void SetElementAt(int row, int col, int digitValue)
         {
+            char boardValue;
             if (digitValue == UNKNOWN)
             {
-                Board[row][col] = '.';
-                return;
+                boardValue = '.';
             }
-            
-            Board[row][col] = (char) ('0' + digitValue);
+            else
+            {
+                boardValue = digitValue.ToString().Single();
+            }
+
+            Board[row][col] = boardValue;
         }
 
         public const int UNKNOWN = -1;
