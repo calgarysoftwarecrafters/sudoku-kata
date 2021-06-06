@@ -65,7 +65,7 @@ namespace SudokuKata
                 wasChangeMade = LookIfBoardHasMultipleSolutions(randomNumbers, wasChangeMade, candidateMasks, maskToOnesCount,
                     finalState, boardAsNumbers, sudokuBoard);
 
-                PrintBoardChange(wasChangeMade, sudokuBoard.Board);
+                PrintBoardChange(wasChangeMade, sudokuBoard.Board, sudokuBoard);
             }
         }
 
@@ -872,7 +872,7 @@ namespace SudokuKata
             return changeMade;
         }
 
-        private static void PrintBoardChange(bool changeMade, char[][] board)
+        private static void PrintBoardChange(bool changeMade, char[][] board, SudokuBoard sudokuBoard)
         {
             if (changeMade)
             {
