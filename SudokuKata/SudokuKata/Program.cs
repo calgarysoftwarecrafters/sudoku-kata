@@ -196,7 +196,7 @@ namespace SudokuKata
                 var col = singleCandidateIndex % 9;
 
                 state[singleCandidateIndex] = candidate + 1;
-                sudokuBoard.SetElementAtWithRowColCalc(row, col, 1+candidate);
+                sudokuBoard.SetValueAt(row, col, 1+candidate);
                 candidateMasks[singleCandidateIndex] = 0;
                 changeMade = true;
 
@@ -303,7 +303,7 @@ namespace SudokuKata
                     var stateIndex = 9 * row + col;
                     state[stateIndex] = digit;
                     candidateMasks[stateIndex] = 0;
-                    sudokuBoard.SetElementAtWithRowColCalc(row, col, digit);
+                    sudokuBoard.SetValueAt(row, col, digit);
 
                     changeMade = true;
 
@@ -456,7 +456,7 @@ namespace SudokuKata
                 positions[removedPos] = positions[indexToPick];
                 positions[indexToPick] = temp;
 
-                sudokuBoard.SetElementAtWithRowColCalc(row, col, SudokuBoard.Unknown);
+                sudokuBoard.SetValueAt(row, col, SudokuBoard.Unknown);
 
                 var stateIndex = 9 * row + col;
                 state[stateIndex] = 0;
@@ -781,7 +781,7 @@ namespace SudokuKata
                             {
                                 usedDigits[digitToMove - 1] = false;
                                 currentState[currentStateIndex] = 0;
-                                sudokuBoard.SetElementAtWithRowColCalc(rowToMove, colToMove, SudokuBoard.Unknown);
+                                sudokuBoard.SetValueAt(rowToMove, colToMove, SudokuBoard.Unknown);
                             }
 
                             if (movedToDigit <= 9)
@@ -789,7 +789,7 @@ namespace SudokuKata
                                 lastDigitStack.Push(movedToDigit);
                                 usedDigits[movedToDigit - 1] = true;
                                 currentState[currentStateIndex] = movedToDigit;
-                                sudokuBoard.SetElementAtWithRowColCalc(rowToMove, colToMove, movedToDigit);
+                                sudokuBoard.SetValueAt(rowToMove, colToMove, movedToDigit);
 
                                 if (currentState.Any(digit => digit == 0))
                                     commandObj = Command.Expand;
@@ -846,10 +846,10 @@ namespace SudokuKata
                         var tempRow = i / 9;
                         var tempCol = i % 9;
 
-                        sudokuBoard.SetElementAtWithRowColCalc(tempRow, tempCol, SudokuBoard.Unknown);
+                        sudokuBoard.SetValueAt(tempRow, tempCol, SudokuBoard.Unknown);
                         if (state[i] > 0)
                         {
-                            sudokuBoard.SetElementAtWithRowColCalc(tempRow, tempCol, state[i]);
+                            sudokuBoard.SetValueAt(tempRow, tempCol, state[i]);
                         }
 
                         

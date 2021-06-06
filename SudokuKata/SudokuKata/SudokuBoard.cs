@@ -56,7 +56,7 @@ namespace SudokuKata
             return result;
         }
 
-        public void SetElementAtWithRowColCalc(int row, int col, int digitValue)
+        public void SetValueAt(int row, int col, int digitValue)
         {
             Board[row][col] = digitValue;
         }
