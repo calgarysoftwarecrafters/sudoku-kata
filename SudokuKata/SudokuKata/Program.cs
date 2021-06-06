@@ -195,11 +195,8 @@ namespace SudokuKata
                 var row = singleCandidateIndex / 9;
                 var col = singleCandidateIndex % 9;
 
-                var rowToWrite = row + row / 3 + 1;
-                var colToWrite = col + col / 3 + 1;
-
                 state[singleCandidateIndex] = candidate + 1;
-                sudokuBoard.SetElementAt(rowToWrite, colToWrite, 1+candidate);
+                sudokuBoard.SetElementAtWithRowColCalc(row, col, 1+candidate);
                 candidateMasks[singleCandidateIndex] = 0;
                 changeMade = true;
 

@@ -72,6 +72,14 @@ namespace SudokuKata
             Board[row][col] = boardValue;
         }
 
+        public void SetElementAtWithRowColCalc(int row, int col, int digitValue)
+        {
+            var rowToWrite = row + row / 3 + 1;
+            var colToWrite = col + col / 3 + 1;
+            SetElementAt(rowToWrite, colToWrite, digitValue);
+        }
+
+        
         public const int Unknown = -1;
 
         public string DisplayBoardWithEmptyChar()
