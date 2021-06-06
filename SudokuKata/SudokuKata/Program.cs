@@ -872,7 +872,7 @@ namespace SudokuKata
                 #region Print the board as it looks after one change was made to it
 
                 Console.WriteLine(sudokuBoard.ToString());
-                Console.WriteLine("Code: {0}", sudokuBoard.DisplayBoardWithEmptyChar());
+                Console.WriteLine("Code: {0}", sudokuBoard.DisplayBoard());
                 Console.WriteLine();
 
                 #endregion

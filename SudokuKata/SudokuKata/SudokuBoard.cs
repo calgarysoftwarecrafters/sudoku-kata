@@ -66,7 +66,7 @@ namespace SudokuKata
         public const int NumRows = 9;
         public const int NumCols = 9;
 
-        public string DisplayBoardWithEmptyChar()
+        public string DisplayBoard()
         {
             return string.Join(string.Empty, Board.Select(rowDigits =>
             {
