@@ -1,3 +1,1 @@
-- currently at https://github.com/JayBazuzi/sudoku-kata/commit/b535703d0d4d8535e6806f996604df910b2ba0bf
-- lots of duplicate code in determine rowToWrite/colToWrite
-- first need to do a draft of refactoring to understand the code site and the cruft in calculating the rowToWrite/colToWrite
+- currently at part 4 -> https://github.com/JayBazuzi/sudoku-kata/commit/c94890c1ab4df812faf266d7e58e6559c095767a
