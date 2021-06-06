@@ -56,11 +56,6 @@ namespace SudokuKata
 
         public const int UNKNOWN = -1;
 
-        public void SetValueStartWith1At(int row, int col, int digit)
-        {
-            Board[row][col] = (char) ('1' + digit);
-        }
-
         public string DisplayBoardWithEmptyChar()
         {
             return string.Join(string.Empty, Board.Select(s => new string(s)).ToArray())
