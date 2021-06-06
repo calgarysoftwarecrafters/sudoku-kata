@@ -149,7 +149,7 @@ namespace SudokuKata
                 stacks.LastDigitStack.Push(viableMove.MovedToDigit);
                 viableMove.UsedDigits[viableMove.MovedToDigit - 1] = true;
                 viableMove.CurrentState[viableMove.CurrentStateIndex] = viableMove.MovedToDigit;
-                SudokuBoard.SetElementAt(viableMove.RowToWrite, viableMove.ColToWrite, viableMove.MovedToDigit);
+                SudokuBoard.SetElementAtWithRowColCalc(viableMove.RowToWrite, viableMove.ColToWrite, viableMove.MovedToDigit);
 
                 // Next possible digit was found at current position
                 // Next step will be to expand the state
@@ -180,9 +180,6 @@ namespace SudokuKata
             var colToMove = colIndexStackTemp.Peek();
             var digitToMove = stacks.LastDigitStack.Pop();
 
-            var rowToWrite = rowToMove + rowToMove / 3 + 1;
-            var colToWrite = colToMove + colToMove / 3 + 1;
-
             var usedDigits = stacks.UsedDigitsStack.Peek();
             var currentState = StateStack.Peek();
             var currentStateIndex = 9 * rowToMove + colToMove;
@@ -195,12 +192,12 @@ namespace SudokuKata
             {
                 usedDigits[digitToMove - 1] = false;
                 currentState[currentStateIndex] = 0;
-                SudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.Unknown);
+                SudokuBoard.SetElementAtWithRowColCalc(rowToMove, colToMove, SudokuBoard.Unknown);
             }
 
             if (movedToDigit <= 9)
             {
-                return new ViableMove(rowToWrite, colToWrite, usedDigits, currentState, currentStateIndex, movedToDigit);    
+                return new ViableMove(rowToMove, colToMove, usedDigits, currentState, currentStateIndex, movedToDigit);    
             }
 
             return null;
