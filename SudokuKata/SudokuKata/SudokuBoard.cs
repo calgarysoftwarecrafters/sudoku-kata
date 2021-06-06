@@ -86,19 +86,6 @@ namespace SudokuKata
 
         public void SetElementAtWithRowColCalc(int row, int col, int digitValue)
         {
-            var rowToWrite = row + row / 3 + 1;
-            var colToWrite = col + col / 3 + 1;
-            char boardValue;
-            if (digitValue == Unknown)
-            {
-                boardValue = '.';
-            }
-            else
-            {
-                boardValue = digitValue.ToString().Single();
-            }
-
-            Board[rowToWrite][colToWrite] = boardValue;
             Board2[row][col] = digitValue;
         }
 
