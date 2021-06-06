@@ -456,10 +456,7 @@ namespace SudokuKata
                 positions[removedPos] = positions[indexToPick];
                 positions[indexToPick] = temp;
 
-                var rowToWrite = row + row / 3 + 1;
-                var colToWrite = col + col / 3 + 1;
-
-                sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.Unknown);
+                sudokuBoard.SetElementAtWithRowColCalc(row, col, SudokuBoard.Unknown);
 
                 var stateIndex = 9 * row + col;
                 state[stateIndex] = 0;
@@ -772,9 +769,6 @@ namespace SudokuKata
                             var colToMove = colIndexStack.Peek();
                             var digitToMove = lastDigitStack.Pop();
 
-                            var rowToWrite = rowToMove + rowToMove / 3 + 1;
-                            var colToWrite = colToMove + colToMove / 3 + 1;
-
                             var usedDigits = usedDigitsStack.Peek();
                             var currentState = stateStack.Peek();
                             var currentStateIndex = 9 * rowToMove + colToMove;
@@ -787,7 +781,7 @@ namespace SudokuKata
                             {
                                 usedDigits[digitToMove - 1] = false;
                                 currentState[currentStateIndex] = 0;
-                                sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.Unknown);
+                                sudokuBoard.SetElementAtWithRowColCalc(rowToMove, colToMove, SudokuBoard.Unknown);
                             }
 
                             if (movedToDigit <= 9)
@@ -795,7 +789,7 @@ namespace SudokuKata
                                 lastDigitStack.Push(movedToDigit);
                                 usedDigits[movedToDigit - 1] = true;
                                 currentState[currentStateIndex] = movedToDigit;
-                                sudokuBoard.SetElementAt(rowToWrite, colToWrite, movedToDigit);
+                                sudokuBoard.SetElementAtWithRowColCalc(rowToMove, colToMove, movedToDigit);
 
                                 if (currentState.Any(digit => digit == 0))
                                     commandObj = Command.Expand;
