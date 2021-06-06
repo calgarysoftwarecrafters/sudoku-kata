@@ -53,7 +53,7 @@ namespace SudokuKata
                         singleBitToIndex, boardAsNumbers, sudokuBoard, wasChangeMade);
 
                     wasChangeMade = FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(randomNumbers, wasChangeMade,
-                        candidateMasks, boardAsNumbers, sudokuBoard.Board, sudokuBoard);
+                        candidateMasks, boardAsNumbers, sudokuBoard);
 
                     stepChangeMade = RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(wasChangeMade,
                         candidateMasks, maskToOnesCount, cellGroups, stepChangeMade);
@@ -212,7 +212,7 @@ namespace SudokuKata
         }
 
         private static bool FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(Random randomNumbers, bool changeMade,
-            int[] candidateMasks, int[] state, char[][] board, SudokuBoard sudokuBoard)
+            int[] candidateMasks, int[] state, SudokuBoard sudokuBoard)
         {
             #region Try to find a number which can only appear in one place in a row/column/block
 
