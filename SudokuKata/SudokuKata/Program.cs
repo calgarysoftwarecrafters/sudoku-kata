@@ -426,7 +426,7 @@ namespace SudokuKata
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
 
-            SoySauce1(randomNumbers, sudokuBoardAndState, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state);
+            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state, sudokuBoardAndState.SudokuBoard);
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
@@ -437,8 +437,8 @@ namespace SudokuKata
             return state;
         }
 
-        private static void SoySauce1(Random randomNumbers, SudokuBoardAndStackState sudokuBoardAndState, int remainingDigits,
-            int[] positions, int[,] removedPerBlock, int maxRemovedPerBlock, int[] state)
+        private static void SoySauce1(Random randomNumbers, int remainingDigits,
+            int[] positions, int[,] removedPerBlock, int maxRemovedPerBlock, int[] state, SudokuBoard sudokuBoard)
         {
             var removedPos = 0;
             while (removedPos < 9 * 9 - remainingDigits)
@@ -464,7 +464,7 @@ namespace SudokuKata
                 var rowToWrite = row + row / 3 + 1;
                 var colToWrite = col + col / 3 + 1;
 
-                sudokuBoardAndState.SudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.UNKNOWN);
+                sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.UNKNOWN);
 
                 var stateIndex = 9 * row + col;
                 state[stateIndex] = 0;
