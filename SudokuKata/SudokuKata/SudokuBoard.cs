@@ -81,11 +81,11 @@ namespace SudokuKata
 
         public string DisplayBoardWithEmptyChar()
         {
-            return string.Join(string.Empty, Board.Select(s => new string(s)).ToArray())
-                .Replace("-", string.Empty)
-                .Replace("+", string.Empty)
-                .Replace("|", string.Empty)
-                .Replace(".", "0");
+            return string.Join(string.Empty, Board2.Select(rowDigits =>
+            {
+                var joinedRow = string.Join(string.Empty, rowDigits.Select(digit => digit == Unknown ? 0 : digit));
+                return joinedRow;
+            }));
         }
     }
 }
