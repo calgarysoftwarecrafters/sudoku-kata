@@ -464,7 +464,7 @@ namespace SudokuKata
                 var rowToWrite = row + row / 3 + 1;
                 var colToWrite = col + col / 3 + 1;
 
-                sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.UNKNOWN);
+                sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.Unknown);
 
                 var stateIndex = 9 * row + col;
                 state[stateIndex] = 0;
@@ -792,7 +792,7 @@ namespace SudokuKata
                             {
                                 usedDigits[digitToMove - 1] = false;
                                 currentState[currentStateIndex] = 0;
-                                sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.UNKNOWN);
+                                sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.Unknown);
                             }
 
                             if (movedToDigit <= 9)
@@ -859,7 +859,7 @@ namespace SudokuKata
                         var rowToWrite = tempRow + tempRow / 3 + 1;
                         var colToWrite = tempCol + tempCol / 3 + 1;
 
-                        sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.UNKNOWN);
+                        sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.Unknown);
                         if (state[i] > 0)
                         {
                             sudokuBoard.SetElementAt(rowToWrite, colToWrite, state[i]);

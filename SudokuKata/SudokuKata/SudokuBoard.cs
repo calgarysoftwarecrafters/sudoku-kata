@@ -10,9 +10,9 @@ namespace SudokuKata
             Board = GetEmptyBoard();
         }
 
-        public char[][] Board { get; }
+        private char[][] Board { get; }
 
-        public char[][] GetEmptyBoard()
+        private char[][] GetEmptyBoard()
         {
             var line = "+---+---+---+";
             var middle = "|...|...|...|";
@@ -42,7 +42,7 @@ namespace SudokuKata
         public void SetElementAt(int row, int col, int digitValue)
         {
             char boardValue;
-            if (digitValue == UNKNOWN)
+            if (digitValue == Unknown)
             {
                 boardValue = '.';
             }
@@ -54,7 +54,7 @@ namespace SudokuKata
             Board[row][col] = boardValue;
         }
 
-        public const int UNKNOWN = -1;
+        public const int Unknown = -1;
 
         public string DisplayBoardWithEmptyChar()
         {
