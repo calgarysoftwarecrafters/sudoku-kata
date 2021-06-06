@@ -53,7 +53,35 @@ namespace SudokuKata
 
         public override string ToString()
         {
-            return string.Join(Environment.NewLine, Board.Select(s => new string(s)).ToArray());
+            var line = "+---+---+---+";
+            var result = "";
+            for (int row = 0; row < NumRows; row++)
+            {
+                if (row % 3 == 0)
+                {
+                    result += line + Environment.NewLine;
+                }
+                result += ToRowString(Board2[row]) + Environment.NewLine;
+            }
+
+            result += line;            
+            return result;
+        }
+
+        private string ToRowString(int[] rowDigits)
+        {
+            var result = "";
+            for (int index = 0; index < rowDigits.Length; index++)
+            {
+                if (index % 3 == 0)
+                {
+                    result += "|";
+                }
+                result += rowDigits[index] == Unknown ? "." : rowDigits[index].ToString();
+            }
+
+            result += "|";
+            return result;
         }
 
         public void SetElementAtWithRowColCalc(int row, int col, int digitValue)
