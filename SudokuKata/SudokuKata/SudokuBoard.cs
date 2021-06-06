@@ -25,18 +25,17 @@ namespace SudokuKata
 
         public override string ToString()
         {
-            var line = "+---+---+---+";
             var result = "";
             for (int row = 0; row < NumRows; row++)
             {
-                if (row % 3 == 0)
+                if (row % SingleSquareNumRows == 0)
                 {
-                    result += line + Environment.NewLine;
+                    result += BoardLineSeparator + Environment.NewLine;
                 }
                 result += ToRowString(Board[row]) + Environment.NewLine;
             }
 
-            result += line;            
+            result += BoardLineSeparator;            
             return result;
         }
 
@@ -45,14 +44,14 @@ namespace SudokuKata
             var result = "";
             for (int index = 0; index < rowDigits.Length; index++)
             {
-                if (index % 3 == 0)
+                if (index % SingleSquareNumCols == 0)
                 {
-                    result += "|";
+                    result += ColumnSeparator;
                 }
                 result += rowDigits[index] == Unknown ? "." : rowDigits[index].ToString();
             }
 
-            result += "|";
+            result += ColumnSeparator;
             return result;
         }
 
@@ -65,6 +64,10 @@ namespace SudokuKata
         public const int Unknown = -1;
         public const int NumRows = 9;
         public const int NumCols = 9;
+        private const int SingleSquareNumCols = 3;
+        private const int SingleSquareNumRows = 3;
+        private const string BoardLineSeparator = "+---+---+---+";
+        private const string ColumnSeparator = "|";
 
         public string DisplayBoard()
         {
