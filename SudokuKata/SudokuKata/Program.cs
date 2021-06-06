@@ -878,9 +878,9 @@ namespace SudokuKata
             {
                 #region Print the board as it looks after one change was made to it
 
-                Console.WriteLine(string.Join(Environment.NewLine, board.Select(s => new string(s)).ToArray()));
+                Console.WriteLine(string.Join(Environment.NewLine, sudokuBoard.Board.Select(s => new string(s)).ToArray()));
                 var code =
-                    string.Join(string.Empty, board.Select(s => new string(s)).ToArray())
+                    string.Join(string.Empty, sudokuBoard.Board.Select(s => new string(s)).ToArray())
                         .Replace("-", string.Empty)
                         .Replace("+", string.Empty)
                         .Replace("|", string.Empty)
