@@ -426,6 +426,20 @@ namespace SudokuKata
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
 
+            SoySauce1(randomNumbers, sudokuBoardAndState, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state);
+
+            Console.WriteLine();
+            Console.WriteLine("Starting look of the board to solve:");
+            Console.WriteLine(string.Join(Environment.NewLine, sudokuBoardAndState.SudokuBoard.ToString()));
+
+            #endregion
+
+            return state;
+        }
+
+        private static void SoySauce1(Random randomNumbers, SudokuBoardAndStackState sudokuBoardAndState, int remainingDigits,
+            int[] positions, int[,] removedPerBlock, int maxRemovedPerBlock, int[] state)
+        {
             var removedPos = 0;
             while (removedPos < 9 * 9 - remainingDigits)
             {
@@ -457,14 +471,6 @@ namespace SudokuKata
 
                 removedPos += 1;
             }
-
-            Console.WriteLine();
-            Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(string.Join(Environment.NewLine, sudokuBoardAndState.SudokuBoard.ToString()));
-
-            #endregion
-
-            return state;
         }
 
         private static bool TryToFindGroupsOfDigitsOfSizeN(bool changeMade, bool stepChangeMade,
