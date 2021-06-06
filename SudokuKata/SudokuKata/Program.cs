@@ -308,7 +308,7 @@ namespace SudokuKata
                     var stateIndex = 9 * row + col;
                     state[stateIndex] = digit;
                     candidateMasks[stateIndex] = 0;
-                    sudokuBoard.Board[rowToWrite][colToWrite] = (char) ('0' + digit);
+                    sudokuBoard.SetElementAt(rowToWrite, colToWrite, digit);
 
                     changeMade = true;
 
