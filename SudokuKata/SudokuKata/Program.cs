@@ -297,15 +297,13 @@ namespace SudokuKata
                     var row = candidateRowIndices.ElementAt(index);
                     var col = candidateColIndices.ElementAt(index);
                     var digit = candidates.ElementAt(index);
-                    var rowToWrite = row + row / 3 + 1;
-                    var colToWrite = col + col / 3 + 1;
 
                     var message = $"{description} can contain {digit} only at ({row + 1}, {col + 1}).";
 
                     var stateIndex = 9 * row + col;
                     state[stateIndex] = digit;
                     candidateMasks[stateIndex] = 0;
-                    sudokuBoard.SetElementAt(rowToWrite, colToWrite, digit);
+                    sudokuBoard.SetElementAtWithRowColCalc(row, col, digit);
 
                     changeMade = true;
 
