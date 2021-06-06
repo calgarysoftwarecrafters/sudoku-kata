@@ -1,1 +1,2 @@
 - currently at part 4 -> https://github.com/JayBazuzi/sudoku-kata/commit/c94890c1ab4df812faf266d7e58e6559c095767a
+- current watch at -> https://www.youtube.com/watch?v=GU_8eMJ8Xd0&t=1397s
