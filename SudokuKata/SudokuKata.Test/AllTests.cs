@@ -55,6 +55,15 @@ namespace SudokuKata.Test
             Approvals.Verify(new SudokuBoard());
         }
 
+        [TestMethod]
+        public void TestToString()
+        {
+            var sudokuBoard = new SudokuBoard();
+            sudokuBoard.SetValueAt(1, 1, 2);
+            sudokuBoard.SetValueAt(4, 5, 3);
+            Approvals.Verify(sudokuBoard);
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
