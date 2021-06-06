@@ -21,7 +21,7 @@ namespace SudokuKata
 
     public class SudokuBoard
     {
-        private int[][] Board2 { get; } = new int[NumRows][].SetAll(Unknown);
+        private int[][] Board { get; } = new int[NumRows][].SetAll(Unknown);
 
         public override string ToString()
         {
@@ -33,7 +33,7 @@ namespace SudokuKata
                 {
                     result += line + Environment.NewLine;
                 }
-                result += ToRowString(Board2[row]) + Environment.NewLine;
+                result += ToRowString(Board[row]) + Environment.NewLine;
             }
 
             result += line;            
@@ -58,7 +58,7 @@ namespace SudokuKata
 
         public void SetElementAtWithRowColCalc(int row, int col, int digitValue)
         {
-            Board2[row][col] = digitValue;
+            Board[row][col] = digitValue;
         }
 
         
@@ -68,7 +68,7 @@ namespace SudokuKata
 
         public string DisplayBoardWithEmptyChar()
         {
-            return string.Join(string.Empty, Board2.Select(rowDigits =>
+            return string.Join(string.Empty, Board.Select(rowDigits =>
             {
                 var joinedRow = string.Join(string.Empty, rowDigits.Select(digit => digit == Unknown ? 0 : digit));
                 return joinedRow;
