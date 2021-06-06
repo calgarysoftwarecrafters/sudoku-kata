@@ -5,15 +5,14 @@ namespace SudokuKata
 {
     static class _
     {
-        public static int[,] SetAll(this int[,] that, int value)
+        public static int[][] SetAll(this int[][] that, int value)
         {
-            var numRows = that.GetLength(0);
-            var numCols = that.GetLength(1);
-            for (int row = 0; row < numRows; row++)
+            for (int row = 0; row < SudokuBoard.NumRows; row++)
             {
-                for (int col = 0; col < numCols; col++)
+                that[row] = new int [SudokuBoard.NumCols];
+                for (int col = 0; col < SudokuBoard.NumCols; col++)
                 {
-                    that[row, col] = value;
+                    that[row][col] = value;
                 }
             }
             return that;
@@ -28,7 +27,7 @@ namespace SudokuKata
         }
 
         private char[][] Board { get; }
-        private int[,] Board2 { get; } = new int[NumRows,NumCols].SetAll(Unknown);
+        private int[][] Board2 { get; } = new int[NumRows][].SetAll(Unknown);
 
         private char[][] GetEmptyBoard()
         {
@@ -72,7 +71,7 @@ namespace SudokuKata
             }
 
             Board[rowToWrite][colToWrite] = boardValue;
-            Board2[row,col] = digitValue;
+            Board2[row][col] = digitValue;
         }
 
         
