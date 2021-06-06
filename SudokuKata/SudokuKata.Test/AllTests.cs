@@ -41,7 +41,7 @@ namespace SudokuKata.Test
             {
                 var rng = new Random(i);
                 var sudokuBoardAndStackState = new SudokuBoardAndStackState();
-                sudokuBoardAndStackState.ConstructFullyPopulatedBoard(rng);
+                sudokuBoardAndStackState.ConstructFullySolvedBoard(rng);
                 output.WriteLine(sudokuBoardAndStackState.SudokuBoard.ToString());
                 output.WriteLine(StateStackString(sudokuBoardAndStackState.StateStack));
             }
