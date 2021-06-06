@@ -60,5 +60,14 @@ namespace SudokuKata
         {
             Board[row][col] = (char) ('1' + digit);
         }
+
+        public static string DisplayBoardWithEmptyChar(SudokuBoard sudokuBoard)
+        {
+            return string.Join(string.Empty, sudokuBoard.Board.Select(s => new string(s)).ToArray())
+                .Replace("-", string.Empty)
+                .Replace("+", string.Empty)
+                .Replace("|", string.Empty)
+                .Replace(".", "0");
+        }
     }
 }
