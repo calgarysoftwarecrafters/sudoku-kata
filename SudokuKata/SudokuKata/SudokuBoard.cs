@@ -28,7 +28,7 @@ namespace SudokuKata
         }
 
         private char[][] Board { get; }
-        private int[,] Board2 { get; } = new int[9,9].SetAll(Unknown);
+        private int[,] Board2 { get; } = new int[NumRows,NumCols].SetAll(Unknown);
 
         private char[][] GetEmptyBoard()
         {
@@ -77,6 +77,8 @@ namespace SudokuKata
 
         
         public const int Unknown = -1;
+        public const int NumRows = 9;
+        public const int NumCols = 9;
 
         public string DisplayBoardWithEmptyChar()
         {
