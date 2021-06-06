@@ -72,6 +72,7 @@ namespace SudokuKata
             }
 
             Board[rowToWrite][colToWrite] = boardValue;
+            Board2[row,col] = digitValue;
         }
 
         
