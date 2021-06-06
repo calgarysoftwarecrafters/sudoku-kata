@@ -21,35 +21,7 @@ namespace SudokuKata
 
     public class SudokuBoard
     {
-        public SudokuBoard()
-        {
-            Board = GetEmptyBoard();
-        }
-
-        private char[][] Board { get; }
         private int[][] Board2 { get; } = new int[NumRows][].SetAll(Unknown);
-
-        private char[][] GetEmptyBoard()
-        {
-            var line = "+---+---+---+";
-            var middle = "|...|...|...|";
-            return new[]
-            {
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                middle.ToCharArray(),
-                line.ToCharArray()
-            };
-        }
 
         public override string ToString()
         {
