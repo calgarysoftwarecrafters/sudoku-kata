@@ -845,13 +845,11 @@ namespace SudokuKata
                     {
                         var tempRow = i / 9;
                         var tempCol = i % 9;
-                        var rowToWrite = tempRow + tempRow / 3 + 1;
-                        var colToWrite = tempCol + tempCol / 3 + 1;
 
-                        sudokuBoard.SetElementAt(rowToWrite, colToWrite, SudokuBoard.Unknown);
+                        sudokuBoard.SetElementAtWithRowColCalc(tempRow, tempCol, SudokuBoard.Unknown);
                         if (state[i] > 0)
                         {
-                            sudokuBoard.SetElementAt(rowToWrite, colToWrite, state[i]);
+                            sudokuBoard.SetElementAtWithRowColCalc(tempRow, tempCol, state[i]);
                         }
 
                         
