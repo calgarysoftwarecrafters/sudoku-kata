@@ -1,1 +1,2 @@
-- currently at https://github.com/JayBazuzi/sudoku-kata/commit/9d5904cfdb859b0ea58c80c94aa12abf405d77de
+- currently at https://github.com/JayBazuzi/sudoku-kata/commit/b535703d0d4d8535e6806f996604df910b2ba0bf
+- lots of duplicate code in determine rowToWrite/colToWrite
