@@ -406,7 +406,7 @@ namespace SudokuKata
         }
 
         private static int[] GeneratePuzzleFromCompletelySolvedBoard(Random randomNumbers,
-            out int[] finalState, SudokuBoardSolver sudokuBoardAndState)
+            out int[] finalState, SudokuBoardSolver sudokuBoardSolver)
         {
             #region Generate inital board from the completely solved one
 
@@ -416,16 +416,16 @@ namespace SudokuKata
             var maxRemovedPerBlock = 6;
             var removedPerBlock = new int[3, 3];
             var positions = Enumerable.Range(0, 9 * 9).ToArray();
-            var state = sudokuBoardAndState.GetState();
+            var state = sudokuBoardSolver.GetState();
 
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
 
-            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state, sudokuBoardAndState.SudokuBoard);
+            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state, sudokuBoardSolver.SudokuBoard);
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(sudokuBoardAndState.ToString());
+            Console.WriteLine(sudokuBoardSolver.ToString());
 
             #endregion
 
