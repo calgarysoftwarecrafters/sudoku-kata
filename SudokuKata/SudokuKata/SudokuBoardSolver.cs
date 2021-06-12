@@ -17,8 +17,6 @@ namespace SudokuKata
             SudokuBoard = new SudokuBoard();
         }
 
-        private Stack<int[]> StateStack { get; }
-
         public SudokuBoard SudokuBoard { get; }
 
         public override string ToString()
@@ -29,11 +27,6 @@ namespace SudokuKata
         public string CurrentBoardState()
         {
             return string.Join(Environment.NewLine, StateStack.Select(SingleStackElementString).ToArray());
-        }
-        
-        private string SingleStackElementString(int[] stackElement)
-        {
-            return string.Join(",", stackElement.Select(value => value.ToString()).ToArray());
         }
         
         public void ConstructFullySolvedBoard(Random randomNumbers)
@@ -56,6 +49,16 @@ namespace SudokuKata
             #endregion
         }
 
+        public int[] GetState()
+        {
+            return SudokuBoard.GetState();
+        }
+
+        private string SingleStackElementString(int[] stackElement)
+        {
+            return string.Join(",", stackElement.Select(value => value.ToString()).ToArray());
+        }
+        
         private Command PopulateBoardAndNextCommand(Random randomNumbers,
             Command command, Stacks stacks)
         {
@@ -212,10 +215,6 @@ namespace SudokuKata
 
             return null;
         }
-
-        public int[] GetState()
-        {
-            return SudokuBoard.GetState();
-        }
+        private Stack<int[]> StateStack { get; }
     }
 }
