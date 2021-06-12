@@ -27,8 +27,7 @@ namespace SudokuKata
         {
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
-            var boardString = sudokuBoardSolver.SudokuBoard.ToString();
-            Console.WriteLine(boardString);
+            Console.WriteLine(sudokuBoardSolver.ToString());
         }
 
         private static void AppleSauce5(Random randomNumbers, int[] boardAsNumbers, int allOnes,

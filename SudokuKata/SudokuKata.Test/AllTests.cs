@@ -40,7 +40,7 @@ namespace SudokuKata.Test
                 var rng = new Random(i);
                 var sudokuBoardAndStackState = new SudokuBoardSolver();
                 sudokuBoardAndStackState.ConstructFullySolvedBoard(rng);
-                output.WriteLine(sudokuBoardAndStackState.SudokuBoard.ToString());
+                output.WriteLine(sudokuBoardAndStackState.ToString());
                 output.WriteLine(sudokuBoardAndStackState.CurrentBoardState());
             }
 
