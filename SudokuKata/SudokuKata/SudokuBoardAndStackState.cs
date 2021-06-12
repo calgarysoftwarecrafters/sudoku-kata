@@ -205,7 +205,7 @@ namespace SudokuKata
 
         public int[] GetState()
         {
-            return StateStack.Peek();
+            return SudokuBoard.GetState();
         }
     }
 }
