@@ -22,7 +22,13 @@ namespace SudokuKata
 
     public class SudokuBoard
     {
-        private int[][] Board { get; } = new int[NumRows][].SetAll(Unknown);
+        public const int Unknown = -1;
+        public const int NumRows = 9;
+        public const int NumCols = 9;
+        private const int SingleSquareNumCols = 3;
+        private const int SingleSquareNumRows = 3;
+        private const string BoardLineSeparator = "+---+---+---+";
+        private const string ColumnSeparator = "|";
 
         public override string ToString()
         {
@@ -40,6 +46,25 @@ namespace SudokuKata
             return result;
         }
 
+        public void SetValueAt(int row, int col, int digitValue)
+        {
+            Board[row][col] = digitValue;
+        }
+
+        public string DisplayBoard()
+        {
+            return string.Join(string.Empty, Board.Select(rowDigits =>
+            {
+                var joinedRow = string.Join(string.Empty, rowDigits.Select(digit => digit == Unknown ? 0 : digit));
+                return joinedRow;
+            }));
+        }
+
+        public int[] GetState()
+        {
+            return Board.SelectMany(rowDigits => rowDigits).ToArray();
+        }
+        
         private string ToRowString(int[] rowDigits)
         {
             var result = "";
@@ -55,33 +80,7 @@ namespace SudokuKata
             result += ColumnSeparator;
             return result;
         }
-
-        public void SetValueAt(int row, int col, int digitValue)
-        {
-            Board[row][col] = digitValue;
-        }
-
         
-        public const int Unknown = -1;
-        public const int NumRows = 9;
-        public const int NumCols = 9;
-        private const int SingleSquareNumCols = 3;
-        private const int SingleSquareNumRows = 3;
-        private const string BoardLineSeparator = "+---+---+---+";
-        private const string ColumnSeparator = "|";
-
-        public string DisplayBoard()
-        {
-            return string.Join(string.Empty, Board.Select(rowDigits =>
-            {
-                var joinedRow = string.Join(string.Empty, rowDigits.Select(digit => digit == Unknown ? 0 : digit));
-                return joinedRow;
-            }));
-        }
-
-        public int[] GetState()
-        {
-            return Board.SelectMany(rowDigits => rowDigits).ToArray();
-        }
+        private int[][] Board { get; } = new int[NumRows][].SetAll(Unknown);
     }
 }
