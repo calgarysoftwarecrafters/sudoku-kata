@@ -425,7 +425,7 @@ namespace SudokuKata
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(sudokuBoardAndState.SudokuBoard.ToString());
+            Console.WriteLine(sudokuBoardAndState.ToString());
 
             #endregion
 
