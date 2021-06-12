@@ -17,7 +17,7 @@ namespace SudokuKata
             SudokuBoard = new SudokuBoard();
         }
 
-        public Stack<int[]> StateStack { get; }
+        private Stack<int[]> StateStack { get; }
 
         public SudokuBoard SudokuBoard { get; }
 
