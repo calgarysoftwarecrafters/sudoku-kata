@@ -416,7 +416,7 @@ namespace SudokuKata
             var maxRemovedPerBlock = 6;
             var removedPerBlock = new int[3, 3];
             var positions = Enumerable.Range(0, 9 * 9).ToArray();
-            var state = GetState(sudokuBoardAndState);
+            var state = sudokuBoardAndState.GetState();
 
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
@@ -430,11 +430,6 @@ namespace SudokuKata
             #endregion
 
             return state;
-        }
-
-        private static int[] GetState(SudokuBoardAndStackState sudokuBoardAndState)
-        {
-            return sudokuBoardAndState.StateStack.Peek();
         }
 
         private static void SoySauce1(Random randomNumbers, int remainingDigits,
