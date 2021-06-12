@@ -9,7 +9,7 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            var sudokuBoardAndStackState = new SudokuBoardAndStackState();
+            var sudokuBoardAndStackState = new SudokuBoardSolver();
 
             sudokuBoardAndStackState.ConstructFullySolvedBoard(randomNumbers);
 
@@ -23,11 +23,11 @@ namespace SudokuKata
             AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardAndStackState.SudokuBoard, finalState);
         }
 
-        private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoardAndStackState sudokuBoardAndStackState)
+        private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoardSolver sudokuBoardSolver)
         {
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
-            var boardString = sudokuBoardAndStackState.SudokuBoard.ToString();
+            var boardString = sudokuBoardSolver.SudokuBoard.ToString();
             Console.WriteLine(boardString);
         }
 
@@ -406,7 +406,7 @@ namespace SudokuKata
         }
 
         private static int[] GeneratePuzzleFromCompletelySolvedBoard(Random randomNumbers,
-            out int[] finalState, SudokuBoardAndStackState sudokuBoardAndState)
+            out int[] finalState, SudokuBoardSolver sudokuBoardAndState)
         {
             #region Generate inital board from the completely solved one
 

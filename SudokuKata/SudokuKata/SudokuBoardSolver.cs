@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace SudokuKata
 {
-    public class SudokuBoardAndStackState
+    public class SudokuBoardSolver
     {
-        public SudokuBoardAndStackState()
+        public SudokuBoardSolver()
         {
             // Construct board to be solved
 
