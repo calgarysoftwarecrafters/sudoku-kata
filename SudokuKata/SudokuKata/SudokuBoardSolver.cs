@@ -26,7 +26,7 @@ namespace SudokuKata
             return SudokuBoard.ToString();
         }
 
-        public string StateStackString()
+        public string CurrentBoardState()
         {
             return string.Join(Environment.NewLine, StateStack.Select(SingleStackElementString).ToArray());
         }
