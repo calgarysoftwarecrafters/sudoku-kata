@@ -26,6 +26,16 @@ namespace SudokuKata
             return SudokuBoard.ToString();
         }
 
+        public string StateStackString()
+        {
+            return string.Join(Environment.NewLine, StateStack.Select(SingleStackElementString).ToArray());
+        }
+        
+        private string SingleStackElementString(int[] stackElement)
+        {
+            return string.Join(",", stackElement.Select(value => value.ToString()).ToArray());
+        }
+        
         public void ConstructFullySolvedBoard(Random randomNumbers)
         {
             #region Construct fully populated board

@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ApprovalTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -43,7 +41,7 @@ namespace SudokuKata.Test
                 var sudokuBoardAndStackState = new SudokuBoardAndStackState();
                 sudokuBoardAndStackState.ConstructFullySolvedBoard(rng);
                 output.WriteLine(sudokuBoardAndStackState.SudokuBoard.ToString());
-                output.WriteLine(StateStackString(sudokuBoardAndStackState.StateStack));
+                output.WriteLine(sudokuBoardAndStackState.StateStackString());
             }
 
             Approvals.Verify(output);
@@ -68,16 +66,6 @@ namespace SudokuKata.Test
         public void Cleanup()
         {
             Console.SetOut(_existingOut);
-        }
-
-        private string StateStackString(Stack<int[]> stateStack)
-        {
-            return string.Join(Environment.NewLine, stateStack.Select(SingleStackElementString).ToArray());
-        }
-
-        private string SingleStackElementString(int[] stackElement)
-        {
-            return string.Join(",", stackElement.Select(value => value.ToString()).ToArray());
         }
     }
 }
