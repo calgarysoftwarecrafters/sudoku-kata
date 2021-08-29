@@ -9,25 +9,25 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            var solvedBoard = new SudokuBoardSolver();
+            var partiallySudokuBoardSolverMayBe = new PartiallySudokuBoardSolver_MayBe();
 
-            solvedBoard.ConstructFullySolvedBoard(randomNumbers);
+            partiallySudokuBoardSolverMayBe.ConstructFullySolvedBoard(randomNumbers);
 
-            DisplayFinalLookOfTheSolvedBoard(solvedBoard);
+            DisplayFinalLookOfTheSolvedBoard(partiallySudokuBoardSolverMayBe);
 
             var boardAsNumbers = GeneratePuzzleFromCompletelySolvedBoard(randomNumbers,
-                out var finalState, solvedBoard);
+                out var finalState, partiallySudokuBoardSolverMayBe);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, solvedBoard.SudokuBoard, finalState);
+            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, partiallySudokuBoardSolverMayBe.SudokuBoard, finalState);
         }
 
-        private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoardSolver sudokuBoardSolver)
+        private static void DisplayFinalLookOfTheSolvedBoard(PartiallySudokuBoardSolver_MayBe partiallySudokuBoardSolverMayBe)
         {
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
-            Console.WriteLine(sudokuBoardSolver.ToString());
+            Console.WriteLine(partiallySudokuBoardSolverMayBe.ToString());
         }
 
         private static void AppleSauce5(Random randomNumbers, int[] boardAsNumbers, int allOnes,
@@ -405,7 +405,7 @@ namespace SudokuKata
         }
 
         private static int[] GeneratePuzzleFromCompletelySolvedBoard(Random randomNumbers,
-            out int[] finalState, SudokuBoardSolver sudokuBoardSolver)
+            out int[] finalState, PartiallySudokuBoardSolver_MayBe partiallySudokuBoardSolverMayBe)
         {
             #region Generate inital board from the completely solved one
 
@@ -415,16 +415,16 @@ namespace SudokuKata
             var maxRemovedPerBlock = 6;
             var removedPerBlock = new int[3, 3];
             var positions = Enumerable.Range(0, 9 * 9).ToArray();
-            var state = sudokuBoardSolver.GetBoardAsNumber();
+            var state = partiallySudokuBoardSolverMayBe.GetBoardAsNumber();
 
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
 
-            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state, sudokuBoardSolver.SudokuBoard);
+            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state, partiallySudokuBoardSolverMayBe.SudokuBoard);
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(sudokuBoardSolver.ToString());
+            Console.WriteLine(partiallySudokuBoardSolverMayBe.ToString());
 
             #endregion
 

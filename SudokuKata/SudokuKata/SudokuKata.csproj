@@ -51,7 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stacks.cs" />
     <Compile Include="SudokuBoard.cs" />
-    <Compile Include="SudokuBoardSolver.cs" />
+    <Compile Include="PartiallySudokuBoardSolver_MayBe.cs" />
     <Compile Include="ViableMove.cs" />
   </ItemGroup>
   <ItemGroup>
