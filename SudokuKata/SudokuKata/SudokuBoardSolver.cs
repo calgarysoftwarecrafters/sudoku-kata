@@ -40,7 +40,7 @@ namespace SudokuKata
             #endregion
         }
 
-        public int[] GetState()
+        public int[] GetBoardAsNumber()
         {
             return SudokuBoard.GetState();
         }
