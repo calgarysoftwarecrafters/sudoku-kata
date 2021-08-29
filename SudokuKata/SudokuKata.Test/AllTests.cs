@@ -41,7 +41,6 @@ namespace SudokuKata.Test
                 var sudokuBoardAndStackState = new SudokuBoardSolver();
                 sudokuBoardAndStackState.ConstructFullySolvedBoard(rng);
                 output.WriteLine(sudokuBoardAndStackState.ToString());
-                output.WriteLine(sudokuBoardAndStackState.CurrentBoardState());
             }
 
             Approvals.Verify(output);

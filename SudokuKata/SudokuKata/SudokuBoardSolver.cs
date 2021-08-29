@@ -20,17 +20,11 @@ namespace SudokuKata
             return SudokuBoard.ToString();
         }
 
-        public string CurrentBoardState()
-        {
-            return string.Join(Environment.NewLine, StateStack.Select(SingleStackElementString).ToArray());
-        }
-        
         public void ConstructFullySolvedBoard(Random randomNumbers)
         {
             #region Construct fully populated board
 
             var stacks = new Stacks();
-            StateStack = stacks.StateStack;
             
             // Indicates operation to perform next
             // - expand - finds next empty cell and puts new state on stacks
@@ -212,7 +206,5 @@ namespace SudokuKata
 
             return null;
         }
-        
-        private Stack<int[]> StateStack { get; set; }
     }
 }
