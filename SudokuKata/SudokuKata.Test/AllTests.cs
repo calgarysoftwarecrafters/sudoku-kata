@@ -48,6 +48,21 @@ namespace SudokuKata.Test
         }
 
         [TestMethod]
+        public void BoardGetStateTests()
+        {
+            var sudokuBoard = new SudokuBoard();
+            sudokuBoard.SetValueAt(0, 1, 3);
+            sudokuBoard.SetValueAt(2, 2, 2);
+            sudokuBoard.SetValueAt(8, 8, 1);
+            sudokuBoard.SetValueAt(0, 0, 5);
+            
+            var boardState = sudokuBoard.GetState();
+            
+            Approvals.Verify(string.Join("",boardState));
+        }
+
+
+        [TestMethod]
         public void TestEmptyBoard()
         {
             Approvals.Verify(new SudokuBoard());
