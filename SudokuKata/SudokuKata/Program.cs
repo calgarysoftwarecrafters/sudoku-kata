@@ -11,7 +11,7 @@ namespace SudokuKata
         {
             var partiallySudokuBoardSolverMayBe = new PartiallySudokuBoardSolver_MayBe();
 
-            partiallySudokuBoardSolverMayBe.ConstructFullySolvedBoard(randomNumbers);
+            partiallySudokuBoardSolverMayBe.ConstructPartiallySolvedBoard(randomNumbers);
 
             DisplayFinalLookOfTheSolvedBoard(partiallySudokuBoardSolverMayBe);
 
