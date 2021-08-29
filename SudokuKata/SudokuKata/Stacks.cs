@@ -4,6 +4,9 @@ namespace SudokuKata
 {
     public class Stacks
     {
+        // Top element is current state of the board
+        public Stack<int[]> StateStack { get; } = new Stack<int[]>();
+        
         // Top elements are (row, col) of cell which has been modified compared to previous state
         public Stack<int> RowIndexStack { get; } = new Stack<int>();
         public Stack<int> ColIndexStack { get; } = new Stack<int>();

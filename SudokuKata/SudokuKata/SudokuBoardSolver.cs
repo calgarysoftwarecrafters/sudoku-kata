@@ -9,10 +9,6 @@ namespace SudokuKata
         public SudokuBoardSolver()
         {
             // Construct board to be solved
-
-            // Top element is current state of the board
-            StateStack = new Stack<int[]>();
-
             // Prepare empty board
             SudokuBoard = new SudokuBoard();
         }
@@ -34,13 +30,14 @@ namespace SudokuKata
             #region Construct fully populated board
 
             var stacks = new Stacks();
-
+            StateStack = stacks.StateStack;
+            
             // Indicates operation to perform next
             // - expand - finds next empty cell and puts new state on stacks
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
             var command = Command.Expand;
-            while (StateStack.Count <= 9 * 9)
+            while (stacks.StateStack.Count <= 9 * 9)
             {
                 
                 command = PopulateBoardAndNextCommand(randomNumbers, command, stacks);
@@ -84,7 +81,7 @@ namespace SudokuKata
         {
             var currentState = new int[9 * 9];
 
-            if (StateStack.Count > 0) Array.Copy(StateStack.Peek(), currentState, currentState.Length);
+            if (stacks.StateStack.Count > 0) Array.Copy(stacks.StateStack.Peek(), currentState, currentState.Length);
 
             var bestRow = -1;
             var bestCol = -1;
@@ -142,7 +139,7 @@ namespace SudokuKata
 
             if (!containsUnsolvableCells)
             {
-                StateStack.Push(currentState);
+                stacks.StateStack.Push(currentState);
                 stacks.RowIndexStack.Push(bestRow);
                 stacks.ColIndexStack.Push(bestCol);
                 stacks.UsedDigitsStack.Push(bestUsedDigits);
@@ -177,7 +174,7 @@ namespace SudokuKata
 
         private Command ExecuteCollapseCommand(Stacks stacks)
         {
-            StateStack.Pop();
+            stacks.StateStack.Pop();
             stacks.RowIndexStack.Pop();
             stacks.ColIndexStack.Pop();
             stacks.UsedDigitsStack.Pop();
@@ -194,7 +191,7 @@ namespace SudokuKata
             var digitToMove = stacks.LastDigitStack.Pop();
 
             var usedDigits = stacks.UsedDigitsStack.Peek();
-            var currentState = StateStack.Peek();
+            var currentState = stacks.StateStack.Peek();
             var currentStateIndex = 9 * rowToMove + colToMove;
 
             var movedToDigit = digitToMove + 1;
@@ -215,6 +212,7 @@ namespace SudokuKata
 
             return null;
         }
-        private Stack<int[]> StateStack { get; }
+        
+        private Stack<int[]> StateStack { get; set; }
     }
 }
