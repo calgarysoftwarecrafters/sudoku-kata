@@ -9,18 +9,18 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            var sudokuBoardSolver = new SudokuBoardSolver();
+            var solvedBoard = new SudokuBoardSolver();
 
-            sudokuBoardSolver.ConstructFullySolvedBoard(randomNumbers);
+            solvedBoard.ConstructFullySolvedBoard(randomNumbers);
 
-            DisplayFinalLookOfTheSolvedBoard(sudokuBoardSolver);
+            DisplayFinalLookOfTheSolvedBoard(solvedBoard);
 
             var boardAsNumbers = GeneratePuzzleFromCompletelySolvedBoard(randomNumbers,
-                out var finalState, sudokuBoardSolver);
+                out var finalState, solvedBoard);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoardSolver.SudokuBoard, finalState);
+            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, solvedBoard.SudokuBoard, finalState);
         }
 
         private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoardSolver sudokuBoardSolver)
