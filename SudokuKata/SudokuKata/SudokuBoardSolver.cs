@@ -54,11 +54,6 @@ namespace SudokuKata
             return SudokuBoard.GetState();
         }
 
-        public void SetValueAt(int row, int col, int digitValue)
-        {
-            SudokuBoard.SetValueAt(row, col, digitValue);
-        }
-        
         private string SingleStackElementString(int[] stackElement)
         {
             return string.Join(",", stackElement.Select(value => value.ToString()).ToArray());
