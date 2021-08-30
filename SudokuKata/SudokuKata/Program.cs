@@ -18,7 +18,7 @@ namespace SudokuKata
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, sudokuBoard,
+            SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, puzzle,
                 finalState);
         }
 
