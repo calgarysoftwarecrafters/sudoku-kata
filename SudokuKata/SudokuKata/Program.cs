@@ -9,12 +9,12 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            var sudokuBoard = new SudokuBoardGenerator().ConstructPartiallySolvedBoard(randomNumbers);
+            var partiallySolvedBoard = new SudokuBoardGenerator().ConstructPartiallySolvedBoard(randomNumbers);
 
-            DisplayFinalLookOfTheSolvedBoard(sudokuBoard);
+            DisplayFinalLookOfTheSolvedBoard(partiallySolvedBoard);
 
             var puzzle = GeneratePuzzleFromPartiallySolvedBoard(randomNumbers,
-                out var finalState, sudokuBoard);
+                out var finalState, partiallySolvedBoard);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
