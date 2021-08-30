@@ -55,7 +55,7 @@ namespace SudokuKata.Test
             sudokuBoard.SetValueAt(8, 8, 1);
             sudokuBoard.SetValueAt(0, 0, 5);
             
-            var boardState = sudokuBoard.GetState();
+            var boardState = sudokuBoard.GetBoardAsNumber();
             
             Approvals.Verify(string.Join("",boardState));
         }

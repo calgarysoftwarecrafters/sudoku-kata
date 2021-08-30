@@ -60,7 +60,7 @@ namespace SudokuKata
             }));
         }
 
-        public int[] GetState()
+        public int[] GetBoardAsNumber()
         {
             return Board.SelectMany(rowDigits => rowDigits).ToArray();
         }

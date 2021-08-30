@@ -42,7 +42,7 @@ namespace SudokuKata
 
         public int[] GetBoardAsNumber()
         {
-            return SudokuBoard.GetState();
+            return SudokuBoard.GetBoardAsNumber();
         }
 
         private Command PopulateBoardAndNextCommand(Random randomNumbers,
