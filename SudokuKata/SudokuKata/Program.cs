@@ -7,16 +7,17 @@ namespace SudokuKata
 {
     public class LookupStructures
     {
-        public LookupStructures(Dictionary<int, int> singleBitToIndex, int allOnes, Dictionary<int, int> maskToOnesCount)
+        public LookupStructures(Dictionary<int, int> singleBitToIndex, int allOnes,
+            Dictionary<int, int> maskToOnesCount)
         {
             SingleBitToIndex = singleBitToIndex;
             AllOnes = allOnes;
             MaskToOnesCount = maskToOnesCount;
         }
 
-        public Dictionary<int, int> SingleBitToIndex { get; private set; }
-        public int AllOnes { get; private set; }
-        public Dictionary<int, int> MaskToOnesCount { get; private set; }
+        public Dictionary<int, int> SingleBitToIndex { get; }
+        public int AllOnes { get; }
+        public Dictionary<int, int> MaskToOnesCount { get; }
     }
 
     public class Program
@@ -55,13 +56,14 @@ namespace SudokuKata
         private static void SolvePuzzle(Random randomNumbers, SudokuBoard sudokuBoard, int[] finalState,
             LookupStructures lookupStructures)
         {
-            int[] boardAsNumbers = sudokuBoard.GetBoardAsNumber();
+            var boardAsNumbers = sudokuBoard.GetBoardAsNumber();
             var wasChangeMade = true;
             while (wasChangeMade)
             {
                 wasChangeMade = false;
 
-                var candidateMasks = CalculateCandidatesForCurrentStateOfTheBoard(boardAsNumbers, lookupStructures.AllOnes);
+                var candidateMasks =
+                    CalculateCandidatesForCurrentStateOfTheBoard(boardAsNumbers, lookupStructures.AllOnes);
 
                 var cellGroups = BuildCellGroupsThatMapsCellIndicesToDistinctGroups(boardAsNumbers);
 
@@ -70,7 +72,8 @@ namespace SudokuKata
                 {
                     stepChangeMade = false;
 
-                    wasChangeMade = PickCellsWithOnlyOneCandidateLeft(randomNumbers, candidateMasks, lookupStructures.MaskToOnesCount,
+                    wasChangeMade = PickCellsWithOnlyOneCandidateLeft(randomNumbers, candidateMasks,
+                        lookupStructures.MaskToOnesCount,
                         lookupStructures.SingleBitToIndex, boardAsNumbers, sudokuBoard, wasChangeMade);
 
                     wasChangeMade = FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(randomNumbers, wasChangeMade,
@@ -79,7 +82,8 @@ namespace SudokuKata
                     stepChangeMade = RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(wasChangeMade,
                         candidateMasks, lookupStructures.MaskToOnesCount, cellGroups, stepChangeMade);
 
-                    stepChangeMade = TryToFindGroupsOfDigitsOfSizeN(wasChangeMade, stepChangeMade, lookupStructures.MaskToOnesCount,
+                    stepChangeMade = TryToFindGroupsOfDigitsOfSizeN(wasChangeMade, stepChangeMade,
+                        lookupStructures.MaskToOnesCount,
                         cellGroups, boardAsNumbers, candidateMasks);
                 }
 
@@ -429,9 +433,10 @@ namespace SudokuKata
             return stepChangeMade;
         }
 
-        private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard(Random randomNumbers, SudokuBoard partiallySolvedBoard)
+        private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard(Random randomNumbers,
+            SudokuBoard partiallySolvedBoard)
         {
-            SudokuBoard puzzle = SudokuBoard.FromNumbers(partiallySolvedBoard.GetBoardAsNumber());
+            var puzzle = SudokuBoard.FromNumbers(partiallySolvedBoard.GetBoardAsNumber());
             // Board is solved at this point.
             // Now pick subset of digits as the starting position.
             var remainingDigits = 30;
@@ -464,7 +469,7 @@ namespace SudokuKata
 
                 removedPos += 1;
             }
-            
+
             return puzzle;
         }
 

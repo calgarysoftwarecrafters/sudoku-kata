@@ -75,17 +75,13 @@ namespace SudokuKata
             result += ColumnSeparator;
             return result;
         }
-        
+
         public static SudokuBoard FromNumbers(int[] state)
         {
             var result = new SudokuBoard();
-            for (int row = 0; row < NumRows; row++)
-            {
-                for (int column = 0; column < NumCols; column++)
-                {
-                    result.SetValueAt(row, column, state[row*NumCols + column]);
-                }
-            }
+            for (var row = 0; row < NumRows; row++)
+            for (var column = 0; column < NumCols; column++)
+                result.SetValueAt(row, column, state[row * NumCols + column]);
             return result;
         }
     }
