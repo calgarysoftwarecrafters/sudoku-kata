@@ -38,7 +38,7 @@ namespace SudokuKata.Test
             for (var i = 1300; i < 1600; i++)
             {
                 var rng = new Random(i);
-                var sudokuBoardAndStackState = new PartiallySudokuBoardSolver_MayBe();
+                var sudokuBoardAndStackState = new SudokuBoardGenerator();
                 sudokuBoardAndStackState.ConstructPartiallySolvedBoard(rng);
                 output.WriteLine(sudokuBoardAndStackState.ToString());
             }

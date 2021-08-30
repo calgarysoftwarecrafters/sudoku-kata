@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace SudokuKata
 {
-    public class PartiallySudokuBoardSolver_MayBe
+    public class SudokuBoardGenerator
     {
-        public PartiallySudokuBoardSolver_MayBe()
+        public SudokuBoardGenerator()
         {
             // Construct board to be solved
             // Prepare empty board
