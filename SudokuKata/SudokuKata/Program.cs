@@ -409,15 +409,16 @@ namespace SudokuKata
         }
 
         private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard(Random randomNumbers,
-            out int[] finalState, SudokuBoard sudokuBoard)
+            out int[] finalState, SudokuBoard partiallySolvedBoard)
         {
+            SudokuBoard puzzle = SudokuBoard.FromNumbers(partiallySolvedBoard.GetBoardAsNumber());
             // Board is solved at this point.
             // Now pick subset of digits as the starting position.
             var remainingDigits = 30;
             var maxRemovedPerBlock = 6;
             var removedPerBlock = new int[3, 3];
             var positions = Enumerable.Range(0, 9 * 9).ToArray();
-            var state = sudokuBoard.GetBoardAsNumber();
+            var state = puzzle.GetBoardAsNumber();
 
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
@@ -443,15 +444,15 @@ namespace SudokuKata
                 positions[removedPos] = positions[indexToPick];
                 positions[indexToPick] = temp;
 
-                sudokuBoard.SetValueAt(row, col, SudokuBoard.Unknown);
+                puzzle.SetValueAt(row, col, SudokuBoard.Unknown);
 
                 var stateIndex = 9 * row + col;
-                sudokuBoard.GetBoardAsNumber()[stateIndex] = 0;
+                puzzle.GetBoardAsNumber()[stateIndex] = 0;
 
                 removedPos += 1;
             }
             
-            return SudokuBoard.FromNumbers(sudokuBoard.GetBoardAsNumber());
+            return puzzle;
         }
 
         private static bool TryToFindGroupsOfDigitsOfSizeN(bool changeMade, bool stepChangeMade,
