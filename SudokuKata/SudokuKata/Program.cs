@@ -39,8 +39,9 @@ namespace SudokuKata
         }
 
         private static void SolvePuzzle(Random randomNumbers, SudokuBoard sudokuBoard, int[] finalState,
-            LookupStructures lookupStructures)
+            LookupStructures lookupStructures2)
         {
+            LookupStructures lookupStructures = LookupStructures.PrepareLookupStructures();
             var boardAsNumbers = sudokuBoard.GetBoardAsNumber();
             var wasChangeMade = true;
             while (wasChangeMade)
