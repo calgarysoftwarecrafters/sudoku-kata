@@ -76,9 +76,7 @@ namespace SudokuKata
         {
             #region Prepare lookup structures that will be used in further execution
 
-            Console.WriteLine();
-            Console.WriteLine(new string('=', 80));
-            Console.WriteLine();
+            PrintLineOfEquals();
 
             var maskToOnesCount = new Dictionary<int, int>();
             maskToOnesCount[0] = 0;
@@ -98,6 +96,13 @@ namespace SudokuKata
             #endregion
 
             return maskToOnesCount;
+        }
+
+        private static void PrintLineOfEquals()
+        {
+            Console.WriteLine();
+            Console.WriteLine(new string('=', 80));
+            Console.WriteLine();
         }
 
         private static int[] CalculateCandidatesForCurrentStateOfTheBoard(int[] state, int allOnes)
