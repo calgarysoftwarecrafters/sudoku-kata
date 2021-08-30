@@ -420,7 +420,7 @@ namespace SudokuKata
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
 
-            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state,
+            var puzzle = SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state,
                 sudokuBoard);
 
             Console.WriteLine();
@@ -429,10 +429,10 @@ namespace SudokuKata
 
             #endregion
 
-            return SudokuBoard.FromNumbers(state);
+            return puzzle;
         }
 
-        private static void SoySauce1(Random randomNumbers, int remainingDigits,
+        private static SudokuBoard SoySauce1(Random randomNumbers, int remainingDigits,
             int[] positions, int[,] removedPerBlock, int maxRemovedPerBlock, int[] state, SudokuBoard sudokuBoard)
         {
             var removedPos = 0;
@@ -463,6 +463,8 @@ namespace SudokuKata
 
                 removedPos += 1;
             }
+            
+            return SudokuBoard.FromNumbers(state);
         }
 
         private static bool TryToFindGroupsOfDigitsOfSizeN(bool changeMade, bool stepChangeMade,
