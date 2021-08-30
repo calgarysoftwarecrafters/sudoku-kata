@@ -45,11 +45,6 @@ namespace SudokuKata
             return SudokuBoard.GetState();
         }
 
-        private string SingleStackElementString(int[] stackElement)
-        {
-            return string.Join(",", stackElement.Select(value => value.ToString()).ToArray());
-        }
-        
         private Command PopulateBoardAndNextCommand(Random randomNumbers,
             Command command, Stacks stacks)
         {
