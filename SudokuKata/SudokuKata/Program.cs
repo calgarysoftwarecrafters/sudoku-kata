@@ -18,7 +18,8 @@ namespace SudokuKata
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoard, finalState);
+            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoard,
+                finalState);
         }
 
         private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoard sudokuBoard)
@@ -59,7 +60,8 @@ namespace SudokuKata
                         cellGroups, boardAsNumbers, candidateMasks);
                 }
 
-                wasChangeMade = LookIfBoardHasMultipleSolutions(randomNumbers, wasChangeMade, candidateMasks, maskToOnesCount,
+                wasChangeMade = LookIfBoardHasMultipleSolutions(randomNumbers, wasChangeMade, candidateMasks,
+                    maskToOnesCount,
                     finalState, boardAsNumbers, sudokuBoard);
 
                 PrintBoardChange(wasChangeMade, sudokuBoard);
@@ -193,7 +195,7 @@ namespace SudokuKata
                 var col = singleCandidateIndex % 9;
 
                 state[singleCandidateIndex] = candidate + 1;
-                sudokuBoard.SetValueAt(row, col, 1+candidate);
+                sudokuBoard.SetValueAt(row, col, 1 + candidate);
                 candidateMasks[singleCandidateIndex] = 0;
                 changeMade = true;
 
@@ -338,16 +340,16 @@ namespace SudokuKata
                     foreach (var group in groups)
                     {
                         var cells =
-                            @group.Cells
+                            group.Cells
                                 .Where(
                                     cell =>
-                                        candidateMasks[cell.Index] != @group.Mask &&
-                                        (candidateMasks[cell.Index] & @group.Mask) > 0)
+                                        candidateMasks[cell.Index] != group.Mask &&
+                                        (candidateMasks[cell.Index] & group.Mask) > 0)
                                 .ToList();
 
                         var maskCells =
-                            @group.Cells
-                                .Where(cell => candidateMasks[cell.Index] == @group.Mask)
+                            group.Cells
+                                .Where(cell => candidateMasks[cell.Index] == group.Mask)
                                 .ToArray();
 
 
@@ -355,7 +357,7 @@ namespace SudokuKata
                         {
                             var upper = 0;
                             var lower = 0;
-                            var temp = @group.Mask;
+                            var temp = group.Mask;
 
                             var value = 1;
                             while (temp > 0)
@@ -371,11 +373,11 @@ namespace SudokuKata
                             }
 
                             Console.WriteLine(
-                                $"Values {lower} and {upper} in {@group.Description} are in cells ({maskCells[0].Row + 1}, {maskCells[0].Column + 1}) and ({maskCells[1].Row + 1}, {maskCells[1].Column + 1}).");
+                                $"Values {lower} and {upper} in {group.Description} are in cells ({maskCells[0].Row + 1}, {maskCells[0].Column + 1}) and ({maskCells[1].Row + 1}, {maskCells[1].Column + 1}).");
 
                             foreach (var cell in cells)
                             {
-                                var maskToRemove = candidateMasks[cell.Index] & @group.Mask;
+                                var maskToRemove = candidateMasks[cell.Index] & group.Mask;
                                 var valuesToRemove = new List<int>();
                                 var curValue = 1;
                                 while (maskToRemove > 0)
@@ -390,7 +392,7 @@ namespace SudokuKata
                                 Console.WriteLine(
                                     $"{valuesReport} cannot appear in ({cell.Row + 1}, {cell.Column + 1}).");
 
-                                candidateMasks[cell.Index] &= ~@group.Mask;
+                                candidateMasks[cell.Index] &= ~group.Mask;
                                 stepChangeMade = true;
                             }
                         }
@@ -418,7 +420,8 @@ namespace SudokuKata
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
 
-            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state, sudokuBoard);
+            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state,
+                sudokuBoard);
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
@@ -844,12 +847,7 @@ namespace SudokuKata
                         var tempCol = i % 9;
 
                         sudokuBoard.SetValueAt(tempRow, tempCol, SudokuBoard.Unknown);
-                        if (state[i] > 0)
-                        {
-                            sudokuBoard.SetValueAt(tempRow, tempCol, state[i]);
-                        }
-
-                        
+                        if (state[i] > 0) sudokuBoard.SetValueAt(tempRow, tempCol, state[i]);
                     }
 
                     Console.WriteLine(

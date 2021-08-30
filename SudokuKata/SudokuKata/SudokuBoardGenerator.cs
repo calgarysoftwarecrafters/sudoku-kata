@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SudokuKata
@@ -25,17 +24,14 @@ namespace SudokuKata
             #region Construct fully populated board
 
             var stacks = new Stacks();
-            
+
             // Indicates operation to perform next
             // - expand - finds next empty cell and puts new state on stacks
             // - move - finds next candidate number at current pos and applies it to current state
             // - collapse - pops current state from stack as it did not yield a solution
             var command = Command.Expand;
             while (stacks.StateStack.Count <= 9 * 9)
-            {
-                
                 command = PopulateBoardAndNextCommand(randomNumbers, command, stacks);
-            }
 
             #endregion
 
@@ -45,20 +41,11 @@ namespace SudokuKata
         private Command PopulateBoardAndNextCommand(Random randomNumbers,
             Command command, Stacks stacks)
         {
-            if (command.Equals(Command.Expand))
-            {
-                return ExecuteExpandCommand(randomNumbers, stacks);
-            }
+            if (command.Equals(Command.Expand)) return ExecuteExpandCommand(randomNumbers, stacks);
 
-            if (command.Equals(Command.Collapse))
-            {
-                return ExecuteCollapseCommand(stacks);
-            }
+            if (command.Equals(Command.Collapse)) return ExecuteCollapseCommand(stacks);
 
-            if (command.Equals(Command.Move))
-            {
-                return ExecuteMoveCommand(stacks);
-            }
+            if (command.Equals(Command.Move)) return ExecuteMoveCommand(stacks);
 
             return command;
         }
@@ -192,9 +179,7 @@ namespace SudokuKata
             }
 
             if (movedToDigit <= 9)
-            {
-                return new ViableMove(rowToMove, colToMove, usedDigits, currentState, currentStateIndex, movedToDigit);    
-            }
+                return new ViableMove(rowToMove, colToMove, usedDigits, currentState, currentStateIndex, movedToDigit);
 
             return null;
         }

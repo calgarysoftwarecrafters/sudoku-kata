@@ -54,10 +54,10 @@ namespace SudokuKata.Test
             sudokuBoard.SetValueAt(2, 2, 2);
             sudokuBoard.SetValueAt(8, 8, 1);
             sudokuBoard.SetValueAt(0, 0, 5);
-            
+
             var boardState = sudokuBoard.GetBoardAsNumber();
-            
-            Approvals.Verify(string.Join("",boardState));
+
+            Approvals.Verify(string.Join("", boardState));
         }
 
         [TestMethod]
