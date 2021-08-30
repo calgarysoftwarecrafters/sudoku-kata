@@ -13,14 +13,14 @@ namespace SudokuKata
             SudokuBoard = new SudokuBoard();
         }
 
-        public SudokuBoard SudokuBoard { get; }
+        private SudokuBoard SudokuBoard { get; }
 
         public override string ToString()
         {
             return SudokuBoard.ToString();
         }
 
-        public void ConstructPartiallySolvedBoard(Random randomNumbers)
+        public SudokuBoard ConstructPartiallySolvedBoard(Random randomNumbers)
         {
             #region Construct fully populated board
 
@@ -38,11 +38,8 @@ namespace SudokuKata
             }
 
             #endregion
-        }
 
-        public int[] GetBoardAsNumber()
-        {
-            return SudokuBoard.GetBoardAsNumber();
+            return SudokuBoard;
         }
 
         private Command PopulateBoardAndNextCommand(Random randomNumbers,

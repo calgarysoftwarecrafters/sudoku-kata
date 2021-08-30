@@ -9,25 +9,23 @@ namespace SudokuKata
     {
         public static void Play(Random randomNumbers)
         {
-            var partiallySudokuBoardSolverMayBe = new SudokuBoardGenerator();
+            var sudokuBoard = new SudokuBoardGenerator().ConstructPartiallySolvedBoard(randomNumbers);
 
-            partiallySudokuBoardSolverMayBe.ConstructPartiallySolvedBoard(randomNumbers);
-
-            DisplayFinalLookOfTheSolvedBoard(partiallySudokuBoardSolverMayBe);
+            DisplayFinalLookOfTheSolvedBoard(sudokuBoard);
 
             var boardAsNumbers = GeneratePuzzleFromPartiallySolvedBoard_Maybe(randomNumbers,
-                out var finalState, partiallySudokuBoardSolverMayBe);
+                out var finalState, sudokuBoard);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, partiallySudokuBoardSolverMayBe.SudokuBoard, finalState);
+            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoard, finalState);
         }
 
-        private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoardGenerator sudokuBoardGenerator)
+        private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoard sudokuBoard)
         {
             Console.WriteLine();
             Console.WriteLine("Final look of the solved board:");
-            Console.WriteLine(sudokuBoardGenerator.ToString());
+            Console.WriteLine(sudokuBoard.ToString());
         }
 
         private static void AppleSauce5(Random randomNumbers, int[] boardAsNumbers, int allOnes,
@@ -405,7 +403,7 @@ namespace SudokuKata
         }
 
         private static int[] GeneratePuzzleFromPartiallySolvedBoard_Maybe(Random randomNumbers,
-            out int[] finalState, SudokuBoardGenerator sudokuBoardGenerator)
+            out int[] finalState, SudokuBoard sudokuBoard)
         {
             #region Generate inital board from the completely solved one
 
@@ -415,16 +413,16 @@ namespace SudokuKata
             var maxRemovedPerBlock = 6;
             var removedPerBlock = new int[3, 3];
             var positions = Enumerable.Range(0, 9 * 9).ToArray();
-            var state = sudokuBoardGenerator.GetBoardAsNumber();
+            var state = sudokuBoard.GetBoardAsNumber();
 
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
 
-            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state, sudokuBoardGenerator.SudokuBoard);
+            SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state, sudokuBoard);
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(sudokuBoardGenerator.ToString());
+            Console.WriteLine(sudokuBoard.ToString());
 
             #endregion
 
