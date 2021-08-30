@@ -32,9 +32,6 @@ namespace SudokuKata
             LogStartingLookOfBoard(puzzle);
 
             var lookupStructures = PrepareLookupStructures();
-            var singleBitToIndex = lookupStructures.SingleBitToIndex;
-            var allOnes = lookupStructures.AllOnes;
-            var maskToOnesCount = lookupStructures.MaskToOnesCount;
 
             SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), puzzle,
                 partiallySolvedBoard.GetBoardAsNumber(), lookupStructures);
