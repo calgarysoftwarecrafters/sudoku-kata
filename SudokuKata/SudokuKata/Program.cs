@@ -411,8 +411,6 @@ namespace SudokuKata
         private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard(Random randomNumbers,
             out int[] finalState, SudokuBoard sudokuBoard)
         {
-            #region Generate inital board from the completely solved one
-
             // Board is solved at this point.
             // Now pick subset of digits as the starting position.
             var remainingDigits = 30;
@@ -424,17 +422,6 @@ namespace SudokuKata
             finalState = new int[state.Length];
             Array.Copy(state, finalState, finalState.Length);
 
-            var puzzle = SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock,
-                sudokuBoard);
-
-            #endregion
-
-            return puzzle;
-        }
-
-        private static SudokuBoard SoySauce1(Random randomNumbers, int remainingDigits,
-            int[] positions, int[,] removedPerBlock, int maxRemovedPerBlock, SudokuBoard sudokuBoard)
-        {
             var removedPos = 0;
             while (removedPos < 9 * 9 - remainingDigits)
             {
