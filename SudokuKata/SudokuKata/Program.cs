@@ -13,7 +13,7 @@ namespace SudokuKata
 
             DisplayFinalLookOfTheSolvedBoard(sudokuBoard);
 
-            var puzzle = GeneratePuzzleFromPartiallySolvedBoard_Maybe(randomNumbers,
+            var puzzle = GeneratePuzzleFromPartiallySolvedBoard(randomNumbers,
                 out var finalState, sudokuBoard);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
@@ -404,7 +404,7 @@ namespace SudokuKata
             return stepChangeMade;
         }
 
-        private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard_Maybe(Random randomNumbers,
+        private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard(Random randomNumbers,
             out int[] finalState, SudokuBoard sudokuBoard)
         {
             #region Generate inital board from the completely solved one
