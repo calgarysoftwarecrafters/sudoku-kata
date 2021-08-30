@@ -13,8 +13,7 @@ namespace SudokuKata
 
             DisplayFinalLookOfTheSolvedBoard(partiallySolvedBoard);
 
-            var puzzle = GeneratePuzzleFromPartiallySolvedBoard(randomNumbers,
-                out var finalState, partiallySolvedBoard);
+            var puzzle = GeneratePuzzleFromPartiallySolvedBoard(randomNumbers, partiallySolvedBoard);
 
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
@@ -23,7 +22,7 @@ namespace SudokuKata
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
             SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, puzzle,
-                finalState);
+                partiallySolvedBoard.GetBoardAsNumber());
         }
 
         private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoard sudokuBoard)
@@ -408,8 +407,7 @@ namespace SudokuKata
             return stepChangeMade;
         }
 
-        private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard(Random randomNumbers,
-            out int[] finalState, SudokuBoard partiallySolvedBoard)
+        private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard(Random randomNumbers, SudokuBoard partiallySolvedBoard)
         {
             SudokuBoard puzzle = SudokuBoard.FromNumbers(partiallySolvedBoard.GetBoardAsNumber());
             // Board is solved at this point.
@@ -419,9 +417,6 @@ namespace SudokuKata
             var removedPerBlock = new int[3, 3];
             var positions = Enumerable.Range(0, 9 * 9).ToArray();
             var state = puzzle.GetBoardAsNumber();
-
-            finalState = new int[state.Length];
-            Array.Copy(state, finalState, finalState.Length);
 
             var removedPos = 0;
             while (removedPos < 9 * 9 - remainingDigits)
