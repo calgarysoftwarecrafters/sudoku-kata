@@ -13,12 +13,12 @@ namespace SudokuKata
 
             DisplayFinalLookOfTheSolvedBoard(sudokuBoard);
 
-            var boardAsNumbers = GeneratePuzzleFromPartiallySolvedBoard_Maybe(randomNumbers,
+            var puzzle = GeneratePuzzleFromPartiallySolvedBoard_Maybe(randomNumbers,
                 out var finalState, sudokuBoard);
 
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
-            AppleSauce5(randomNumbers, boardAsNumbers, allOnes, maskToOnesCount, singleBitToIndex, sudokuBoard,
+            AppleSauce5(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, sudokuBoard,
                 finalState);
         }
 
@@ -404,7 +404,7 @@ namespace SudokuKata
             return stepChangeMade;
         }
 
-        private static int[] GeneratePuzzleFromPartiallySolvedBoard_Maybe(Random randomNumbers,
+        private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard_Maybe(Random randomNumbers,
             out int[] finalState, SudokuBoard sudokuBoard)
         {
             #region Generate inital board from the completely solved one
@@ -429,7 +429,7 @@ namespace SudokuKata
 
             #endregion
 
-            return state;
+            return SudokuBoard.FromNumbers(state);
         }
 
         private static void SoySauce1(Random randomNumbers, int remainingDigits,
