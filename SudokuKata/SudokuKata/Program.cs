@@ -33,7 +33,7 @@ namespace SudokuKata
 
             var lookupStructures = PrepareLookupStructures();
 
-            SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), puzzle,
+            SolvePuzzle(randomNumbers, puzzle,
                 partiallySolvedBoard.GetBoardAsNumber(), lookupStructures);
         }
 
@@ -52,7 +52,7 @@ namespace SudokuKata
             Console.WriteLine(sudokuBoard.ToString());
         }
 
-        private static void SolvePuzzle(Random randomNumbers, int[] boardAsNumbers2, SudokuBoard sudokuBoard, int[] finalState,
+        private static void SolvePuzzle(Random randomNumbers, SudokuBoard sudokuBoard, int[] finalState,
             LookupStructures lookupStructures)
         {
             int[] boardAsNumbers = sudokuBoard.GetBoardAsNumber();
