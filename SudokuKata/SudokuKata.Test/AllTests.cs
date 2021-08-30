@@ -60,7 +60,6 @@ namespace SudokuKata.Test
             Approvals.Verify(string.Join("",boardState));
         }
 
-
         [TestMethod]
         public void TestEmptyBoard()
         {

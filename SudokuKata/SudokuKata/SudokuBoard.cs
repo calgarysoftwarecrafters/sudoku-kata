@@ -22,7 +22,7 @@ namespace SudokuKata
 
     public class SudokuBoard
     {
-        public const int Unknown = -1;
+        public const int Unknown = 0;
         public const int NumRows = 9;
         public const int NumCols = 9;
         private const int SingleSquareNumCols = 3;
