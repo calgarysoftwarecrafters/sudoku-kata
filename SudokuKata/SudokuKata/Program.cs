@@ -17,8 +17,7 @@ namespace SudokuKata
 
             LogStartingLookOfBoard(puzzle);
 
-            SolvePuzzle(randomNumbers, puzzle,
-                partiallySolvedBoard.GetBoardAsNumber(), partiallySolvedBoard);
+            SolvePuzzle(randomNumbers, puzzle, partiallySolvedBoard);
         }
 
         private static void LogStartingLookOfBoard(SudokuBoard puzzle)
@@ -36,7 +35,7 @@ namespace SudokuKata
             Console.WriteLine(sudokuBoard.ToString());
         }
 
-        private static void SolvePuzzle(Random randomNumbers, SudokuBoard sudokuBoard, int[] finalState2,
+        private static void SolvePuzzle(Random randomNumbers, SudokuBoard sudokuBoard,
             SudokuBoard partiallySolvedBoard)
         {
             LookupStructures lookupStructures = LookupStructures.PrepareLookupStructures();
