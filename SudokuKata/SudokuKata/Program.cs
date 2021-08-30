@@ -36,7 +36,7 @@ namespace SudokuKata
             var allOnes = lookupStructures.AllOnes;
             var maskToOnesCount = lookupStructures.MaskToOnesCount;
 
-            SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, puzzle,
+            SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), puzzle,
                 partiallySolvedBoard.GetBoardAsNumber(), lookupStructures);
         }
 
@@ -55,21 +55,15 @@ namespace SudokuKata
             Console.WriteLine(sudokuBoard.ToString());
         }
 
-        private static void SolvePuzzle(Random randomNumbers, int[] boardAsNumbers, int allOnes1,
-            Dictionary<int, int> maskToOnesCount1,
-            Dictionary<int, int> singleBitToIndex1, SudokuBoard sudokuBoard, int[] finalState,
+        private static void SolvePuzzle(Random randomNumbers, int[] boardAsNumbers, SudokuBoard sudokuBoard, int[] finalState,
             LookupStructures lookupStructures)
         {
-            int allOnes = lookupStructures.AllOnes;
-            Dictionary<int, int> maskToOnesCount = lookupStructures.MaskToOnesCount;
-            Dictionary<int, int> singleBitToIndex = lookupStructures.SingleBitToIndex;
-            
             var wasChangeMade = true;
             while (wasChangeMade)
             {
                 wasChangeMade = false;
 
-                var candidateMasks = CalculateCandidatesForCurrentStateOfTheBoard(boardAsNumbers, allOnes);
+                var candidateMasks = CalculateCandidatesForCurrentStateOfTheBoard(boardAsNumbers, lookupStructures.AllOnes);
 
                 var cellGroups = BuildCellGroupsThatMapsCellIndicesToDistinctGroups(boardAsNumbers);
 
@@ -78,21 +72,21 @@ namespace SudokuKata
                 {
                     stepChangeMade = false;
 
-                    wasChangeMade = PickCellsWithOnlyOneCandidateLeft(randomNumbers, candidateMasks, maskToOnesCount,
-                        singleBitToIndex, boardAsNumbers, sudokuBoard, wasChangeMade);
+                    wasChangeMade = PickCellsWithOnlyOneCandidateLeft(randomNumbers, candidateMasks, lookupStructures.MaskToOnesCount,
+                        lookupStructures.SingleBitToIndex, boardAsNumbers, sudokuBoard, wasChangeMade);
 
                     wasChangeMade = FindANumberCanOnlyAppearInOnePlaceInRowColumnBlock(randomNumbers, wasChangeMade,
                         candidateMasks, boardAsNumbers, sudokuBoard);
 
                     stepChangeMade = RemovePairsOfDigitsInSameRowColumnBlocksFromOtherCollidingCells(wasChangeMade,
-                        candidateMasks, maskToOnesCount, cellGroups, stepChangeMade);
+                        candidateMasks, lookupStructures.MaskToOnesCount, cellGroups, stepChangeMade);
 
-                    stepChangeMade = TryToFindGroupsOfDigitsOfSizeN(wasChangeMade, stepChangeMade, maskToOnesCount,
+                    stepChangeMade = TryToFindGroupsOfDigitsOfSizeN(wasChangeMade, stepChangeMade, lookupStructures.MaskToOnesCount,
                         cellGroups, boardAsNumbers, candidateMasks);
                 }
 
                 wasChangeMade = LookIfBoardHasMultipleSolutions(randomNumbers, wasChangeMade, candidateMasks,
-                    maskToOnesCount,
+                    lookupStructures.MaskToOnesCount,
                     finalState, boardAsNumbers, sudokuBoard);
 
                 PrintBoardChange(wasChangeMade, sudokuBoard);
