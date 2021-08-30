@@ -5,6 +5,20 @@ using System.Text;
 
 namespace SudokuKata
 {
+    public class LookupStructures
+    {
+        public LookupStructures(Dictionary<int, int> singleBitToIndex, int allOnes, Dictionary<int, int> returnValue)
+        {
+            SingleBitToIndex = singleBitToIndex;
+            AllOnes = allOnes;
+            ReturnValue = returnValue;
+        }
+
+        public Dictionary<int, int> SingleBitToIndex { get; private set; }
+        public int AllOnes { get; private set; }
+        public Dictionary<int, int> ReturnValue { get; private set; }
+    }
+
     public class Program
     {
         public static void Play(Random randomNumbers)
@@ -17,7 +31,10 @@ namespace SudokuKata
 
             LogStartingLookOfBoard(puzzle);
 
-            var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
+            var lookupStructures = PrepareLookupStructures();
+            var singleBitToIndex = lookupStructures.SingleBitToIndex;
+            var allOnes = lookupStructures.AllOnes;
+            var maskToOnesCount = lookupStructures.ReturnValue;
 
             SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, puzzle,
                 partiallySolvedBoard.GetBoardAsNumber());
@@ -77,8 +94,7 @@ namespace SudokuKata
             }
         }
 
-        private static Dictionary<int, int> PrepareLookupStructures(out Dictionary<int, int> singleBitToIndex,
-            out int allOnes)
+        private static LookupStructures PrepareLookupStructures()
         {
             #region Prepare lookup structures that will be used in further execution
 
@@ -91,15 +107,15 @@ namespace SudokuKata
                 maskToOnesCount[i] = maskToOnesCount[smaller] + increment;
             }
 
-            singleBitToIndex = new Dictionary<int, int>();
+            var singleBitToIndex = new Dictionary<int, int>();
             for (var i = 0; i < 9; i++)
                 singleBitToIndex[1 << i] = i;
 
-            allOnes = (1 << 9) - 1;
+            var allOnes = (1 << 9) - 1;
 
             #endregion
 
-            return maskToOnesCount;
+            return new LookupStructures(singleBitToIndex, allOnes, maskToOnesCount);
         }
 
         private static void PrintLineOfEquals()
