@@ -436,7 +436,7 @@ namespace SudokuKata
         private static SudokuBoard GeneratePuzzleFromPartiallySolvedBoard(Random randomNumbers,
             SudokuBoard partiallySolvedBoard)
         {
-            var puzzle = SudokuBoard.FromNumbers(partiallySolvedBoard.GetBoardAsNumber());
+            var puzzle = partiallySolvedBoard.Clone();
             // Board is solved at this point.
             // Now pick subset of digits as the starting position.
             var remainingDigits = 30;
