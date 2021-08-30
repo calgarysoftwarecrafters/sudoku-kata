@@ -16,6 +16,10 @@ namespace SudokuKata
             var puzzle = GeneratePuzzleFromPartiallySolvedBoard(randomNumbers,
                 out var finalState, partiallySolvedBoard);
 
+            Console.WriteLine();
+            Console.WriteLine("Starting look of the board to solve:");
+            Console.WriteLine(puzzle.ToString());
+            
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
             SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, puzzle,
@@ -422,10 +426,6 @@ namespace SudokuKata
 
             var puzzle = SoySauce1(randomNumbers, remainingDigits, positions, removedPerBlock, maxRemovedPerBlock, state,
                 sudokuBoard);
-
-            Console.WriteLine();
-            Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(sudokuBoard.ToString());
 
             #endregion
 
