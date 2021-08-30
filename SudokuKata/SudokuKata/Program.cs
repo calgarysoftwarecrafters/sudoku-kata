@@ -7,16 +7,16 @@ namespace SudokuKata
 {
     public class LookupStructures
     {
-        public LookupStructures(Dictionary<int, int> singleBitToIndex, int allOnes, Dictionary<int, int> returnValue)
+        public LookupStructures(Dictionary<int, int> singleBitToIndex, int allOnes, Dictionary<int, int> maskToOnesCount)
         {
             SingleBitToIndex = singleBitToIndex;
             AllOnes = allOnes;
-            ReturnValue = returnValue;
+            MaskToOnesCount = maskToOnesCount;
         }
 
         public Dictionary<int, int> SingleBitToIndex { get; private set; }
         public int AllOnes { get; private set; }
-        public Dictionary<int, int> ReturnValue { get; private set; }
+        public Dictionary<int, int> MaskToOnesCount { get; private set; }
     }
 
     public class Program
@@ -34,7 +34,7 @@ namespace SudokuKata
             var lookupStructures = PrepareLookupStructures();
             var singleBitToIndex = lookupStructures.SingleBitToIndex;
             var allOnes = lookupStructures.AllOnes;
-            var maskToOnesCount = lookupStructures.ReturnValue;
+            var maskToOnesCount = lookupStructures.MaskToOnesCount;
 
             SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, puzzle,
                 partiallySolvedBoard.GetBoardAsNumber(), lookupStructures);
@@ -61,7 +61,7 @@ namespace SudokuKata
             LookupStructures lookupStructures)
         {
             int allOnes = lookupStructures.AllOnes;
-            Dictionary<int, int> maskToOnesCount = lookupStructures.ReturnValue;
+            Dictionary<int, int> maskToOnesCount = lookupStructures.MaskToOnesCount;
             Dictionary<int, int> singleBitToIndex = lookupStructures.SingleBitToIndex;
             
             var wasChangeMade = true;
