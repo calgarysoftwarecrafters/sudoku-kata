@@ -37,7 +37,7 @@ namespace SudokuKata
             var maskToOnesCount = lookupStructures.ReturnValue;
 
             SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, puzzle,
-                partiallySolvedBoard.GetBoardAsNumber());
+                partiallySolvedBoard.GetBoardAsNumber(), lookupStructures);
         }
 
         private static void LogStartingLookOfBoard(SudokuBoard puzzle)
@@ -55,10 +55,15 @@ namespace SudokuKata
             Console.WriteLine(sudokuBoard.ToString());
         }
 
-        private static void SolvePuzzle(Random randomNumbers, int[] boardAsNumbers, int allOnes,
-            Dictionary<int, int> maskToOnesCount,
-            Dictionary<int, int> singleBitToIndex, SudokuBoard sudokuBoard, int[] finalState)
+        private static void SolvePuzzle(Random randomNumbers, int[] boardAsNumbers, int allOnes1,
+            Dictionary<int, int> maskToOnesCount1,
+            Dictionary<int, int> singleBitToIndex1, SudokuBoard sudokuBoard, int[] finalState,
+            LookupStructures lookupStructures)
         {
+            int allOnes = lookupStructures.AllOnes;
+            Dictionary<int, int> maskToOnesCount = lookupStructures.ReturnValue;
+            Dictionary<int, int> singleBitToIndex = lookupStructures.SingleBitToIndex;
+            
             var wasChangeMade = true;
             while (wasChangeMade)
             {
