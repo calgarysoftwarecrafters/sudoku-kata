@@ -416,7 +416,6 @@ namespace SudokuKata
             var maxRemovedPerBlock = 6;
             var removedPerBlock = new int[3, 3];
             var positions = Enumerable.Range(0, 9 * 9).ToArray();
-            var state = puzzle.GetBoardAsNumber();
 
             var removedPos = 0;
             while (removedPos < 9 * 9 - remainingDigits)
@@ -440,9 +439,6 @@ namespace SudokuKata
                 positions[indexToPick] = temp;
 
                 puzzle.SetValueAt(row, col, SudokuBoard.Unknown);
-
-                var stateIndex = 9 * row + col;
-                puzzle.GetBoardAsNumber()[stateIndex] = 0;
 
                 removedPos += 1;
             }
