@@ -415,16 +415,16 @@ namespace SudokuKata
             var remainingDigits = 30;
             var maxRemovedPerBlock = 6;
             var removedPerBlock = new int[3, 3];
-            var positions = Enumerable.Range(0, 9 * 9).ToArray();
+            var positions = Enumerable.Range(0, SudokuBoard.TotalPositions).ToArray();
 
             var removedPos = 0;
-            while (removedPos < 9 * 9 - remainingDigits)
+            while (removedPos < SudokuBoard.TotalPositions - remainingDigits)
             {
                 var curRemainingDigits = positions.Length - removedPos;
                 var indexToPick = removedPos + randomNumbers.Next(curRemainingDigits);
 
-                var row = positions[indexToPick] / 9;
-                var col = positions[indexToPick] % 9;
+                var row = positions[indexToPick] / SudokuBoard.NumRows;
+                var col = positions[indexToPick] % SudokuBoard.NumCols;
 
                 var blockRowToRemove = row / 3;
                 var blockColToRemove = col / 3;

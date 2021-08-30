@@ -22,6 +22,7 @@ namespace SudokuKata
         public const int Unknown = 0;
         public const int NumRows = 9;
         public const int NumCols = 9;
+        public const int TotalPositions = NumRows * NumCols;
 
         private const int SingleSquareNumCols = 3;
         private const int SingleSquareNumRows = 3;
