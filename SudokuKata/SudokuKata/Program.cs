@@ -18,6 +18,7 @@ namespace SudokuKata
             Console.WriteLine();
             Console.WriteLine("Starting look of the board to solve:");
             Console.WriteLine(puzzle.ToString());
+            PrintLineOfEquals();
             
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
@@ -75,8 +76,6 @@ namespace SudokuKata
             out int allOnes)
         {
             #region Prepare lookup structures that will be used in further execution
-
-            PrintLineOfEquals();
 
             var maskToOnesCount = new Dictionary<int, int>();
             maskToOnesCount[0] = 0;
