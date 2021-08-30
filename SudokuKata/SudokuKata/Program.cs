@@ -15,15 +15,20 @@ namespace SudokuKata
 
             var puzzle = GeneratePuzzleFromPartiallySolvedBoard(randomNumbers, partiallySolvedBoard);
 
-            Console.WriteLine();
-            Console.WriteLine("Starting look of the board to solve:");
-            Console.WriteLine(puzzle.ToString());
-            PrintLineOfEquals();
-            
+            LogStartingLookOfBoard(puzzle);
+
             var maskToOnesCount = PrepareLookupStructures(out var singleBitToIndex, out var allOnes);
 
             SolvePuzzle(randomNumbers, puzzle.GetBoardAsNumber(), allOnes, maskToOnesCount, singleBitToIndex, puzzle,
                 partiallySolvedBoard.GetBoardAsNumber());
+        }
+
+        private static void LogStartingLookOfBoard(SudokuBoard puzzle)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Starting look of the board to solve:");
+            Console.WriteLine(puzzle.ToString());
+            PrintLineOfEquals();
         }
 
         private static void DisplayFinalLookOfTheSolvedBoard(SudokuBoard sudokuBoard)
