@@ -47,7 +47,7 @@ namespace SudokuKata.Test
         }
 
         [TestMethod]
-        public void BoardGetStateTests()
+        public void GetBoardAsNumberTests()
         {
             var sudokuBoard = new SudokuBoard();
             sudokuBoard.SetValueAt(0, 1, 3);
