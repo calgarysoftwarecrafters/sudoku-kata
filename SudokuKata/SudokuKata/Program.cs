@@ -52,9 +52,10 @@ namespace SudokuKata
             Console.WriteLine(sudokuBoard.ToString());
         }
 
-        private static void SolvePuzzle(Random randomNumbers, int[] boardAsNumbers, SudokuBoard sudokuBoard, int[] finalState,
+        private static void SolvePuzzle(Random randomNumbers, int[] boardAsNumbers2, SudokuBoard sudokuBoard, int[] finalState,
             LookupStructures lookupStructures)
         {
+            int[] boardAsNumbers = sudokuBoard.GetBoardAsNumber();
             var wasChangeMade = true;
             while (wasChangeMade)
             {
