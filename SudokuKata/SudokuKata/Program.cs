@@ -36,11 +36,12 @@ namespace SudokuKata
             Console.WriteLine(sudokuBoard.ToString());
         }
 
-        private static void SolvePuzzle(Random randomNumbers, SudokuBoard sudokuBoard, int[] finalState,
+        private static void SolvePuzzle(Random randomNumbers, SudokuBoard sudokuBoard, int[] finalState2,
             SudokuBoard partiallySolvedBoard)
         {
             LookupStructures lookupStructures = LookupStructures.PrepareLookupStructures();
             var boardAsNumbers = sudokuBoard.GetBoardAsNumber();
+            int[] finalState = partiallySolvedBoard.GetBoardAsNumber();
             var wasChangeMade = true;
             while (wasChangeMade)
             {
