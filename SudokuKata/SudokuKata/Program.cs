@@ -40,7 +40,6 @@ namespace SudokuKata
         {
             LookupStructures lookupStructures = LookupStructures.PrepareLookupStructures();
             var boardAsNumbers = sudokuBoard.GetBoardAsNumber();
-            int[] finalState = partiallySolvedBoard.GetBoardAsNumber();
             var wasChangeMade = true;
             while (wasChangeMade)
             {
@@ -73,7 +72,7 @@ namespace SudokuKata
 
                 wasChangeMade = LookIfBoardHasMultipleSolutions(randomNumbers, wasChangeMade, candidateMasks,
                     lookupStructures.MaskToOnesCount,
-                    finalState, boardAsNumbers, sudokuBoard);
+                    partiallySolvedBoard.GetBoardAsNumber(), boardAsNumbers, sudokuBoard);
 
                 PrintBoardChange(wasChangeMade, sudokuBoard);
             }
