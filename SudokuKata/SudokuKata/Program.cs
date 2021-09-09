@@ -5,6 +5,16 @@ using System.Text;
 
 namespace SudokuKata
 {
+    public class Candidates
+    {
+        public Candidates(int[] returnValue)
+        {
+            ReturnValue = returnValue;
+        }
+
+        public int[] ReturnValue { get; private set; }
+    }
+
     public class Program
     {
         public static void Play(Random randomNumbers)
@@ -46,7 +56,7 @@ namespace SudokuKata
                 wasChangeMade = false;
 
                 var candidateMasks =
-                    CalculateCandidatesForCurrentStateOfTheBoard(boardAsNumbers, lookupStructures.AllOnes);
+                    CalculateCandidatesForCurrentStateOfTheBoard(boardAsNumbers, lookupStructures.AllOnes).ReturnValue;
 
                 var cellGroups = BuildCellGroupsThatMapsCellIndicesToDistinctGroups(boardAsNumbers);
 
@@ -85,7 +95,7 @@ namespace SudokuKata
             Console.WriteLine();
         }
 
-        private static int[] CalculateCandidatesForCurrentStateOfTheBoard(int[] state, int allOnes)
+        private static Candidates CalculateCandidatesForCurrentStateOfTheBoard(int[] state, int allOnes)
         {
             #region Calculate candidates for current state of the board
 
@@ -118,7 +128,7 @@ namespace SudokuKata
 
             #endregion
 
-            return candidateMasks;
+            return new Candidates(candidateMasks);
         }
 
         private static List<IGrouping<int, AppleSauce1>> BuildCellGroupsThatMapsCellIndicesToDistinctGroups(int[] state)
